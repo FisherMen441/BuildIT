@@ -76,19 +76,20 @@ export default class App extends React.Component {
       .catch(error => console.log("Error: ", error))
   }
 
-  addPost(){
+  addPost() {
     fetch('http://159.89.181.188/getchatts/', {
       method: 'GET'
     })
       .then(res => res.json())
       .then(result => {
-        if (result.chatts.length > this.state.messages.length){
+        if (result.chatts.length > this.state.messages.length) {
           let newMsg = this.state.messages;
           for (let i = newMsg.length; i < result.chatts.length; i++)
             newMsg.push(result.chatts[i]);
           this.setState({
             messages: newMsg,
-          });
+          }, () => setTimeout(() => this.refs.FlatList.scrollToEnd({ animated: true }), 10)
+          )
         }
       })
       .catch(error => console.log("Error: ", error))
@@ -120,7 +121,7 @@ export default class App extends React.Component {
             }
           />
         </View>
-        <PostBar addPost={this.addPost.bind(this)}/>
+        <PostBar addPost={this.addPost.bind(this)} />
       </KeyboardAvoidingView>
     );
   }

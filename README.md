@@ -11,6 +11,10 @@ git clone https://github.com/FisherMen441/BuildIT.git
 
 ### Backend API
 
+Start server:
+
+`service gunicorn restart`
+
 You can use `postman` or `curl` to test these APIs.
 
 - POST request 157.230.91.86/adduser/

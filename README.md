@@ -9,9 +9,13 @@ git clone https://github.com/FisherMen441/BuildIT.git
 
 ## Run Starter App
 
-### Backend 
+### Backend API
 
+You can use `postman` or `curl` to test these APIs.
 
+- POST request 157.230.91.86/registeruser/
+- POST request 157.230.91.86/addchatt/
+- GET request 157.230.91.86/getchatts/
 
 ### Frontend
 
@@ -22,6 +26,7 @@ Install `node` on MacOS:`brew install node`
 Launch the app:
 
 ```
+cd BuildIT/Starter\ App/frontend/Chatter
 npm install -g expo-cli
 npm install
 npm start

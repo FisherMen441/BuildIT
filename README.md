@@ -13,7 +13,7 @@ git clone https://github.com/FisherMen441/BuildIT.git
 
 You can use `postman` or `curl` to test these APIs.
 
-- POST request 157.230.91.86/registeruser/
+- POST request 157.230.91.86/adduser/
 - POST request 157.230.91.86/addchatt/
 - GET request 157.230.91.86/getchatts/
 

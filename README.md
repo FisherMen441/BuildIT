@@ -40,7 +40,7 @@ If you are using iPhone, open your camera and aim at the QR code. Then open the 
 
 If you are using Android phone, open `Expo` and go to `Projects -> Scan QR Code`.
 
-##Folder Structure
+## Folder Structure
 
 Folder **Starter App** contains all the files needed to build the starter app: all your source codes, resources, meta data files, IDE project files or Makefiles. 
 

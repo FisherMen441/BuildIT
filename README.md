@@ -7,6 +7,13 @@ We help you pick the right piece to build your world.
 git clone https://github.com/FisherMen441/BuildIT.git
 ```
 
+## Frontend
+
+We decide to use React-Native for frontend development.
+
+## Backend
+### Backend APIs
+
 ## Folder Structure
 
 Folder **Starter App** contains all the files needed to build the starter app: all your source codes, resources, meta data files, IDE project files or Makefiles. 

@@ -7,13 +7,6 @@ We help you pick the right piece to build your world.
 git clone https://github.com/FisherMen441/BuildIT.git
 ```
 
-## Frontend
-
-We decide to use React-Native for frontend development.
-
-## Backend
-### Backend APIs
-
 ## Folder Structure
 
 Folder **Starter App** contains all the files needed to build the starter app: all your source codes, resources, meta data files, IDE project files or Makefiles. 
@@ -57,3 +50,21 @@ Folder **Starter App/backend** contains all the files for backend.
         │   ├── urls.py
         │   └── wsgi.py
         └── manage.py
+
+## Frontend
+
+We decide to use React-Native for frontend development.
+
+## Backend
+
+### Backend APIs
+
+| API                                   | Method   | Describe                                                     |
+| ------------------------------------- | -------- | ------------------------------------------------------------ |
+| /api/recommend?user_id=xxx            | GET      | Recommend furniture for user                                 |
+| /api/search                           | GET      | Search the furniture                                         |
+| /api/comment?furniture_id=xxx&step=xx | GET/POST | Get/Post the comments for the furniture                      |
+| /api/tools?furniture_id=xxx&step=xx   | GET      | Get the tools for the furniture                              |
+| /api/manual?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
+| /api/upload                           | POST     | Post the image/live video to backend for CV analysis         |
+| /api/videos?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |

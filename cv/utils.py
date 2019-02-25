@@ -1,4 +1,2 @@
-import numpy as np
-import cv2
-from matplotlib import pyplot as plt
+from sift import *
 import tensorflow as tf

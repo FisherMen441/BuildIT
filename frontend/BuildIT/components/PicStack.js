@@ -28,12 +28,14 @@ export default class PicStack extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        alignSelf: 'center'
     },
     part: {
-        margin: 10
+        marginTop: 5,
+        marginBottom: 5,
     },
     image: {
-        width: 170
+        width: 190
     }
 
 })

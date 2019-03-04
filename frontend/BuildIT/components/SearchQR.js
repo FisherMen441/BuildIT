@@ -1,26 +1,43 @@
 import React from 'react';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, Icon } from 'react-native-elements';
 import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ''
+            search: '',
+            naviFunc: props.naviFunc,
+            naviScreen: props.naviScreen,
+            screen: props.screen
         }
     }
     render() {
+        const icon = <Icon
+            name={this.state.screen == 'Search' ? 'keyboard_backspace' : 'search'}
+            type='material'
+            onPress={this.state.screen == 'Search' ? () => {
+                this.state.naviFunc(this.state.naviScreen);
+            } : () => {}}
+        />
         return (
             <View style={styles.container}>
                 <SearchBar
+                    ref={ref => this.searchbar = ref}
                     inputContainerStyle={styles.inputContainer}
                     containerStyle={styles.barContainer}
                     placeholder="Find Furnitures...."
                     onChangeText={(text) => this.setState({ search: text })}
                     value={this.state.search}
-                    onFocus={() => { console.log('AA') }}
+                    onFocus={() => {
+                        if (this.state.screen == 'Home'){
+                            this.state.naviFunc(this.state.naviScreen);
+                        } 
+                    }
+                    }
                     onSubmitEditing={() => { console.log('AHA') }}
                     returnKeyType={"search"}
+                    searchIcon={{icon}}
                 />
                 <View style={styles.qrcode}>
                     <TouchableOpacity onPress={() => console.log("QR")} >
@@ -45,8 +62,8 @@ const styles = StyleSheet.create({
     barContainer: {
         flex: 0.9,
         marginTop: 25,
-        paddingBottom: 0, 
-        backgroundColor: 'green',
+        paddingBottom: 0,
+        backgroundColor: 'white',
         borderBottomWidth: 1,
         borderBottomColor: '#d7dadd',
         borderTopWidth: 0

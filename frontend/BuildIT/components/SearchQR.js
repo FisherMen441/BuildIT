@@ -12,10 +12,14 @@ export default class HomeScreen extends React.Component {
             screen: props.screen
         }
     }
+    componentDidMount() {
+        if (this.state.screen == 'Search')
+            this.searchbar.focus();
+    }
     render() {
         const icon = <Icon
-            name={this.state.screen == 'Search' ? 'keyboard_backspace' : 'search'}
-            type='material'
+            name={this.state.screen == 'Search' ? 'arrow-left' : 'magnify'}
+            type='material-community'
             onPress={this.state.screen == 'Search' ? () => {
                 this.state.naviFunc(this.state.naviScreen);
             } : () => {}}
@@ -30,14 +34,14 @@ export default class HomeScreen extends React.Component {
                     onChangeText={(text) => this.setState({ search: text })}
                     value={this.state.search}
                     onFocus={() => {
-                        if (this.state.screen == 'Home'){
+                        if (this.state.screen == 'Home') {
                             this.state.naviFunc(this.state.naviScreen);
-                        } 
+                        }
                     }
                     }
-                    onSubmitEditing={() => { console.log('AHA') }}
+                    onSubmitEditing={() => { console.log('HA') }}
                     returnKeyType={"search"}
-                    searchIcon={{icon}}
+                    searchIcon={icon}
                 />
                 <View style={styles.qrcode}>
                     <TouchableOpacity onPress={() => console.log("QR")} >

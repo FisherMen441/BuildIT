@@ -45,15 +45,16 @@ export default class HomeScreen extends React.Component {
             focusFunc: this.props.navigation.navigate.bind(this), 
             focusScreen: 'Search'
         };
+        const { navigation } = this.props;
         return (
             <View>
-                <SearchQR naviFunc={this.props.navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>
+                <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     <View style={[styles.pic, styles.left]}>
-                        <PicStack uris={images1} style={styles.PicStack}/>
+                        <PicStack uris={images1} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} />
                     </View>
                     <View style={styles.pic}>
-                        <PicStack uris={images2} style={styles.PicStack}/>
+                        <PicStack uris={images2} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} />
                     </View>
                 </ScrollView>
             </View>

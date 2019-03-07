@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity} from 'react-native';
 import ScaleImage from './ScaleImage';
 
 export default class PicStack extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            uris: props.uris
+            uris: props.uris,
+            naviFunc: props.naviFunc
         }
     }
 
@@ -14,9 +15,15 @@ export default class PicStack extends React.Component {
         let images = [];
         for (let [index, uri] of this.state.uris.entries())
             images.push(
-                <View style={styles.part} key={index}>
-                    <ScaleImage uri={uri} style={styles.image}/>
-                </View>
+                <TouchableOpacity  onPress={() => this.state.naviFunc('Intro', {
+                    uri: uri,
+                    naviFunc: this.state.naviFunc,
+                    naviScreen: 'Home'
+                })} key={index} >
+                    <View style={styles.part}>
+                        <ScaleImage uri={uri} style={styles.image}/>
+                    </View>
+                </TouchableOpacity>
             );
         return (
             <View style={styles.container}>

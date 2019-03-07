@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList} from 'react-native';
-import {Icon } from 'react-native-elements';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 import SearchQR from '../components/SearchQR';
 
 export default class SearchScreen extends React.Component {
@@ -11,19 +11,19 @@ export default class SearchScreen extends React.Component {
         }
     }
 
-    updateSearchText(text){
+    updateSearchText(text) {
         this.setState(
-        {searchText: text}
+            { searchText: text }
         )
     }
 
 
-    searchResult(searchText){
-        if (searchText === '' )
+    searchResult(searchText) {
+        if (searchText === '')
             return [
-                {name: 'Table', id: 0},
-                {name: 'Bed', id: 1},
-                {name: 'Lamp', id: 2}
+                { name: 'Table', id: 0, uri: 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'},
+                { name: 'Bed', id: 1 , uri: 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'},
+                { name: 'Lamp', id: 2, uri: 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg' }
             ]
         else return [];
     }
@@ -34,20 +34,27 @@ export default class SearchScreen extends React.Component {
         return (
             <View>
                 <SearchQR naviFunc={this.props.navigation.navigate.bind(this)} naviScreen={'Home'} screen={'Search'} />
-                <FlatList  
+                <FlatList
                     data={sr}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({item}) => 
-                        <View style={styles.searchItem}>
-                            <Icon name='clock-outline' type='material-community' containerStyle={{flex: 0.1}}/>
-                            <Text style={{flex: 0.9, fontSize: 16 }}>{item.name}</Text>
-                        </View>
+                    renderItem={({ item }) =>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('Intro', {
+                                uri: item.uri,
+                                naviFunc: this.props.navigation.navigate.bind(this),
+                                naviScreen: 'Search'
+                            })}>
+                            <View style={styles.searchItem}>
+                                <Icon name='clock-outline' type='material-community' containerStyle={{ flex: 0.1 }} />
+                                <Text style={{ flex: 0.9, fontSize: 16 }}>{item.name}</Text>
+                            </View>
+                        </TouchableOpacity>
                     }
                 />
             </View>
         );
     }
-} 
+}
 
 const styles = StyleSheet.create({
     searchItem: {

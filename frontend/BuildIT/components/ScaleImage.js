@@ -4,7 +4,8 @@ import { Image } from "react-native";
 export default class ScaleImage extends Component {
     constructor(props) {
         super(props);
-        this.state = { source: { uri: this.props.uri } };
+        const radius = this.props.style.borderRadius ? this.props.style.borderRadius : 0;
+        this.state = { source: { uri: this.props.uri }, borderRadius: radius};
     }
 
     componentWillMount() {
@@ -29,7 +30,8 @@ export default class ScaleImage extends Component {
         return (
             <Image
                 source={this.state.source}
-                style={{ height: this.state.height, width: this.state.width }}
+                // Maybe need support any # of styles ley
+                style={{ height: this.state.height, width: this.state.width, borderRadius: this.state.borderRadius}}
             />
         );
     }

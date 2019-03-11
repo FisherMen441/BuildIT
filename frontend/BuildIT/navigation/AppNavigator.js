@@ -4,6 +4,7 @@ import { createAppContainer, createSwitchNavigator, createStackNavigator } from 
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import IntroScreen from '../screens/IntroScreen';
+import QRScreen from '../screens/QRScreen';
 
 export default createAppContainer(createSwitchNavigator(
   {
@@ -11,7 +12,8 @@ export default createAppContainer(createSwitchNavigator(
     // Read more at https://reactnavigation.org/docs/en/auth-flow.html
     Home: HomeScreen,
     Search: SearchScreen,
-    Intro: IntroScreen
+    Intro: IntroScreen,
+    QR: QRScreen,
   },
   {
     initialRouteName: 'Home',

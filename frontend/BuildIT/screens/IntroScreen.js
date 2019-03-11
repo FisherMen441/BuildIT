@@ -7,7 +7,7 @@ import ScaleImage from '../components/ScaleImage'
 export default class IntroScreen extends React.Component {
     constructor(props) {
         super(props);
-        const { navigation } = this.props;
+        const { navigation } = props;
         this.state = {
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             naviScreen: navigation.getParam('naviScreen', 'Home'),
@@ -23,14 +23,16 @@ export default class IntroScreen extends React.Component {
                     <Icon
                         name='arrow-left'
                         type='material-community'
-                        onPress={() => this.state.naviFunc(this.state.naviScreen)}
                         style={{ flex: 0.1 }}
+                        onPress={() => {
+                            this.state.naviFunc(this.state.naviScreen);
+                        }}
                     />
-                    <View style={{ flex: 0.9 }}></View>
+                    <View style={{ flex: 0.9 }}/>
                 </View>
                 <View style={styles.main}>
                     <ScaleImage uri={this.state.uri} style={styles.image} />
-                    <Text>{this.state.name}</Text>
+                    <Text style={{ margin: 10 }}>{this.state.name}</Text>
                     <Button title='Start assemble' color='black' onPress={() => { }} />
                 </View>
             </View>
@@ -46,14 +48,13 @@ const styles = StyleSheet.create({
     },
     back: {
         marginTop: 40,
-        flex: 1,
+        marginLeft: 10,
         flexDirection: 'row',
-        backgroundColor: 'red'
     },
     container: {
     },
     main: {
-        marginTop: 60,
+        marginTop: 30,
         alignItems: 'center'
     }
 })

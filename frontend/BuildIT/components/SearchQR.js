@@ -44,7 +44,7 @@ export default class HomeScreen extends React.Component {
                     searchIcon={icon}
                 />
                 <View style={styles.qrcode}>
-                    <TouchableOpacity onPress={() => console.log("QR")} >
+                    <TouchableOpacity onPress={() => {console.log("QR"); this.state.naviFunc('QR')}} >
                         <Image style={{ resizeMode: 'center', height: 45, width: 45 }} source={require('../assets/qr_code.png')} />
                     </TouchableOpacity>
                 </View>

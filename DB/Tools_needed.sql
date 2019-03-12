@@ -1,0 +1,7 @@
+CREATE TABLE Tools_needed (
+    SID int NOT NULL,
+    TID int NOT NULL,
+    FOREIGN KEY (SID) REFERENCES Steps(SID),
+    FOREIGN KEY (TID) REFERENCES Tools(TID)
+);
+

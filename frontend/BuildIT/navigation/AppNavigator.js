@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import IntroScreen from '../screens/IntroScreen';
 import QRScreen from '../screens/QRScreen';
+import CommentScreen from '../screens/CommentScreen';
 
 export default createAppContainer(createSwitchNavigator(
   {
@@ -14,6 +15,7 @@ export default createAppContainer(createSwitchNavigator(
     Search: SearchScreen,
     Intro: IntroScreen,
     QR: QRScreen,
+    Comment: CommentScreen
   },
   {
     initialRouteName: 'Home',

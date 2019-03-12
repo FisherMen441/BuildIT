@@ -57,14 +57,14 @@ We use React Native for the app.
 
 Install `node` on MacOS:`brew install node`
 
-Launch the app:
+Launch the app frontend:
 
 ```
-cd BuildIT/Starter\ App/frontend/Chatter
-npm install -g expo-cli
-npm install
-npm start
+chmod +x startFrontend.sh
+./startFrontend.sh
 ```
+
+If you tried the frontend before, use `./startFrontend.sh -s` for simple start. This will be much faster.
 
 There will be a website window with a QR code.
 

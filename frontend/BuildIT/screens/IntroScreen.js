@@ -35,10 +35,13 @@ export default class IntroScreen extends React.Component {
                 <View style={styles.main}>
                     <ScaleImage uri={this.state.uri} style={styles.image} />
                     <Text style={{ margin: 10 }}>{this.state.name}</Text>
-                    <TouchableOpacity style={styles.button} onPress={() => { this.backgroundColor='#ffffff' }}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Touch Here </Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => { this.backgroundColor='#ffffff' }}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Start assemble </Text></TouchableOpacity>
                 </View>
                 <View style={styles.comment}>
-                    <TouchableOpacity onPress={() => { this.state.naviFunc(this.state.commentScreen); }} uri={this.state.uri} >
+                    <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
+                        uri: this.state.uri,
+                        naviFunc: this.state.naviFunc
+                    })} } >
                         <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
                     </TouchableOpacity>
                 </View>

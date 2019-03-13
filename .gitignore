@@ -1,1 +1,9 @@
+venv/
+*~
+*.log
+*.egg-info/
+*.pyc
 .DS_Store
+backend/api/__pycache__/
+env/
+.vagrant/

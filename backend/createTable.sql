@@ -17,6 +17,7 @@ CREATE TABLE Steps (
     FID int NOT NULL,
     SID int NOT NULL,
     Description  varchar(255),
+    Img_url varchar(255),
     Video_loc varchar(255),
     PRIMARY KEY (FID, SID),
     FOREIGN KEY (FID) REFERENCES Furniture(FID)

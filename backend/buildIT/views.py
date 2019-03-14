@@ -46,6 +46,18 @@ def tools(request):
 def step_manual(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
+    furniture_id = int(request.GET.get('furniture_id'))
+    step = request.GET.get('step')
+    cursor = connection.cursor()
+    cursor.execute("SELECT Img_url, Description FROM Steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
+    result = cursor.fetchall()[0]
+    response = {}
+    response = {
+        'img_url': result['Img_url'],
+        'description': result['Description']
+    }
+    return JsonResponse(response)
+    
     
 
 def cv_upload(request):

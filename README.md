@@ -71,9 +71,9 @@ We decide to use React-Native for frontend development.
 
 ### Backend DB
 
-1. Furniture Table: Each row represents a set of furniture with a unique FID. Each furniture has a name, description and an integer number stands for the total # of steps for the furniture
-2. Steps Table: Each row represents a step with a unique SID, an associated FID and a step_num, a video_loc and a description. (FID, step_num) is unique as well, standing for a certain step for a certain furniture.
-3. Components/Tools table: these 2 are very similar. Each row is component/tool, with a name and a description.
-4. Comments Table: each row is a comment associated with a step.
-5. Components/Tools_needed Table: Each row is a component/tool needed for the step with SID.
-
+1. User table: Each row represents a user with a unique UID. Each user has a user_name and a password.
+2. Furniture Table: Each row represents a set of furniture with a unique FID. Each furniture has a name, description and an integer number indicates the total number of steps for assembling the furniture
+3. Steps Table: Each row represents a step with a unique pair of (FID, SID) indicating it is the SIDth step to assemble the set of furniture of FID. Each step has a video_loc and a description.
+4. Comments Table: each row is a comment associated with a step uploaded by a certain user.
+5. Components/Tools table: these 2 are very similar. Each row is a component/tool, with a unique CID/TID, a name, a url to its image and a description.
+6. Components/Tools_needed Table: Each row is a component/tool needed for the step (FID, SID).

@@ -78,17 +78,17 @@ We decide to use React-Native for frontend development.
 6. Components/Tools_needed Table: Each row is a component/tool needed for the step (FID, SID).
 
 ### Create MYSQL database and do local test
-Open terminal <br>
+Open terminal
 ```
-mysql -u root -p <br>
-CREATE DATABASE buildIT CHARACTER SET UTF8;<br>
-CREATE USER buildITuser@localhost IDENTIFIED BY '123';<br>
-GRANT ALL PRIVILEGES ON buildIT.* TO buildITuser@localhost;<br>
-FLUSH PRIVILEGES;<br>
+mysql -u root -p
+CREATE DATABASE buildIT CHARACTER SET UTF8;
+CREATE USER buildITuser@localhost IDENTIFIED BY '123';
+GRANT ALL PRIVILEGES ON buildIT.* TO buildITuser@localhost;
+FLUSH PRIVILEGES;
 exit
 ```
 Go to backend/api/settings.py and change DATABASE section to <br>
-```json
+```
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -102,6 +102,6 @@ DATABASES = {
 ```
 Create super user and start server
 ```
-python manage.py createsuperuser<br>
+python manage.py createsuperuser
 python manage.py runserver 0.0.0.0:8000
 ```

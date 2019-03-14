@@ -63,5 +63,13 @@ def step_manual(request):
 def cv_upload(request):
     pass
 
-def video(request):
-    pass
+def videos(request):
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+    furniture_id = int(request.GET.get('furniture_id'))
+    step = int(request.GET.get('step'))
+    cursor = connection.cursor()
+    cursor.execute("SELECT Video_loc FROM steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
+    video_loc = cursor.fetchall()
+    response = {'video_loc': video_loc, 'furniture_id': furniture_id, 'step': step}
+    return JsonResponse(response)

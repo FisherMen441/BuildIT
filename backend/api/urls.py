@@ -20,5 +20,6 @@ from buildIT import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'api/recommend/$', views.recommend, name='recommend')
+    url(r'api/recommend/$', views.recommend, name='recommend'),
+    url(r'api/tools/$', views.tools, name='tools')
 ]

@@ -13,7 +13,7 @@ Folder **Starter App** contains all the files needed to build the starter app: a
 
 Folder **Starter App/frontend** contains all the files for frontend and UI.
 
-Folder **Starter App/backend** contains all the files for backend.
+Folder **Starter App/backend** contains all the files for backend. Folder **buildIT** contains files for api, while **sql** contains files for database. Folder **api** is used for `django` settings.
 
 
 ## File List
@@ -77,31 +77,34 @@ We decide to use React-Native for frontend development.
 5. Components/Tools Table: these 2 are very similar. Each row is a component/tool, with a unique CID/TID, a name, a url to its image and a description.
 6. Components/Tools_needed Table: Each row is a component/tool needed for the step (FID, SID).
 
-### Create MYSQL database and do local test
-Open terminal
+### Database
+
+We use MYSQL for our database.
+
+* Create local database
+
 ```
-mysql -u root -p
-CREATE DATABASE buildIT CHARACTER SET UTF8;
-CREATE USER buildITuser@localhost IDENTIFIED BY '123';
-GRANT ALL PRIVILEGES ON buildIT.* TO buildITuser@localhost;
-FLUSH PRIVILEGES;
-exit
+mysql.server start // start sql local server
+mysql -u root -p // open mysql
+mysql> CREATE DATABASE buildIT CHARACTER SET UTF8;
+mysql> CREATE USER buildITuser@localhost IDENTIFIED BY '123';
+mysql> GRANT ALL PRIVILEGES ON buildIT.* TO buildITuser@localhost;
+mysql> FLUSH PRIVILEGES;
+mysql> exit
 ```
-Go to backend/api/settings.py and change DATABASE section to <br>
+
+* Create tables
+
 ```
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'buildIT',
-        'USER': 'buildITuser',
-        'PASSWORD': '123',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+cd backend/sql
+mysql -uroot buildIT < CreateTable.sql
 ```
-Create super user and start server
+
+* Create super user and start server
+
 ```
 python manage.py createsuperuser
 python manage.py runserver 0.0.0.0:8000
 ```
+
+Go to `0.0.0.0:8000/admin` and you can see the details for the database.

@@ -100,3 +100,8 @@ DATABASES = {
     }
 }
 ```
+Create super user and start server
+```
+python manage.py createsuperuser<br>
+python manage.py runserver 0.0.0.0:8000
+```

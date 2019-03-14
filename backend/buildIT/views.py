@@ -24,10 +24,10 @@ def comment(request):
 
 def tools(request):
     if request.method != 'GET':
-		return HttpResponse(status=404)
-	furniture_id = request.GET.get('furniture_id')
+        return HttpResponse(status=404)
+    furniture_id = request.GET.get('furniture_id')
     step = request.GET.get('step')
-	cursor = connection.cursor()
+    cursor = connection.cursor()
     cursor.execute("SELECT TID FROM Tools_needed WHERE FID=? AND SID=?", (furniture_id, step))
     tool_ids = cursor.fetchall()
     tool_list = []
@@ -41,12 +41,12 @@ def tools(request):
         }
         tool_list += [tool_info]
     response = {'tool_list': tool_list}
-	return JsonResponse(response)
+    return JsonResponse(response)
 
 def step_manual(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
-    pass
+    
 
 def cv_upload(request):
     pass

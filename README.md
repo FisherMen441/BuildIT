@@ -97,7 +97,7 @@ mysql> exit
 
 ```
 cd backend/sql
-mysql -uroot buildIT < CreateTable.sql
+mysql -uroot buildIT < schema.sql
 ```
 
 * Create super user and start server

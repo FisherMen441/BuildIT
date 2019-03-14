@@ -61,15 +61,19 @@ We decide to use React-Native for frontend development.
 
 | API                                   | Method   | Describe                                                     |
 | ------------------------------------- | -------- | ------------------------------------------------------------ |
-| /api/recommend?user_id=xxx            | GET      | Recommend furniture for user                                 |
-| /api/search                           | GET      | Search the furniture                                         |
-| /api/comment?furniture_id=xxx&step=xx | GET/POST | Get/Post the comments for the furniture                      |
-| /api/tools?furniture_id=xxx&step=xx   | GET      | Get the tools for the furniture                              |
-| /api/manual?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
-| /api/upload                           | POST     | Post the image/live video to backend for CV analysis         |
-| /api/videos?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
+| /api/recommend/?user_id=xxx            | GET      | Recommend furniture for user                                 |
+| /api/search/                           | GET      | Search the furniture                                         |
+| /api/comment/?furniture_id=xxx&step=xx | GET/POST | Get/Post the comments for the furniture                      |
+| /api/tools/?furniture_id=xxx&step=xx   | GET      | Get the tools for the furniture                              |
+| /api/manual/?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
+| /api/upload/                           | POST     | Post the image/live video to backend for CV analysis         |
+| /api/videos/?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
 
 ### Backend DB
+### Database
+
+#### Tables
+
 1. User Table: Each row represents a user with a unique UID. Each user has a user_name and a password.
 2. Furniture Table: Each row represents a set of furniture with a unique FID. Each furniture has a name, description and an integer number indicates the total number of steps for assembling the furniture
 3. Steps Table: Each row represents a step with a unique pair of (FID, SID) indicating it is the SIDth step to assemble the set of furniture of FID. Each step has a video_loc and a description.
@@ -77,7 +81,7 @@ We decide to use React-Native for frontend development.
 5. Components/Tools Table: these 2 are very similar. Each row is a component/tool, with a unique CID/TID, a name, a url to its image and a description.
 6. Components/Tools_needed Table: Each row is a component/tool needed for the step (FID, SID).
 
-### Database
+#### Local Setup
 
 We use MYSQL for our database.
 

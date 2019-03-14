@@ -52,6 +52,7 @@ export default class IntroScreen extends React.Component {
             <Swiper 
                 loop={false}
                 horizontal={false}
+                showsPagination={false}
             >
             <View style={styles.container}>
                 <View style={styles.back}>
@@ -74,7 +75,7 @@ export default class IntroScreen extends React.Component {
                     <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
                         uri: this.state.uri,
                         naviFunc: this.state.naviFunc
-                    })} } >
+                    })}} >
                         <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
                     </TouchableOpacity>
                 </View>
@@ -83,6 +84,7 @@ export default class IntroScreen extends React.Component {
             <Swiper
                 loop={false}
                 horizontal={false}
+                showsPagination={false}
             >
                 <View style={styles.container} >
                 <View style={styles.tointro}>
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
         alignItems: 'center',
         flexDirection: 'column',
-        flex: 0
+        flex: 0,
     },
     stretch: {
         width: 70,

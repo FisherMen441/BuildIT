@@ -13,6 +13,7 @@ case $1 in
     *)
     npm install -g expo-cli
     npm install
+    npm i react-native-swiper --save
     npm start
     ;;
 esac

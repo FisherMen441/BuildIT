@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import ScaleImage from './ScaleImage';
 
 export default class PicStack extends React.Component {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     image: {
-        width: 190
+        width: Dimensions.get('window').width/2 - 10
     }
 
 })

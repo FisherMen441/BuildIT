@@ -10,6 +10,7 @@ export default class CommentScreen extends React.Component {
         const { navigation } = props;
         this.state = {
             comments: '',
+            text: '',
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             introScreen: navigation.getParam('introScreen', 'Intro'),
             uri: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
@@ -61,7 +62,7 @@ export default class CommentScreen extends React.Component {
                         editable={true}
                         multiline={true}
                         value={this.state.text}
-                        onChangeText={(text) => this.setState({ comments: comments }) }
+                        onChangeText={(text) => this.setState({ text: text }) }
                         placeholder="Post yout comments"
                     />
                     <View style={styles.right}>

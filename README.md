@@ -68,3 +68,12 @@ We decide to use React-Native for frontend development.
 | /api/manual?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
 | /api/upload                           | POST     | Post the image/live video to backend for CV analysis         |
 | /api/videos?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
+
+### Backend DB
+
+1. Furniture Table: Each row represents a set of furniture with a unique FID. Each furniture has a name, description and an integer number stands for the total # of steps for the furniture
+2. Steps Table: Each row represents a step with a unique SID, an associated FID and a step_num, a video_loc and a description. (FID, step_num) is unique as well, standing for a certain step for a certain furniture.
+3. Components/Tools table: these 2 are very similar. Each row is component/tool, with a name and a description.
+4. Comments Table: each row is a comment associated with a step.
+5. Components/Tools_needed Table: Each row is a component/tool needed for the step with SID.
+

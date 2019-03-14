@@ -1,7 +1,7 @@
 CREATE TABLE Users (
 	UID int NOT NULL AUTO_INCREMENT,
 	User_name VARCHAR(255) NOT NULL,
-	Pass_word VARCHAR(255) NOT NULL,
+	Password VARCHAR(255) NOT NULL,
 	PRIMARY KEY (UID)
 );
 
@@ -17,7 +17,6 @@ CREATE TABLE Steps (
     FID int NOT NULL,
     SID int NOT NULL,
     Description  varchar(255),
-    Step_num int NOT NULL,
     Video_loc varchar(255),
     PRIMARY KEY (FID, SID),
     FOREIGN KEY (FID) REFERENCES Furniture(FID)

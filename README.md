@@ -13,7 +13,7 @@ Folder **Starter App** contains all the files needed to build the starter app: a
 
 Folder **Starter App/frontend** contains all the files for frontend and UI.
 
-Folder **Starter App/backend** contains all the files for backend.
+Folder **Starter App/backend** contains all the files for backend. Folder **buildIT** contains files for api, while **sql** contains files for database. Folder **api** is used for `django` settings.
 
 
 ## File List
@@ -61,15 +61,18 @@ We decide to use React-Native for frontend development.
 
 | API                                   | Method   | Describe                                                     |
 | ------------------------------------- | -------- | ------------------------------------------------------------ |
-| /api/recommend?user_id=xxx            | GET      | Recommend furniture for user                                 |
-| /api/search                           | GET      | Search the furniture                                         |
-| /api/comment?furniture_id=xxx&step=xx | GET/POST | Get/Post the comments for the furniture                      |
-| /api/tools?furniture_id=xxx&step=xx   | GET      | Get the tools for the furniture                              |
-| /api/manual?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
-| /api/upload                           | POST     | Post the image/live video to backend for CV analysis         |
-| /api/videos?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
+| /api/recommend/?user_id=xxx            | GET      | Recommend furniture for user                                 |
+| /api/search/?search_text=xxx          | GET      | Search the furniture                                         |
+| /api/comment/?furniture_id=xxx&step=xx | GET/POST | Get/Post the comments for the furniture                      |
+| /api/tools/?furniture_id=xxx&step=xx   | GET      | Get the tools for the furniture                              |
+| /api/manual/?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
+| /api/upload/                           | POST     | Post the image/live video to backend for CV analysis         |
+| /api/videos/?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
 
 ### Backend DB
+### Database
+
+#### Tables
 
 1. User Table: Each row represents a user with a unique UID. Each user has a user_name and a password.
 2. Furniture Table: Each row represents a set of furniture with a unique FID. Each furniture has a name, description and an integer number indicates the total number of steps for assembling the furniture
@@ -77,3 +80,35 @@ We decide to use React-Native for frontend development.
 4. Comments Table: each row is a comment associated with a step uploaded by a certain user.
 5. Components/Tools Table: these 2 are very similar. Each row is a component/tool, with a unique CID/TID, a name, a url to its image and a description.
 6. Components/Tools_needed Table: Each row is a component/tool needed for the step (FID, SID).
+
+#### Local Setup
+
+We use MYSQL for our database.
+
+* Create local database
+
+```
+mysql.server start // start sql local server
+mysql -u root -p // open mysql
+mysql> CREATE DATABASE buildIT CHARACTER SET UTF8;
+mysql> CREATE USER buildITuser@localhost IDENTIFIED BY '123';
+mysql> GRANT ALL PRIVILEGES ON buildIT.* TO buildITuser@localhost;
+mysql> FLUSH PRIVILEGES;
+mysql> exit
+```
+
+* Create tables
+
+```
+cd backend/sql
+mysql -uroot buildIT < schema.sql
+```
+
+* Create super user and start server
+
+```
+python manage.py createsuperuser
+python manage.py runserver 0.0.0.0:8000
+```
+
+Go to `0.0.0.0:8000/admin` and you can see the details for the database.

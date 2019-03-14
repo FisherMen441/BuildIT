@@ -82,8 +82,8 @@ Open terminal <br>
 ```
 mysql -u root -p <br>
 CREATE DATABASE buildIT CHARACTER SET UTF8;<br>
-CREATE USER myuser@localhost IDENTIFIED BY 'password';<br>
-GRANT ALL PRIVILEGES ON buildIT.* TO myuser@localhost;<br>
+CREATE USER buildITuser@localhost IDENTIFIED BY '123';<br>
+GRANT ALL PRIVILEGES ON buildIT.* TO buildITuser@localhost;<br>
 FLUSH PRIVILEGES;<br>
 exit
 ```

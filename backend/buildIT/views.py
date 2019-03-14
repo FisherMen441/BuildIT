@@ -7,7 +7,14 @@ import json
 # Create your views here.
 
 def recommend(request):
-    pass
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+    user_id = int(request.GET.get('id'))
+    #TODO: Add SQL query if necessary
+    response = {}
+    response['recommend']  = 'placeholder'
+    return JsonResponse(response)
+   
 
 def search(request):
     pass
@@ -37,6 +44,8 @@ def tools(request):
 	return JsonResponse(response)
 
 def step_manual(request):
+    if request.method != 'GET':
+        return HttpResponse(status=404)
     pass
 
 def cv_upload(request):

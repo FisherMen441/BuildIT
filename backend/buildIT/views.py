@@ -17,10 +17,26 @@ def recommend(request):
    
 
 def search(request):
-    pass
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+    search_text = request.GET.get('search_text')
+    search_text_lowercase = lower(search_text)
+    cursor = connection.cursor()
+    cursor.execute("SELECT Name, FID FROM Furniture WHERE Name LIKE '%$%s%' COLLATE utf8_general_ci", (search_text_lowercase))
+    furniture_result = cursor.fetchall()
+    result_list = []
+    for fur in furniture_result:
+        result_list.append({
+            'name': fur['Name'],
+            'id': fur['FID']
+        })
+    response = {'result': result_list}
+    return JsonResponse(response)
+
 
 def comment(request):
-    pass
+    return JsonResponse({'comments': []})
+
 
 def tools(request):
     if request.method != 'GET':
@@ -49,12 +65,14 @@ def step_manual(request):
     furniture_id = int(request.GET.get('furniture_id'))
     step = request.GET.get('step')
     cursor = connection.cursor()
-    cursor.execute("SELECT Img_url, Description FROM Steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
+    cursor.execute("SELECT * FROM Steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
     result = cursor.fetchall()[0]
     response = {}
     response = {
         'img_url': result['Img_url'],
-        'description': result['Description']
+        'description': result['Description'],
+        'video_link': result['Video_loc'],
+        
     }
     return JsonResponse(response)
     

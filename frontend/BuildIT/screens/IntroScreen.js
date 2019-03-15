@@ -13,11 +13,16 @@ export default class IntroScreen extends React.Component {
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             naviScreen: navigation.getParam('naviScreen', 'Home'),
             commentScreen: navigation.getParam('commentScreen', 'Comment'),
+            stepScreen: navigation.getParam('stepScreen', 'Step'),
             uri: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
             name: navigation.getParam('name', 'annonymous'),
             comments: '',
             text: '',
+            FID: props.FID,
         }
+    }
+    async componentDidMount() {
+        //TODO query from backend, get furniture pic 
     }
 
     postPressed() {
@@ -39,11 +44,18 @@ export default class IntroScreen extends React.Component {
             return;
         })
         .then(()=>{
-            this.props.addPost()
+            this.props.addPost();
             this.refs.PostText.clear();
         })
         .catch(error => console.log('Error: ', error))
 
+    }
+    pressAssemble(){
+        const {navigate} = this.props.navigation;
+        navigate('Step', {
+            FID: this.state.FID,
+            SID: 0,
+        })
     }
 
     render() {
@@ -61,7 +73,7 @@ export default class IntroScreen extends React.Component {
                         type='material-community'
                         style={{ flex: 0.1 }}
                         onPress={() => {
-                            this.state.naviFunc(this.state.naviScreen);
+                            navigation.goBack()
                         }}
                     />
                     <View style={{ flex: 0.9 }}/>
@@ -69,7 +81,7 @@ export default class IntroScreen extends React.Component {
                 <View style={styles.main}>
                     <ScaleImage uri={this.state.uri} style={styles.image} />
                     <Text style={{ margin: 10 }}>{this.state.name}</Text>
-                    <TouchableOpacity style={styles.button} onPress={() => { this.backgroundColor='#ffffff' }}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Start assemble </Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={this.pressAssemble.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Start assemble </Text></TouchableOpacity>
                 </View>
                 <View style={styles.comment}>
                     <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {

@@ -42,7 +42,8 @@ export default class SearchScreen extends React.Component {
                             onPress={() => this.props.navigation.navigate('Intro', {
                                 uri: item.uri,
                                 naviFunc: this.props.navigation.navigate.bind(this),
-                                naviScreen: 'Search'
+                                naviScreen: 'Search',
+                                FID: item.id,
                             })}>
                             <View style={styles.searchItem}>
                                 <Icon name='clock-outline' type='material-community' containerStyle={{ flex: 0.1 }} />

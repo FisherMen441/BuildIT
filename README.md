@@ -87,6 +87,7 @@ If you are using Android phone, open `Expo` and go to `Projects -> Scan QR Code`
 | /api/manual/?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
 | /api/upload/                           | POST     | Post the image/live video to backend for CV analysis         |
 | /api/videos/?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
+| /api/furniture_info/?furniture_id=xxx | GET | Get the furniture infor for intro screen |
 
 ### Backend DB
 ### Database

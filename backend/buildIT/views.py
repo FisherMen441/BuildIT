@@ -89,5 +89,32 @@ def videos(request):
     cursor = connection.cursor()
     cursor.execute("SELECT Video_loc FROM steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
     video_loc = cursor.fetchall()
-    response = {'video_loc': video_loc, 'furniture_id': furniture_id, 'step': step}
+    if len(video_loc) == 0:
+        response = {'video_loc': '', 'furniture_id': furniture_id, 'step': step}
+    else:
+        response = {'video_loc': video_loc[0][video_loc], 'furniture_id': furniture_id, 'step': step}
+    return JsonResponse(response)
+
+
+def furniture_info(request):
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+    furniture_id = int(request.GET.get('furniture_id'))
+    cursor = connection.cursor()
+    cursor.execute("SELECT Name, Description, Img_url FROM Furniture WHERE FID=%s;", (furniture_id,))
+    furniture_result = cursor.fetchall()
+    if len(furniture_result) == 0:
+        response = {
+            'Name': '',
+            'Description': '',
+            'Img_url': '',
+            'furniture_id': furniture_id
+        }
+    else:
+        response = {
+            'Name': furniture_result[0]['Name'],
+            'Description': furniture_result[0]['Description'],
+            'Img_url': furniture_result[0]['Img_url'],
+            'furniture_id': furniture_id
+        }
     return JsonResponse(response)

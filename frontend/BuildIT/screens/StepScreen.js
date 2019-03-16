@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput} from 'react-native';
 import { Icon } from 'react-native-elements';
-import ScaleImage from '../components/ScaleImage'
-import Swiper from 'react-native-swiper'
+import ScaleImage from '../components/ScaleImage';
+import Swiper from 'react-native-swiper';
+import { Constants, Video } from 'expo';
 
 
 export default class StepScreen extends React.Component {
@@ -17,11 +18,11 @@ export default class StepScreen extends React.Component {
             stepManualLoc: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
             videoLink: '',
             description:'Note: Insert cam-lock in open position. Rotate to open position with screw driver if necessary.',
+            videoOnPlay: 'false'
         }
     }
 
     async componentDidMount() {
-        //TODO
         const host = '';
         console.log('http://100.64.9.41:8000/api/manual/?furniture_id=' 
         + this.state.FID 
@@ -45,7 +46,7 @@ export default class StepScreen extends React.Component {
             this.setState({
                 stepManualLoc: data.img_url,
                 description: data.description,
-                videoLink: data.video_link
+                videoLink: data.video_link,
             })
         })
         .catch(error => console.log('Error: ', error))
@@ -99,80 +100,100 @@ export default class StepScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        return (
-            <Swiper 
-                loop={false}
-                horizontal={false}
-                showsPagination={false}
-            >
-            <View style={styles.container}>
-                <View style={styles.back}>
-                    <Icon
-                        name='arrow-left'
-                        type='material-community'
-                        style={{ flex: 0.1 }}
-                        onPress={this.backStep.bind(this)}
-                    />
-                    <View style={{ flex: 0.9 }}/>
+        console.log(this.state.videoOnPlay);
+        if (this.state.videoOnPlay === 'false'){
+            return (
+                <Swiper 
+                    loop={false}
+                    horizontal={false}
+                    showsPagination={false}
+                >
+                <View style={styles.container}>
+                    <View style={styles.back}>
+                        <Icon
+                            name='arrow-left'
+                            type='material-community'
+                            style={{ flex: 0.1 }}
+                            onPress={this.backStep.bind(this)}
+                        />
+                        <View style={{ flex: 0.9 }}/>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={styles.title}>Step: {this.state.SID}</Text>
+                        <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />
+                        <Text style={styles.description}>{this.state.description}</Text>
+                        <TouchableOpacity style={styles.button} onPress={() => {this.setState({videoOnPlay: 'True'})}}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
+                    </View>
+                    <View style={styles.comment}>
+                        <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
+                            uri: this.state.uri,
+                        })}} >
+                            <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </View>        
+    
+                <Swiper
+                    loop={false}
+                    horizontal={false}
+                    showsPagination={false}
+                >
+                    <View style={styles.container} >
+                    <View style={styles.tointro}>
+                        <TouchableOpacity>
+                        <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.post}>
+                    {/* TODO: align to bottom and keyboard align */}
+                        <TextInput style={styles.textInput}
+                            ref="PostText"
+                            editable={true}
+                            multiline={true}
+                            value={this.state.text}
+                            onChangeText={(text) => this.setState({ text: text }) }
+                            placeholder="Post yout comments"
+                        />
+                        <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
+                            <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
+                        </TouchableOpacity>
+                    </View>
+                    </View>
+    
+                </Swiper>
+    
+    
+                </Swiper>
+            )
+        }else {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.back}>
+                            <Icon
+                                name='arrow-left'
+                                type='material-community'
+                                style={{ flex: 0.1 }}
+                                onPress={() => {this.setState({videoOnPlay: 'false'})}}
+                            />
+                            <View style={{ flex: 0.9 }}/>
+                        </View>
+                    <Video
+                        source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+                        rate={1.0}
+                        volume={1.0}
+                        isMuted={false}
+                        resizeMode="cover"
+                        shouldPlay
+                        isLooping
+                        style={{ width: 300, height: 300 }}/>
                 </View>
-                <View style={styles.main}>
-                    <Text style={styles.title}>Step: {this.state.SID}</Text>
-                    <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />
-                    <Text style={styles.description}>{this.state.description}</Text>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}>
-                        <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
-                </View>
-                <View style={styles.comment}>
-                    <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
-                        uri: this.state.uri,
-                    })}} >
-                        <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
-                    </TouchableOpacity>
-                </View>
-            </View>        
+            )
+        }
 
-            <Swiper
-                loop={false}
-                horizontal={false}
-                showsPagination={false}
-            >
-                <View style={styles.container} >
-                <View style={styles.tointro}>
-                    <TouchableOpacity>
-                    <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.post}>
-                {/* TODO: align to bottom and keyboard align */}
-                    <TextInput style={styles.textInput}
-                        ref="PostText"
-                        editable={true}
-                        multiline={true}
-                        value={this.state.text}
-                        onChangeText={(text) => this.setState({ text: text }) }
-                        placeholder="Post yout comments"
-                    />
-                    <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
-                        <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
-                    </TouchableOpacity>
-                </View>
-                </View>
-
-            </Swiper>
-
-
-            </Swiper>
-                
-
-        )
     }
-
 }
 
 const styles = StyleSheet.create({

@@ -30,7 +30,7 @@ export default class SearchScreen extends React.Component {
         else {
             console.log('search: ', this.state.searchText);
             fetch(
-                'http://0.0.0.0:8000/api/search/?search_text=' 
+                'http://100.64.9.41:8000/api/search/?search_text=' 
                 + this.state.searchText,
                 {
                 method: 'GET',

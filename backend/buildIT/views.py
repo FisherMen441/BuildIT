@@ -65,15 +65,18 @@ def step_manual(request):
     furniture_id = int(request.GET.get('furniture_id'))
     step = request.GET.get('step')
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM Steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
-    result = cursor.fetchall()[0]
-    response = {}
-    response = {
+    cursor.execute("SELECT Img_url, Description FROM Steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
+    result = cursor.fetchall()
+    if len(result) == 0:
+        response = {
+        'img_url': '',
+        'description': ''}
+    else:
+        response = {
         'img_url': result['Img_url'],
-        'description': result['Description'],
-        'video_link': result['Video_loc'],
-        
+        'description': result['Description']
     }
+    
     return JsonResponse(response)
     
     
@@ -118,3 +121,4 @@ def furniture_info(request):
             'furniture_id': furniture_id
         }
     return JsonResponse(response)
+    

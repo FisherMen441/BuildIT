@@ -49,7 +49,6 @@ export default class CommentScreen extends React.Component {
             <View style={styles.container} >
                 <View style={styles.tointro}>
                     <TouchableOpacity underlayColor="#ffffff00" onPress={() => { this.state.naviFunc('Intro', {
-                        uri: this.state.uri,
                         naviFunc: this.state.naviFunc
                     }) }} > 
                         <Image style={styles.stretch} source={require('../assets/swipeup.png')} />

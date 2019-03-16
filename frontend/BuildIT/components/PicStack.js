@@ -18,7 +18,8 @@ export default class PicStack extends React.Component {
                 <TouchableOpacity  onPress={() => this.state.naviFunc('Intro', {
                     uri: uri,
                     naviFunc: this.state.naviFunc,
-                    naviScreen: 'Home'
+                    naviScreen: 'Home',
+                    FID: 1,
                 })} key={index} >
                     <View style={styles.part}>
                         <ScaleImage uri={uri} style={styles.image}/>

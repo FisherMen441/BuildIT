@@ -18,11 +18,31 @@ export default class IntroScreen extends React.Component {
             name: navigation.getParam('name', 'annonymous'),
             comments: '',
             text: '',
-            FID: props.FID,
+            FID: navigation.getParam('FID', 1),
         }
     }
     async componentDidMount() {
-        //TODO query from backend, get furniture pic 
+        fetch(
+            'http://100.64.9.41:8000/api/furniture_info/?furniture_id=' 
+            + this.state.FID,
+            {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return;
+        })
+        .then((data)=>{
+            this.setState({
+                name: data.Name,
+                uri: data.Img_url,
+            })
+        })
+        .catch(error => console.log('Error: ', error))
     }
 
     postPressed() {
@@ -50,11 +70,12 @@ export default class IntroScreen extends React.Component {
         .catch(error => console.log('Error: ', error))
 
     }
+
     pressAssemble(){
         const {navigate} = this.props.navigation;
         navigate('Step', {
             FID: this.state.FID,
-            SID: 0,
+            SID: 1,
         })
     }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput} from 'react-native';
 import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage'
-import { NavigationActions } from 'react-navigation'
+import Swiper from 'react-native-swiper'
 
 
 export default class StepScreen extends React.Component {
@@ -12,20 +12,22 @@ export default class StepScreen extends React.Component {
         this.state = {
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             stepScreen: navigation.getParam('stepScreen', 'Step'),
-            FID: props.FID,
-            SID: props.SID,
-            uri: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
-            stepManualLoc: '',
+            FID: navigation.getParam('FID', 1),
+            SID: navigation.getParam('SID', 1),
+            stepManualLoc: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
             videoLink: '',
-            description:'This is description',
-            name: navigation.getParam('name', 'annonymous'),
+            description:'Note: Insert cam-lock in open position. Rotate to open position with screw driver if necessary.',
         }
     }
 
     async componentDidMount() {
+        //TODO
         const host = '';
+        console.log('http://100.64.9.41:8000/api/manual/?furniture_id=' 
+        + this.state.FID 
+        + '&step=' + this.state.SID)
         fetch(
-            '0.0.0.0:8000/api/manual/?furniture_id=' 
+            'http://100.64.9.41:8000/api/manual/?furniture_id=' 
             + this.state.FID 
             + '&step=' + this.state.SID,
             {
@@ -33,10 +35,6 @@ export default class StepScreen extends React.Component {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                username: "testuser5",
-                message: 'get step',
-            })
         })
         .then(response => {
             if (!response.stateText == 'OK')
@@ -54,10 +52,9 @@ export default class StepScreen extends React.Component {
     }
 
     backStep(){
-        if (this.state.step === 0){//back to intro
+        if (this.state.SID === 1){//back to intro
             this.props.navigation.navigate('Intro', {
-                uri: this.state.uri,
-                FID: this.props.FID,
+                FID: this.state.FID,
             })
         } else{
             this.props.navigation.navigate('Step', {
@@ -67,36 +64,100 @@ export default class StepScreen extends React.Component {
         }
     }
 
+    postPressed() {
+        this.backgroundColor='#ffffff';
+        const host = '';
+        fetch('', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: "testuser5",
+                message: this.state.text,
+            })
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return;
+        })
+        .then(()=>{
+            this.props.addPost();
+            this.refs.PostText.clear();
+        })
+        .catch(error => console.log('Error: ', error))
+
+    }
+
     render() {
         const { navigation } = this.props;
         return (
+            <Swiper 
+                loop={false}
+                horizontal={false}
+                showsPagination={false}
+            >
             <View style={styles.container}>
                 <View style={styles.back}>
                     <Icon
                         name='arrow-left'
                         type='material-community'
                         style={{ flex: 0.1 }}
-                        onPress={() => {
-                            const backAction = NavigationActions.back({
-                                key: null
-                              });
-                              navigation.dispatch(backAction);
-                        }}
+                        onPress={this.backStep.bind(this)}
                     />
                     <View style={{ flex: 0.9 }}/>
                 </View>
                 <View style={styles.main}>
-                    <ScaleImage uri={this.state.uri} style={styles.image} />
-                    <Text style={{ margin: 10 }}>{this.state.name}</Text>
+                    <Text style={styles.title}>Step: {this.state.SID}</Text>
+                    <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />
+                    <Text style={styles.description}>{this.state.description}</Text>
+                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
                 </View>
-                {/* <View style={styles.comment}>
+                <View style={styles.comment}>
                     <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
                         uri: this.state.uri,
                     })}} >
                         <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
                     </TouchableOpacity>
-                </View> */}
-            </View>            
+                </View>
+            </View>        
+
+            <Swiper
+                loop={false}
+                horizontal={false}
+                showsPagination={false}
+            >
+                <View style={styles.container} >
+                <View style={styles.tointro}>
+                    <TouchableOpacity>
+                    <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.post}>
+                {/* TODO: align to bottom and keyboard align */}
+                    <TextInput style={styles.textInput}
+                        ref="PostText"
+                        editable={true}
+                        multiline={true}
+                        value={this.state.text}
+                        onChangeText={(text) => this.setState({ text: text }) }
+                        placeholder="Post yout comments"
+                    />
+                    <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
+                        <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+
+            </Swiper>
+
+
+            </Swiper>
+                
 
         )
     }
@@ -120,6 +181,17 @@ const styles = StyleSheet.create({
         marginTop: 30,
         alignItems: 'center'
     },
+    title:{
+        margin: 10,
+        fontSize: 40,
+        color: '#696969',
+    },
+    description:{
+        margin: 10,
+        fontSize: 15,
+        color: '#696969',
+        textAlign: 'center'
+    },
     comment: {
         marginTop: 40,
         alignItems: 'center',
@@ -137,7 +209,26 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         padding: 10,
         borderRadius:10,
-        marginLeft: 5,
-        marginRight: 5
+        margin:5,
     },
+    post: {
+        flexDirection: 'row'
+    },
+    tointro: {
+        marginTop: 30,
+        alignItems: 'center',
+        flexDirection: 'column',
+        backgroundColor: '#ffffff',
+        flex: 0
+    },
+    textInput: {
+        flex: 1,
+        height: 40,
+        width: Dimensions.get('window').width - 70,
+        backgroundColor: '#fff',
+        paddingLeft: 10,
+        borderWidth: 1,
+        borderColor: '#8a8a8a',
+        borderRadius:10,
+    }
 })

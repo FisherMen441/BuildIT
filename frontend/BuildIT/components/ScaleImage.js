@@ -5,7 +5,7 @@ export default class ScaleImage extends Component {
     constructor(props) {
         super(props);
         const radius = this.props.style.borderRadius ? this.props.style.borderRadius : 0;
-        this.state = { source: { uri: this.props.uri }, borderRadius: radius};
+        this.state = { source: { uri: this.props.uri}, borderRadius: radius};
     }
 
     componentWillMount() {

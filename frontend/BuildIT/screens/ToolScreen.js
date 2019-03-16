@@ -5,7 +5,7 @@ import ScaleImage from '../components/ScaleImage'
 import Swiper from 'react-native-swiper'
 
 
-export default class StepScreen extends React.Component {
+export default class ToolScreen extends React.Component {
     constructor(props) {
         super(props);
         const { navigation } = props;
@@ -14,9 +14,9 @@ export default class StepScreen extends React.Component {
             stepScreen: navigation.getParam('stepScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
-            stepManualLoc: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
             videoLink: '',
-            description:'Note: Insert cam-lock in open position. Rotate to open position with screw driver if necessary.',
+            description:'',
+            img_uri: 'https://png.pngtree.com/element_origin_min_pic/16/11/11/d0b1701cfa14fc996b0893554bb777e3.jpg'
         }
     }
 
@@ -52,22 +52,9 @@ export default class StepScreen extends React.Component {
     }
 
     backStep(){
-        if (this.state.SID === 1){//back to intro
-            this.props.navigation.navigate('Intro', {
-                FID: this.state.FID,
-            })
-        } else{
-            this.props.navigation.navigate('Step', {
-                FID: this.state.FID,
-                SID: this.state.SID - 1,
-            })
-        }
-    }
-
-    toolStep(){
-        this.props.navigation.navigate('Tool', {
+        this.props.navigation.navigate('Step', {
             FID: this.state.FID,
-            SID: this.state.SID
+            SID: this.state.SID,
         })
     }
 
@@ -100,11 +87,6 @@ export default class StepScreen extends React.Component {
     render() {
         const { navigation } = this.props;
         return (
-            <Swiper 
-                loop={false}
-                horizontal={false}
-                showsPagination={false}
-            >
             <View style={styles.container}>
                 <View style={styles.back}>
                     <Icon
@@ -113,63 +95,15 @@ export default class StepScreen extends React.Component {
                         style={{ flex: 0.1 }}
                         onPress={this.backStep.bind(this)}
                     />
-                    <View style={{ flex: 0.9 }}/>
+                    <View style={{ flex: 0.45 }} />
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign : "center" }}> Tools </Text>
                 </View>
                 <View style={styles.main}>
                     <Text style={styles.title}>Step: {this.state.SID}</Text>
-                    <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />
+                    <ScaleImage uri={this.state.img_uri} style={styles.image} />
                     <Text style={styles.description}>{this.state.description}</Text>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}>
-                        <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
                 </View>
-                <View style={styles.comment}>
-                    <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
-                        uri: this.state.uri,
-                    })}} >
-                        <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
-                    </TouchableOpacity>
-                </View>
-            </View>        
-
-            <Swiper
-                loop={false}
-                horizontal={false}
-                showsPagination={false}
-            >
-                <View style={styles.container} >
-                <View style={styles.tointro}>
-                    <TouchableOpacity>
-                    <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.post}>
-                {/* TODO: align to bottom and keyboard align */}
-                    <TextInput style={styles.textInput}
-                        ref="PostText"
-                        editable={true}
-                        multiline={true}
-                        value={this.state.text}
-                        onChangeText={(text) => this.setState({ text: text }) }
-                        placeholder="Post yout comments"
-                    />
-                    <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
-                        <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
-                    </TouchableOpacity>
-                </View>
-                </View>
-
-            </Swiper>
-
-
-            </Swiper>
-                
-
+            </View>
         )
     }
 
@@ -189,7 +123,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     main: {
-        marginTop: 30,
+        marginTop: 20,
         alignItems: 'center'
     },
     title:{

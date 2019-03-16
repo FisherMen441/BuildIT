@@ -24,5 +24,4 @@ urlpatterns = [
     url(r'api/tools/$', views.tools, name='tools'),
     url(r'api/videos/$', views.videos, name='videos'),
     url(r'api/manual/$', views.step_manual, name='manual')
-    url(r'api/search/$', views.search, name='search')
 ]

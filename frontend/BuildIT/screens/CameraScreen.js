@@ -1,8 +1,9 @@
 import React from 'react';
 import { AppRegistry, StyleSheet, View, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { Camera, Permissions } from 'expo';
 
-export default class QRScreen extends React.Component {
+export default class CameraScreen extends React.Component {
     constructor(props) {
         super(props);
         const { navigation } = props;
@@ -11,8 +12,8 @@ export default class QRScreen extends React.Component {
             type: Camera.Constants.Type.back,
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             naviScreen: navigation.getParam('naviScreen', 'Step'),
-            FID: this.props.FID,
-            SID: this.props.SID
+            FID: navigation.getParam('FID', 1),
+            SID: navigation.getParam('SID', 1)
         };
     }
 
@@ -54,7 +55,7 @@ export default class QRScreen extends React.Component {
                             }}
                         />
                         <View style={{ flex: 0.45 }} />
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}> Scan QR Code </Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}> Recognizing Components </Text>
                     </View>
                     <Camera style={{ flex: 1 }}
                         type={this.state.type}

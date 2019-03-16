@@ -98,6 +98,13 @@ export default class StepScreen extends React.Component {
 
     }
 
+    cameraNavigate(){
+        this.state.naviFunc('Camera', {
+            FID: this.state.FID,
+            SID: this.state.SID
+        })
+    }
+
     render() {
         const { navigation } = this.props;
         console.log(this.state.videoOnPlay);
@@ -124,7 +131,7 @@ export default class StepScreen extends React.Component {
                         <Text style={styles.description}>{this.state.description}</Text>
                         <TouchableOpacity style={styles.button} onPress={() => {this.setState({videoOnPlay: 'True'})}}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={this.cameraNavigate.bind(this)} ><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
                     </View>
                     <View style={styles.comment}>

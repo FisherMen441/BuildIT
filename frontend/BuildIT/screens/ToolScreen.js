@@ -15,7 +15,7 @@ export default class ToolScreen extends React.Component {
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
             videoLink: '',
-            description:'',
+            description:'Description of the screw driver',
             img_uri: 'https://png.pngtree.com/element_origin_min_pic/16/11/11/d0b1701cfa14fc996b0893554bb777e3.jpg'
         }
     }

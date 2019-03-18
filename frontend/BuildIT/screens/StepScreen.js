@@ -192,10 +192,11 @@ export default class StepScreen extends React.Component {
                         rate={1.0}
                         volume={1.0}
                         isMuted={false}
-                        resizeMode="cover"
+                        useNativeControls={true}
+                        resizeMode="contain"
                         shouldPlay
                         isLooping
-                        style={{ width: 300, height: 300 }}/>
+                        style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height - 40 }}/>
                 </View>
             )
         }

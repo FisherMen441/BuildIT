@@ -21,39 +21,58 @@ Folder **Starter App/backend** contains all the files for backend. Folder **buil
     .
     ├── README.md
     ├── Starter App
-    │   └── frontend
-    │       └── Chatter
-    │           ├── App.js
-    │           ├── app.json
-    │           ├── assets
-    │           │   ├── icon.png
-    │           │   └── splash.png
-    │           ├── babel.config.js
-    │           ├── components
-    │           │   └── PostBar.js
-    │           ├── package-lock.json
-    │           └── package.json
+    │   └── frontend
+    │       └── Chatter
+    │           ├── App.js
+    │           ├── app.json
+    │           ├── assets
+    │           │   ├── icon.png
+    │           │   └── splash.png
+    │           ├── babel.config.js
+    │           ├── components
+    │           │   └── PostBar.js
+    │           ├── package-lock.json
+    │           └── package.json
     └── backend
         ├── README.md
         ├── chatter
-        │   ├── __init__.py
-        │   ├── admin.py
-        │   ├── migrations
-        │   │   └── __init__.py
-        │   ├── models.py
-        │   ├── tests.py
-        │   └── views.py
+        │   ├── __init__.py
+        │   ├── admin.py
+        │   ├── migrations
+        │   │   └── __init__.py
+        │   ├── models.py
+        │   ├── tests.py
+        │   └── views.py
         ├── django_project
-        │   ├── __init__.py
-        │   ├── settings.py
-        │   ├── settings.py.orig
-        │   ├── urls.py
-        │   └── wsgi.py
+        │   ├── __init__.py
+        │   ├── settings.py
+        │   ├── settings.py.orig
+        │   ├── urls.py
+        │   └── wsgi.py
         └── manage.py
 
 ## Frontend
 
-We decide to use React-Native for frontend development.
+We use React Native for the app.
+
+Install `node` on MacOS:`brew install node`
+
+Launch the app frontend:
+
+```
+chmod +x startFrontend.sh
+./startFrontend.sh
+```
+
+If you tried the frontend before, use `./startFrontend.sh -s` for simple start. This will be much faster.
+
+There will be a website window with a QR code.
+
+Now download the app [`Expo`](https://expo.io/) to our phone.
+
+If you are using iPhone, open your camera and aim at the QR code. Then open the app `Expo`. 
+
+If you are using Android phone, open `Expo` and go to `Projects -> Scan QR Code`.
 
 ## Backend
 
@@ -68,6 +87,7 @@ We decide to use React-Native for frontend development.
 | /api/manual/?furniture_id=xxx&step=xx  | GET      | Get the stepwise information for the furniture (picture and description ) on the paper manual |
 | /api/upload/                           | POST     | Post the image/live video to backend for CV analysis         |
 | /api/videos/?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
+| /api/furniture_info/?furniture_id=xxx | GET | Get the furniture infor for intro screen |
 
 ### Backend DB
 ### Database

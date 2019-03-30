@@ -1,13 +1,36 @@
 import numpy as np
 import cv2
+from PIL import Image  
+import sys
 from matplotlib import pyplot as plt
 
 
+def preprocess(file):
+    sImg = Image.open(file)  
+    w, h = sImg.size
+    if w > 1000 and h > 1000:
+        dImg=sImg.resize((1000, 1000),Image.ANTIALIAS)
+        dImg.save(file)
+    elif w > 1000:
+        dImg=sImg.resize((1000, h),Image.ANTIALIAS)
+        dImg.save(file)
+    elif h > 1000:
+        dImg=sImg.resize((w, 1000),Image.ANTIALIAS)
+        dImg.save(file)
+
+
 def recognize_from_image(file1='query.jpeg', file2='src.jpeg'):
+    file1 = sys.argv[1]
+    file2 = sys.argv[2]
     MIN_MATCH_COUNT = 10
+
+    # Preprocess the pictures to accelerate 
+    preprocess(file1)
+    preprocess(file2)
 
     img1 = cv2.imread(file1, 0)  # queryImage
     img2 = cv2.imread(file2, 0)  # trainImage
+    img2_colored = cv2.imread(file2, cv2.IMREAD_COLOR)
 
     # Initiate SIFT detector
     sift = cv2.xfeatures2d.SIFT_create()
@@ -42,21 +65,29 @@ def recognize_from_image(file1='query.jpeg', file2='src.jpeg'):
         pts = np.float32([[0, 0], [0, h-1], [w-1, h-1], [w-1, 0]]).reshape(-1, 1, 2)
         dst = cv2.perspectiveTransform(pts, M)
 
-        img2 = cv2.polylines(img2, [np.int32(dst)], True, 255, 3, cv2.LINE_AA)
+        img2 = cv2.polylines(img2_colored, [np.int32(dst)], True, (255,0,0), 7, cv2.LINE_AA)
 
     else:
         print("Not enough matches are found - %d/%d" % (len(good),MIN_MATCH_COUNT))
         matchesMask = None
 
-    draw_params = dict(matchColor=(0, 255, 0), # draw matches in green color
-                       singlePointColor=None,
-                       matchesMask=matchesMask, # draw only inliers
-                       flags=2)
+    plt.xticks([])
+    plt.yticks([])
+    plt.imshow(img2)
+    plt.subplots_adjust(bottom = 0)
+    plt.subplots_adjust(top = 1)
+    plt.subplots_adjust(right = 1)
+    plt.subplots_adjust(left = 0)
+    plt.savefig('result.jpg')
+    # draw_params = dict(matchColor=(0, 0, 0), # draw matches in green color
+    #                    singlePointColor=None,
+    #                    matchesMask=matchesMask, # draw only inliers
+    #                    flags=2)
 
 
-    img3 = cv2.drawMatches(img1,kp1,img2,kp2,good,None,**draw_params)
+    # img3 = cv2.drawMatches(img1,kp1,img2,kp2,good,None,**draw_params)
 
-    plt.imshow(img3, 'gray'),plt.show()
+    # plt.imshow(img3, 'gray'),plt.show()
 
 if __name__ == '__main__':
     recognize_from_image()

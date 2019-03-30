@@ -17,7 +17,7 @@ CREATE TABLE Furniture (
 CREATE TABLE Steps (
     FID int NOT NULL,
     SID int NOT NULL,
-    Description  varchar(255),
+    Description varchar(255),
     Img_url varchar(255),
     Video_loc varchar(255),
     PRIMARY KEY (FID, SID),
@@ -37,7 +37,7 @@ CREATE TABLE Components (
     CID int NOT NULL AUTO_INCREMENT,
     Name varchar(255) NOT NULL,
     Img_url varchar(255),
-    Description  varchar(255),
+    Description varchar(255),
     PRIMARY KEY (CID)
 );
 
@@ -53,7 +53,7 @@ CREATE TABLE Tools (
     TID int NOT NULL AUTO_INCREMENT,
     Name varchar(255) NOT NULL,
     Img_url varchar(255),
-    Description  varchar(255),
+    Description varchar(255),
     PRIMARY KEY (TID)
 );
 

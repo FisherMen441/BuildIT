@@ -1,0 +1,25 @@
+python model_main.py --logtostderr --train_dir=train/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
+
+
+# From tensorflow/models/research/
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+
+python train.py \
+    --train_dir=train/ \
+    --pipeline_config_path=training/ssd_mobilenet_v1_pets.config \
+    --num_train_steps=10000 \
+    --sample_1_of_n_eval_examples=1 \
+    --alsologtostderr
+
+
+
+python export_inference_graph.py \
+  input_type image_tensor \
+  --pipeline_config_path training/ssd_mobilenet_v1_pets.config \
+  --trained_checkpoint_prefix train/model.ckpt-model.ckpt-5243\
+  --output_directory "inference"
+
+python tf_text_graph_ssd.py \
+  --input ../frozen_inference_graph.pb \
+  --output ./graph.pbtxt \
+  --config ../pipeline.config

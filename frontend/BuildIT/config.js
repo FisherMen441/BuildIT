@@ -1,3 +1,2 @@
-import React from 'react';
 
-export let IP = '0.0.0.0';
+export let HOST = 'http://35.3.117.173:8000';

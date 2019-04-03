@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import SearchQR from '../components/SearchQR';
-import {IP} from '../config'
+import {HOST} from '../config'
 
 export default class SearchScreen extends React.Component {
     constructor() {
@@ -30,7 +30,7 @@ export default class SearchScreen extends React.Component {
         else {
             console.log('search: ', this.state.searchText);
             fetch(
-                `http://${IP}/api/search/?search_text=${this.state.searchText}`,
+                `${HOST}/api/search/?search_text=${this.state.searchText}`,
                 {
                 method: 'GET',
                 headers: {

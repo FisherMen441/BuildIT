@@ -31,14 +31,14 @@ export default class CameraScreen extends React.Component {
         console.log(IP);
         if (this.camera) {
             let photo = await this.camera.takePictureAsync({ skipProcessing: false, base64: true, quality: 0.0 });
-            fetch(`http://${IP}/api/upload/`, {
+            fetch(`${HOST}/api/upload/`, {
                 method: 'POST',
                 body: photo.base64,
             }).
             then(response => {
                 if (!response.stateText == 'OK')
                     throw Error("Not 200 status code");
-                return;
+                return response.json();
             })
         }
     }

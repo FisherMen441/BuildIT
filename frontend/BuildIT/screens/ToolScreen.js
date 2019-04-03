@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpaci
 import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage'
 import Swiper from 'react-native-swiper'
-import {IP} from '../config'
+import {HOST} from '../config'
 
 
 export default class ToolScreen extends React.Component {
@@ -25,7 +25,7 @@ export default class ToolScreen extends React.Component {
         //TODO
         const host = '';
         fetch(
-            `http://${IP}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
+            `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
             {
             method: 'GET',
             headers: {

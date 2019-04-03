@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, FlatList, ScrollView, Button } from 'react-native';
 import SearchQR from '../components/SearchQR';
 import PicStack from '../components/PicStack';
+import {HOST} from '../config'
 
 
 
@@ -13,9 +14,9 @@ export default class HomeScreen extends React.Component {
         }
     }
 
-    getRecommentID() {
-        fetch('/api/recommend/?user_id=1', {
-            method: 'GET'
+    componentDidMount() {
+        fetch(`${HOST}/api/recommend/?user_id=1`, {
+            method: 'GET',
         })
         .then(response => {
             if (!response.stateText == 'OK')
@@ -32,11 +33,11 @@ export default class HomeScreen extends React.Component {
         let images1 = [], images2 = [];
         let FID1 = [], FID2 = [];
         for (let i  = 0; i < size /2; i++) {
-            images1.push(this.state.meta[i]["img"]);
+            images1.push(`${HOST}${this.state.meta[i]["img"]}`);
             FID1.push(this.state.meta[i]["fid"]);
         }
         for (let i  = 0; i < size /2; i++) {
-            images2.push(this.state.meta[i]["img"]);
+            images2.push(`${HOST}/${this.state.meta[i]["img"]}`);
             FID2.push(this.state.meta[i]["fid"]);
         }
         const focus={
@@ -44,6 +45,7 @@ export default class HomeScreen extends React.Component {
             focusScreen: 'Search'
         };
         const { navigation } = this.props;
+        console.log(images1);
         return (
             <View>
                 <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpaci
 import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage'
 import Swiper from 'react-native-swiper'
-import {IP} from '../config'
+import {HOST} from '../config'
 
 
 export default class IntroScreen extends React.Component {
@@ -24,7 +24,7 @@ export default class IntroScreen extends React.Component {
     }
     async componentDidMount() {
         fetch(
-            `http://${IP}/api/furniture_info/?furniture_id=${this.state.FID}`,
+            `${HOST}/api/furniture_info/?furniture_id=${this.state.FID}`,
             {
             method: 'GET',
             headers: {

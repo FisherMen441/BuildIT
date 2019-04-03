@@ -24,13 +24,9 @@ export default class StepScreen extends React.Component {
 
     async componentDidMount() {
         const host = '';
-        console.log('http://100.64.9.41:8000/api/manual/?furniture_id=' 
-        + this.state.FID 
-        + '&step=' + this.state.SID)
+        console.log(`http://100.64.9.41:8000/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`);
         fetch(
-            'http://100.64.9.41:8000/api/manual/?furniture_id=' 
-            + this.state.FID 
-            + '&step=' + this.state.SID,
+            `http://100.64.9.41:8000/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
             {
             method: 'GET',
             headers: {

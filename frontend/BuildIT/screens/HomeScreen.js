@@ -9,26 +9,36 @@ export default class HomeScreen extends React.Component {
     constructor() {
         super();
         this.state = {
+            meta: {}
         }
     }
 
-    render() {
-        let images1 = [
-            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
-            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
-            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
-            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
-            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
-            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
-        ]
-        let images2 = [
-            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
-            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
-            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
-            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
-            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg'
+    getRecommentID() {
+        fetch('/api/recommend/?user_id=1', {
+            method: 'GET'
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then(data => {
+            this.setState({meta: data["result"]});
+        })
+    }
 
-        ]
+    render() {
+        let size = this.state.meta.length;
+        let images1 = [], images2 = [];
+        let FID1 = [], FID2 = [];
+        for (let i  = 0; i < size /2; i++) {
+            images1.push(this.state.meta[i]["img"]);
+            FID1.push(this.state.meta[i]["fid"]);
+        }
+        for (let i  = 0; i < size /2; i++) {
+            images2.push(this.state.meta[i]["img"]);
+            FID2.push(this.state.meta[i]["fid"]);
+        }
         const focus={
             focusFunc: this.props.navigation.navigate.bind(this), 
             focusScreen: 'Search'
@@ -39,10 +49,10 @@ export default class HomeScreen extends React.Component {
                 <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     <View style={[styles.pic, styles.left]}>
-                        <PicStack uris={images1} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} />
+                        <PicStack uris={images1} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={FID1}/>
                     </View>
                     <View style={styles.pic}>
-                        <PicStack uris={images2} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} />
+                        <PicStack uris={images2} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={FID2}/>
                     </View>
                 </ScrollView>
             </View>

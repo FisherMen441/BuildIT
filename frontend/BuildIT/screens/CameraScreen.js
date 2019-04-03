@@ -1,7 +1,8 @@
 import React from 'react';
-import { AppRegistry, StyleSheet, View, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { AppRegistry, StyleSheet, View, TouchableOpacity, Text, Dimensions, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Camera, Permissions } from 'expo';
+import { IP } from '../config';
 
 export default class CameraScreen extends React.Component {
     constructor(props) {
@@ -27,9 +28,18 @@ export default class CameraScreen extends React.Component {
     }
 
     async takePicture() {
+        console.log(IP);
         if (this.camera) {
             let photo = await this.camera.takePictureAsync({ skipProcessing: false, base64: true, quality: 0.0 });
-            console.log('photo.base64.length')
+            fetch(`http://${IP}/api/upload/`, {
+                method: 'POST',
+                body: photo.base64,
+            }).
+            then(response => {
+                if (!response.stateText == 'OK')
+                    throw Error("Not 200 status code");
+                return;
+            })
         }
     }
 
@@ -68,8 +78,11 @@ export default class CameraScreen extends React.Component {
                                 flex: 1,
                                 backgroundColor: 'transparent',
                                 flexDirection: 'row',
+                                alignItems: 'center',
+                                marginTop: 500,
+                                marginLeft: 150,
                             }}>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 style={{
                                     flex: 0.1,
                                     alignSelf: 'flex-end',
@@ -86,19 +99,15 @@ export default class CameraScreen extends React.Component {
                                     style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
                                     {' '}Flip{' '}
                                 </Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                             <TouchableOpacity
-                                style={{
-                                    // flex: 0.1,
-                                    alignSelf: 'flex-end',
-                                    alignItems: 'center',
-                                }}
+                                // style={{
+                                //     // flex: 0.1,
+                                //     // alignSelf: 'flex',
+                                // }}
                                 onPress={() => this.takePicture()}
                             >
-                                <Text
-                                    style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                                    {' '}Take Picture{' '}
-                                </Text>
+                            <Image source={require('../assets/takepic.jpg')} style={styles.icon}/>
                             </TouchableOpacity>
                         </View>
                     </Camera>
@@ -116,7 +125,11 @@ const styles = StyleSheet.create({
     },
     camera: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').width * 16 / 9
+        height: Dimensions.get('window').width * 16 / 9,
     },
-
+    icon: {
+        width: Dimensions.get('window').width / 4,
+        height: Dimensions.get('window').width / 4,
+        resizeMode: 'contain'
+    },
 })

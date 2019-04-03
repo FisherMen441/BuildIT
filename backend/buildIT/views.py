@@ -10,10 +10,17 @@ def recommend(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
     user_id = int(request.GET.get('user_id'))
-    #TODO: Add SQL query if necessary
-    response = {}
-    response['recommend']  = 'placeholder'
-    return JsonResponse(response)
+    cursor = connection.cursor()
+    cursor.execute("SELECT FID, Img_url FROM Furniture;")
+    furniture_result = cursor.fetchall()
+    response = []
+    for item in furniture_result:
+        rsp = {
+            'fid': item[0],
+            'img': item[1]
+        }
+        response += [rsp]
+    return JsonResponse({'result': response})
    
 
 def search(request):

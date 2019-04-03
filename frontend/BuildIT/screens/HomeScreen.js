@@ -14,32 +14,20 @@ export default class HomeScreen extends React.Component {
 
     render() {
         let images1 = [
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg',
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg'
-
-            ,
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg',
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg'
-
-            ,
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg',
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg'
+            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
+            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
+            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
+            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
+            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
+            'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG',
         ]
         let images2 = [
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg',
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
+            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
+            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
+            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
+            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg',
+            'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg'
 
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg',
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
-
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
-            'https://secure.img1-fg.wfcdn.com/im/12654093/resize-h600-w600%5Ecompr-r85/6840/68402479/.jpg',
-            'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg', 
         ]
         const focus={
             focusFunc: this.props.navigation.navigate.bind(this), 

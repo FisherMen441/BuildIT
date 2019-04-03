@@ -35,7 +35,40 @@ def search(request):
 
 
 def comment(request):
-    return JsonResponse({'comments': []})
+    if request.method != 'GET' and request.method != 'POST':
+        return HttpResponse(status=404)
+        
+    cursor = connection.cursor()
+    if request.method == 'POST':
+        furniture_id = int(request.POST.get('furniture_id'))
+        step = int(request.POST.get('step'))
+        user_id = int(request.POST.get('user_id'))
+        body = request.POST.get('body')
+        cursor.execute("INSERT INTO Comments (FID, SID, UID, Content) VALUES (%s, %s, %s, %s);"
+                        (furniture_id, step, user_id, body))
+        connection.commit()
+    elif request.method == 'GET':
+        furniture_id = int(request.GET.get('furniture_id'))
+        step = int(request.GET.get('step'))
+
+    if step == 0:
+        cursor.execute("SELECT C.Content, U.User_name " +
+                "FROM Comments C, Users U " + 
+                "WHERE C.FID=%s AND U.UID = C.UID;", (furniture_id,))
+    else:
+        cursor.execute("SELECT C.Content, U.User_name " +
+                    "FROM Comments C, Users U " + 
+                    "WHERE U.UID = C.UID AND C.FID=%s AND C.SID=%s;", (furniture_id, step))
+    comment_list = cursor.fetchall()
+    result = []
+    context = {'comments': []}
+    for comment in comment_list:
+        result.append({
+            'User_name': comment['User_name'],
+            'Content': comment['Content']
+        })
+    context['comments'] = result
+    return JsonResponse(context)
 
 
 def tools(request):

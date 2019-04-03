@@ -7,7 +7,8 @@ export default class PicStack extends React.Component {
         super(props);
         this.state = {
             uris: props.uris,
-            naviFunc: props.naviFunc
+            naviFunc: props.naviFunc,
+            fid: props.fid,
         }
     }
 
@@ -19,7 +20,7 @@ export default class PicStack extends React.Component {
                     uri: uri,
                     naviFunc: this.state.naviFunc,
                     naviScreen: 'Home',
-                    FID: 1,
+                    FID: this.state.fid[index],
                 })} key={index} >
                     <View style={styles.part}>
                         <ScaleImage uri={uri} style={styles.image}/>

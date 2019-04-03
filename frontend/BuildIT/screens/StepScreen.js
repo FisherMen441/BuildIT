@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage';
 import Swiper from 'react-native-swiper';
 import { Constants, Video } from 'expo';
+import {HOST} from '../config'
 
 
 export default class StepScreen extends React.Component {
@@ -24,9 +25,9 @@ export default class StepScreen extends React.Component {
 
     async componentDidMount() {
         const host = '';
-        console.log(`http://100.64.9.41:8000/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`);
+        console.log(`${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`);
         fetch(
-            `http://100.64.9.41:8000/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
+            `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
             {
             method: 'GET',
             headers: {

@@ -11,7 +11,7 @@ export default class QRScreen extends React.Component {
             hasCameraPermission: null,
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             naviScreen: navigation.getParam('naviScreen', 'Home'),
-            furniture_id: 0,
+            FID: 0,
             uri: '',
             name: ''
         }
@@ -55,28 +55,30 @@ export default class QRScreen extends React.Component {
     }
 
     handleBarCodeScanned = ({ type, data }) => {
-        this.state.furniture_id = data;
-        const query = `/api/furniture_info/?furniture_id=${this.state.furniture_id.toString()}`;
+        this.state.FID = data;
+        const query = `http://35.3.117.173:8000/api/furniture_info/?furniture_id=${this.state.FID.toString()}`;
         const url = encodeURI(query);
-        // fetch(url, {
-        //     credentials: 'same-origin',
-        // })
-        // .then(response => {
-        //     if (!response.stateText == 'OK')
-        //         throw Error("Not 200 status code");
-        //     return;
-        // })
-        // .then((data)=>{
-        //     this.setState({
-        //         uri: data.uri,
-        //         name: data.name
-        //     })
-        // })
-        // .catch(error => console.log('Error: ', error))
+        fetch(url, {
+            credentials: 'same-origin',
+        })
+        .then(response => {
+            if (!response.stateText == 'OK') throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then((data)=>{
+            this.setState({
+                uri: data.Img_url,
+                name: data.Name
+            })
+            // console.log(data)
+        })
+        .catch(error => console.log('Error: ', error))
 
         // This is the place holder for recent demo
         this.state.naviFunc('Intro', {
-            uri: 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg',
+            uri: this.state.uri,
+            name: this.state.name,
+            FID: this.state.FID,
             naviFunc: this.state.naviFunc
         }) 
     }

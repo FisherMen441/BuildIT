@@ -23,7 +23,7 @@ export default class IntroScreen extends React.Component {
     }
     async componentDidMount() {
         fetch(
-            'http://100.64.9.41:8000/api/furniture_info/?furniture_id=' 
+            'http://35.3.117.173:8000/api/furniture_info/?furniture_id=' 
             + this.state.FID,
             {
             method: 'GET',
@@ -34,7 +34,7 @@ export default class IntroScreen extends React.Component {
         .then(response => {
             if (!response.stateText == 'OK')
                 throw Error("Not 200 status code");
-            return;
+            return response.json();
         })
         .then((data)=>{
             this.setState({

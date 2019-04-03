@@ -2,13 +2,13 @@ INSERT INTO Furniture VALUES(1, 'Accent Table', 'Three drawers on wood slides op
 INSERT INTO Furniture VALUES(2, 'Lamp', 'A nice white lamp.', 'lamp.png', 1);
 
 INSERT INTO Steps VALUES(2, 8, NULL, '', 'step1.mp4');
-INSERT INTO Steps VALUES(1, 1, NULL, 'table_step1.png', 'IMG_7185.MOV');
-INSERT INTO Steps VALUES(1, 2, NULL, 'table_step2.png', 'step1.mp4');
-INSERT INTO Steps VALUES(1, 3, NULL, 'table_step3.png', 'step1.mp4');
-INSERT INTO Steps VALUES(1, 4, NULL, 'table_step4.png', 'step1.mp4');
-INSERT INTO Steps VALUES(1, 5, NULL, 'table_step5.png', 'step1.mp4');
-INSERT INTO Steps VALUES(1, 6, NULL, 'table_step6.png', 'step1.mp4');
-INSERT INTO Steps VALUES(1, 7, NULL, 'table_step7.png', 'step1.mp4');
+INSERT INTO Steps VALUES(1, 1, NULL, 'table_step1.png', 'https://youtu.be/MHp-UEC9tQ4');
+INSERT INTO Steps VALUES(1, 2, NULL, 'table_step2.png', 'https://youtu.be/yVdLjqTq7sY');
+INSERT INTO Steps VALUES(1, 3, NULL, 'table_step3.png', 'https://youtu.be/ImvDnnRtoTY');
+INSERT INTO Steps VALUES(1, 4, NULL, 'table_step4.png', 'https://youtu.be/IEKfTD5-eLs');
+INSERT INTO Steps VALUES(1, 5, NULL, 'table_step5.png', 'https://youtu.be/5467aFq7yHY');
+INSERT INTO Steps VALUES(1, 6, NULL, 'table_step6.png', 'https://youtu.be/HBZauC7ZY14');
+INSERT INTO Steps VALUES(1, 7, NULL, 'table_step7.png', 'https://youtu.be/Tdo_KB6QV54');
 
 INSERT INTO Components VALUES(1, "Top Panel", "A.png", "A_.jpg", NULL);
 INSERT INTO Components VALUES(2, "Middle Panel", "B.png", "B_.jpg", NULL);

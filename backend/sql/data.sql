@@ -13,3 +13,11 @@ VALUES
 INSERT INTO Tools_needed(FID, SID, TID)
 VALUES
 (1, 1, 1);
+
+
+INSERT INTO Furniture(FID, Name, Description, Img_url, Total_steps)
+VALUES
+(2, 'Lamp', 'A nice white lamp.', 'lamp.png', 1);
+INSERT INTO Steps(FID, SID, Description, Img_url, Video_loc)
+VALUES
+(2, 2, '', '', 'step1.mp4');

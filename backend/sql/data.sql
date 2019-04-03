@@ -1,4 +1,4 @@
-INSERT INTO Furniture VALUES(1, 'Accent Table', 'Three drawers on wood slides open to reveal plenty of room to tuck away small-scale must-haves, while the top offers space to place a lamp, books, and more.', 'Accent_table.png', 7);
+INSERT INTO Furniture VALUES(1, 'Accent Table', 'Three drawers on wood slides open to reveal plenty of room to tuck away small-scale must-haves, while the top offers space to place a lamp, books, and more.', 'Accent_table.jpg', 7);
 INSERT INTO Furniture VALUES(2, 'Lamp', 'A nice white lamp.', 'lamp.png', 1);
 
 INSERT INTO Steps VALUES(2, 8, NULL, '', 'step1.mp4');

@@ -1,12 +1,14 @@
 CREATE TABLE Users (
-	UID int NOT NULL AUTO_INCREMENT,
+	-- UID INTEGER PRIMARY KEY,
+    UID INT NOT NULL AUTOINCREMENT,
 	User_name VARCHAR(255) NOT NULL,
 	Password VARCHAR(255) NOT NULL,
 	PRIMARY KEY (UID)
 );
 
 CREATE TABLE Furniture (
-    FID int NOT NULL AUTO_INCREMENT,
+    -- FID INTEGER PRIMARY KEY,
+    FID int not null AUTOINCREMENT,
     Name varchar(255) NOT NULL,
     Description varchar(255),
     Img_url varchar(255),
@@ -34,9 +36,11 @@ CREATE TABLE Comments (
 );
 
 CREATE TABLE Components (
-    CID int NOT NULL AUTO_INCREMENT,
+    CID int NOT NULL AUTOINCREMENT,
+    -- CID INTEGER PRIMARY KEY,
     Name varchar(255) NOT NULL,
-    Img_url varchar(255),
+    Sketch_img_url varchar(255),
+    Real_img_url varchar(255),
     Description varchar(255),
     PRIMARY KEY (CID)
 );
@@ -50,7 +54,8 @@ CREATE TABLE Components_needed (
 );
 
 CREATE TABLE Tools (
-    TID int NOT NULL AUTO_INCREMENT,
+    TID int NOT NULL AUTOINCREMENT,
+    -- TID INTEGER PRIMARY KEY,
     Name varchar(255) NOT NULL,
     Img_url varchar(255),
     Description varchar(255),

@@ -34,8 +34,8 @@ def search(request):
     result_list = []
     for fur in furniture_result:
         result_list.append({
-            'name': fur['Name'],
-            'id': fur['FID']
+            'name': fur[0],
+            'id': fur[1]
         })
     response = {'result': result_list}
     return JsonResponse(response)
@@ -44,7 +44,7 @@ def search(request):
 def comment(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponse(status=404)
-        
+
     cursor = connection.cursor()
     if request.method == 'POST':
         furniture_id = int(request.POST.get('furniture_id'))
@@ -71,8 +71,8 @@ def comment(request):
     context = {'comments': []}
     for comment in comment_list:
         result.append({
-            'User_name': comment['User_name'],
-            'Content': comment['Content']
+            'User_name': comment[1],
+            'Content': comment[0]
         })
     context['comments'] = result
     return JsonResponse(context)
@@ -88,12 +88,12 @@ def tools(request):
     tool_ids = cursor.fetchall()
     tool_list = []
     for tool_id in tool_ids:
-        cursor.execute("SELECT * FROM Tools WHERE TID=?;", tool_id['TID'])
+        cursor.execute("SELECT Name, Img_url, Description FROM Tools WHERE TID=%s;", (tool_id[0],))
         info = cursor.fetchall()[0]
         tool_info = {
-            'Name': info['Name'],
-            'Img_url': info['Img_url'],
-            'Description': info['Description']
+            'Name': info[0],
+            'Img_url': info[1],
+            'Description': info[2]
         }
         tool_list += [tool_info]
     response = {'tool_list': tool_list, 'furniture_id': furniture_id, 'step': step}
@@ -113,8 +113,8 @@ def step_manual(request):
         'description': ''}
     else:
         response = {
-        'img_url': result['Img_url'],
-        'description': result['Description']
+        'img_url': result[0][0],
+        'description': result[0][1]
     }
     
     return JsonResponse(response)
@@ -155,9 +155,9 @@ def furniture_info(request):
         }
     else:
         response = {
-            'Name': furniture_result[0]['Name'],
-            'Description': furniture_result[0]['Description'],
-            'Img_url': furniture_result[0]['Img_url'],
+            'Name': furniture_result[0][0],
+            'Description': furniture_result[0][1],
+            'Img_url': furniture_result[0][2],
             'furniture_id': furniture_id
         }
     return JsonResponse(response)

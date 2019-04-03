@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 # Create your views here.
-
 def recommend(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
@@ -17,7 +16,7 @@ def recommend(request):
     for item in furniture_result:
         rsp = {
             'fid': item[0],
-            'img': item[1]
+            'img': '/sql/uploads/' + item[1],
         }
         response += [rsp]
     return JsonResponse({'result': response})
@@ -92,7 +91,7 @@ def tools(request):
         info = cursor.fetchall()[0]
         tool_info = {
             'Name': info[0],
-            'Img_url': info[1],
+            'Img_url': '/sql/uploads/' + info[1],
             'Description': info[2]
         }
         tool_list += [tool_info]
@@ -113,7 +112,7 @@ def step_manual(request):
         'description': ''}
     else:
         response = {
-        'img_url': result[0][0],
+        'img_url': '/sql/uploads/' + result[0][0],
         'description': result[0][1]
     }
     
@@ -135,7 +134,7 @@ def videos(request):
     if len(video_loc) == 0:
         response = {'video_loc': '', 'furniture_id': furniture_id, 'step': step}
     else:
-        response = {'video_loc': video_loc[0][video_loc], 'furniture_id': furniture_id, 'step': step}
+        response = {'video_loc': '/sql/uploads/' + video_loc[0][0], 'furniture_id': furniture_id, 'step': step}
     return JsonResponse(response)
 
 
@@ -157,7 +156,7 @@ def furniture_info(request):
         response = {
             'Name': furniture_result[0][0],
             'Description': furniture_result[0][1],
-            'Img_url': furniture_result[0][2],
+            'Img_url': '/sql/uploads/' +  furniture_result[0][2],
             'furniture_id': furniture_id
         }
     return JsonResponse(response)

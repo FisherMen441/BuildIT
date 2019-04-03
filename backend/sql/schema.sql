@@ -1,5 +1,4 @@
 CREATE TABLE Users (
-	-- UID INTEGER PRIMARY KEY,
     UID INT NOT NULL AUTOINCREMENT,
 	User_name VARCHAR(255) NOT NULL,
 	Password VARCHAR(255) NOT NULL,
@@ -7,7 +6,6 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Furniture (
-    -- FID INTEGER PRIMARY KEY,
     FID int not null AUTOINCREMENT,
     Name varchar(255) NOT NULL,
     Description varchar(255),
@@ -37,7 +35,6 @@ CREATE TABLE Comments (
 
 CREATE TABLE Components (
     CID int NOT NULL AUTOINCREMENT,
-    -- CID INTEGER PRIMARY KEY,
     Name varchar(255) NOT NULL,
     Sketch_img_url varchar(255),
     Real_img_url varchar(255),

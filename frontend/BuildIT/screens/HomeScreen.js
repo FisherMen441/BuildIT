@@ -10,7 +10,10 @@ export default class HomeScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            meta: {}
+            images1: ['http://35.3.117.173:8000/sql/uploads/Accent_table.jpg'],
+            images2: ['http://35.3.117.173:8000/sql/uploads/Accent_table.jpg'],
+            FID1: [1],
+            FID2: [2],
         }
     }
 
@@ -24,39 +27,39 @@ export default class HomeScreen extends React.Component {
             return response.json();
         })
         .then(data => {
-            this.setState({meta: data["result"]});
+            data = data["result"]
+            let size = data.length;
+            var images1 = [], images2 = [];
+            var FID1 = [], FID2 = [];
+            for (let i  = 0; i < size /2; i++) {
+                images1.push(`${HOST}${data[i]["img"]}`);
+                FID1.push(data[i]["fid"]);
+            }
+            for (let i  = size/2; i < size; i++) {
+                images2.push(`${HOST}${data[i]["img"]}`);
+                FID2.push(data[i]["fid"]);
+            }
         })
     }
 
     render() {
-        let size = this.state.meta.length;
-        let images1 = [], images2 = [];
-        let FID1 = [], FID2 = [];
-        for (let i  = 0; i < size /2; i++) {
-            images1.push(`${HOST}${this.state.meta[i]["img"]}`);
-            FID1.push(this.state.meta[i]["fid"]);
-        }
-        for (let i  = 0; i < size /2; i++) {
-            images2.push(`${HOST}/${this.state.meta[i]["img"]}`);
-            FID2.push(this.state.meta[i]["fid"]);
-        }
         const focus={
             focusFunc: this.props.navigation.navigate.bind(this), 
             focusScreen: 'Search'
         };
         const { navigation } = this.props;
-        console.log(images1);
         return (
             <View>
                 <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <View style={[styles.pic, styles.left]}>
-                        <PicStack uris={images1} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={FID1}/>
-                    </View>
-                    <View style={styles.pic}>
-                        <PicStack uris={images2} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={FID2}/>
-                    </View>
-                </ScrollView>
+                <Text>{images1[0]}</Text>
+                <View style={[styles.pic, styles.left]}>
+                    <PicStack uris={this.state.images1} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={this.state.FID1}/>
+                </View>
+                <View style={styles.pic}>
+                    <PicStack uris={this.state.images2} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={this.state.FID2}/>
+                </View>
+            </ScrollView>
             </View>
         )
     }

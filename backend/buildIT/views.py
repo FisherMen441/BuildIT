@@ -40,20 +40,26 @@ def search(request):
     response = {'result': result_list}
     return JsonResponse(response)
 
-
+@csrf_exempt
 def comment(request):
     if request.method != 'GET' and request.method != 'POST':
         return HttpResponse(status=404)
 
     cursor = connection.cursor()
     if request.method == 'POST':
-        furniture_id = int(request.POST.get('furniture_id'))
-        step = int(request.POST.get('step'))
-        user_id = int(request.POST.get('user_id'))
-        body = request.POST.get('body')
+        data = json.loads(request.body.decode('utf-8'))
+        furniture_id = int(data['furniture_id'])
+        step = int(data['step'])
+        user_id = int(data['user_id'])
+        body = data['text']
         cursor.execute("INSERT INTO Comments (FID, SID, UID, Content) VALUES (%s, %s, %s, %s);"
-                        (furniture_id, step, user_id, body))
+                        ,(furniture_id, step, user_id, body))
         connection.commit()
+        cursor.execute("SELECT User_name " +
+                       "FROM Users " + 
+                       "WHERE UID=%s;", (user_id,))
+        name = cursor.fetchall()[0][0]
+        return JsonResponse({'User_name': name, 'Content': body})
     elif request.method == 'GET':
         furniture_id = int(request.GET.get('furniture_id'))
         step = int(request.GET.get('step'))

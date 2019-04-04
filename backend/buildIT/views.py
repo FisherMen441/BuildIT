@@ -28,13 +28,14 @@ def search(request):
     search_text = request.GET.get('search_text')
     search_text_lowercase = search_text.lower()
     cursor = connection.cursor()
-    cursor.execute("SELECT Name, FID FROM Furniture WHERE Name LIKE %s", ("%" + search_text_lowercase + "%",))
+    cursor.execute("SELECT Name, FID, Img_url FROM Furniture WHERE Name LIKE %s", ("%" + search_text_lowercase + "%",))
     furniture_result = cursor.fetchall()
     result_list = []
     for fur in furniture_result:
         result_list.append({
             'name': fur[0],
-            'id': fur[1]
+            'id': fur[1],
+            'img_url': '/sql/uploads/' + fur[2]
         })
     response = {'result': result_list}
     return JsonResponse(response)
@@ -104,6 +105,7 @@ def tools(request):
     response = {'tool_list': tool_list, 'furniture_id': furniture_id, 'step': step}
     return JsonResponse(response)
 
+
 def step_manual(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
@@ -124,10 +126,18 @@ def step_manual(request):
     
     return JsonResponse(response)
     
-    
 
+@csrf_exempt
 def cv_upload(request):
-    pass
+    # if request.method != 'POST':
+    #     return HttpResponse(status=404)
+    if request.method == 'POST':
+        print('post')
+        print(request.body)
+    print('cv_upload')
+    response = {1: 10}
+    return JsonResponse(response)
+
 
 def videos(request):
     if request.method != 'GET':

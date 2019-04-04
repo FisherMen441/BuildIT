@@ -10,8 +10,8 @@ export default class HomeScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            images1: ['http://35.3.117.173:8000/sql/uploads/Accent_table.jpg'],
-            images2: ['http://35.3.117.173:8000/sql/uploads/Accent_table.jpg'],
+            images1: ['http://100.64.9.41:8000/sql/uploads/Accent_table.jpg'],
+            images2: ['http://100.64.9.41:8000/sql/uploads/Accent_table.jpg'],
             FID1: [1],
             FID2: [2],
         }
@@ -29,16 +29,20 @@ export default class HomeScreen extends React.Component {
         .then(data => {
             data = data["result"]
             let size = data.length;
-            var images1 = [], images2 = [];
+            var images1_new = [], images2_new = [];
             var FID1 = [], FID2 = [];
-            for (let i  = 0; i < size /2; i++) {
-                images1.push(`${HOST}${data[i]["img"]}`);
+            for (let i  = 0; i < size; i++) {
+                images1_new.push(`${HOST}${data[i]["img"]}`);
                 FID1.push(data[i]["fid"]);
             }
             for (let i  = size/2; i < size; i++) {
-                images2.push(`${HOST}${data[i]["img"]}`);
+                images2_new.push(`${HOST}${data[i]["img"]}`);
                 FID2.push(data[i]["fid"]);
             }
+            this.setState({
+                images1: images1_new,
+                images2: images2_new
+            })
         })
     }
 
@@ -48,11 +52,13 @@ export default class HomeScreen extends React.Component {
             focusScreen: 'Search'
         };
         const { navigation } = this.props;
+        console.log('123')
+        // console.log(this.state)
         return (
             <View>
                 <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                <Text>{images1[0]}</Text>
+                {/* <Text>{this.state.images1[0]}</Text> */}
                 <View style={[styles.pic, styles.left]}>
                     <PicStack uris={this.state.images1} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={this.state.FID1}/>
                 </View>

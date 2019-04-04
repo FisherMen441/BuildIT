@@ -15,15 +15,15 @@ export default class PicStack extends React.Component {
 
 
     render() {
-        console.log(this.state)
+        // console.log(this.state)
         let images = [];
-        for (let [index, uri] of this.state.uris.entries())
+        for (let [index, uri] of this.props.uris.entries())
             images.push(
-                <TouchableOpacity  onPress={() => this.state.naviFunc('Intro', {
+                <TouchableOpacity  onPress={() => this.props.naviFunc('Intro', {
                     uri: uri,
-                    naviFunc: this.state.naviFunc,
+                    naviFunc: this.props.naviFunc,
                     naviScreen: 'Home',
-                    FID:  this.state.fid[index],
+                    FID:  this.props.fid[index],
                 })} key={index}  >
                     <View style={styles.part}>
                         <ScaleImage uri={uri} style={styles.image}/>

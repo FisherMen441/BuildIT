@@ -5,13 +5,17 @@ import ScaleImage from './ScaleImage';
 export default class PicStack extends React.Component {
     constructor(props) {
         super(props);
+        console.log("PicStack", props.uris);
         this.state = {
             uris: props.uris,
-            naviFunc: props.naviFunc
+            naviFunc: props.naviFunc,
+            fid: props.fid,
         }
     }
 
+
     render() {
+        console.log(this.state)
         let images = [];
         for (let [index, uri] of this.state.uris.entries())
             images.push(
@@ -19,8 +23,8 @@ export default class PicStack extends React.Component {
                     uri: uri,
                     naviFunc: this.state.naviFunc,
                     naviScreen: 'Home',
-                    FID: 1,
-                })} key={index} >
+                    FID:  this.state.fid[index],
+                })} key={index}  >
                     <View style={styles.part}>
                         <ScaleImage uri={uri} style={styles.image}/>
                     </View>

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import SearchQR from '../components/SearchQR';
+import {HOST} from '../config'
 
 export default class SearchScreen extends React.Component {
     constructor() {
@@ -23,15 +24,13 @@ export default class SearchScreen extends React.Component {
     searchResult(searchText) {
         if (searchText === '')
             return [
-                { name: 'Table', id: 0, uri: 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'},
-                { name: 'Bed', id: 1 , uri: 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'},
-                { name: 'Lamp', id: 2, uri: 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg' }
+                { name: 'Accent Table', id: 0, uri:  'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg'},
+                { name: 'Lamp', id: 1 , uri: 'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG'},
             ]
         else {
             console.log('search: ', this.state.searchText);
             fetch(
-                'http://100.64.9.41:8000/api/search/?search_text=' 
-                + this.state.searchText,
+                `${HOST}/api/search/?search_text=${this.state.searchText}`,
                 {
                 method: 'GET',
                 headers: {
@@ -54,7 +53,6 @@ export default class SearchScreen extends React.Component {
 
     render() {
         let sr = this.searchResult(this.state.searchText);
-        console.log('search: ', this.state.searchText);
         return (
             <View>
                 <SearchQR 

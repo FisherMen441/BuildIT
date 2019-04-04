@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
                     inputContainerStyle={styles.inputContainer}
                     containerStyle={styles.barContainer}
                     placeholder="Find Furnitures...."
-                    onChangeText={(text) => {this.setState({ search: text }); console.log("search: ", this.state.search); this.props.updateSearchText(this.state.search)}}
+                    onChangeText={(text) => {this.setState({ search: text }); console.log("search: ", this.state.search);}}
                     value={this.state.search}
                     onFocus={() => {
                         if (this.state.screen == 'Home') {
@@ -39,7 +39,7 @@ export default class HomeScreen extends React.Component {
                         }
                     }
                     }
-                    onSubmitEditing={() => { console.log('HA') }}
+                    onSubmitEditing={() => { console.log('ha') }}
                     returnKeyType={"search"}
                     searchIcon={icon}
                 />

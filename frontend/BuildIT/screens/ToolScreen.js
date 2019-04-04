@@ -15,17 +15,15 @@ export default class ToolScreen extends React.Component {
             stepScreen: navigation.getParam('stepScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
-            videoLink: '',
-            description:'Description of the screw driver',
-            img_uri: 'https://png.pngtree.com/element_origin_min_pic/16/11/11/d0b1701cfa14fc996b0893554bb777e3.jpg'
+            tools: '',
+            description:'Cross screw driver',
+            img_uri: ''
         }
     }
 
     async componentDidMount() {
-        //TODO
-        const host = '';
         fetch(
-            `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
+            `${HOST}/api/tools/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
             {
             method: 'GET',
             headers: {
@@ -35,13 +33,12 @@ export default class ToolScreen extends React.Component {
         .then(response => {
             if (!response.stateText == 'OK')
                 throw Error("Not 200 status code");
-            return;
+            return response.json();
         })
         .then((data)=>{
             this.setState({
-                stepManualLoc: data.img_url,
-                description: data.description,
-                videoLink: data.video_link
+                tools: data['tool_list'][0]['Name'],
+                img_uri: `${HOST}${data['tool_list'][0]['Img_url']}`,
             })
         })
         .catch(error => console.log('Error: ', error))
@@ -56,7 +53,6 @@ export default class ToolScreen extends React.Component {
 
     postPressed() {
         this.backgroundColor='#ffffff';
-        const host = '';
         fetch('', {
             method: 'POST',
             headers: {
@@ -96,7 +92,7 @@ export default class ToolScreen extends React.Component {
                 </View>
                 <View style={styles.main}>
                     <Text style={styles.title}>Step: {this.state.SID}</Text>
-                    <ScaleImage uri={this.state.img_uri} style={styles.image} />
+                    {this.state.img_uri ? <ScaleImage uri={this.state.img_uri} style={styles.image} />: null}
                     <Text style={styles.description}>{this.state.description}</Text>
                 </View>
             </View>
@@ -119,12 +115,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     main: {
-        marginTop: 20,
+        marginTop: 5,
         alignItems: 'center'
     },
     title:{
-        margin: 10,
-        fontSize: 40,
+        margin: 5,
+        fontSize: 30,
         color: '#696969',
     },
     description:{

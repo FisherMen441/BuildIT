@@ -1,14 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import SearchQR from '../components/SearchQR';
-import {HOST} from '../config'
+import { HOST } from '../config';
+import ScaleImage from '../components/ScaleImage';
 
 export default class SearchScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            searchText: ''
+            searchText: '',
+            return_list: []
         };
         this.updateSearchText = this.updateSearchText.bind(this);
         this.searchResult = this.searchResult.bind(this);
@@ -20,15 +22,13 @@ export default class SearchScreen extends React.Component {
         )
     }
 
-
     searchResult(searchText) {
         if (searchText === '')
             return [
-                { name: 'Accent Table', id: 0, uri:  'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg'},
-                { name: 'Lamp', id: 1 , uri: 'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG'},
+                { name: 'Accent Table', id: 1, uri:  'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg'},
+                { name: 'Lamp', id: 2 , uri: 'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG'},
             ]
         else {
-            console.log('search: ', this.state.searchText);
             fetch(
                 `${HOST}/api/search/?search_text=${this.state.searchText}`,
                 {
@@ -40,10 +40,16 @@ export default class SearchScreen extends React.Component {
             .then(response => {
                 if (!response.stateText == 'OK')
                     throw Error("Not 200 status code");
+                return response.json();
             })
             .then((data)=>{
                 return_list = []
-                data.forEach((d) => {return_list.push({name: d.name, id: d.id})});
+                data = data['result']
+                data.forEach((d) => {return_list.push({name: d.name, id: d.id, uri: `${HOST}${d.img_url}`})});
+                console.log('list', return_list)
+                this.setState({
+                    return_list: return_list
+                })
                 return return_list;
             })
             .catch(error => console.log('Error: ', error))
@@ -53,6 +59,14 @@ export default class SearchScreen extends React.Component {
 
     render() {
         let sr = this.searchResult(this.state.searchText);
+        const search_result = [];
+        console.log(this.state.return_list)
+        this.state.return_list.forEach((element) => {
+            search_result.push(
+                <ScaleImage uri={element.img_url} style={styles.small_image}/> ,
+            );
+        });
+
         return (
             <View>
                 <SearchQR 
@@ -77,6 +91,8 @@ export default class SearchScreen extends React.Component {
                             </View>
                         </TouchableOpacity>
                     } />
+                <Text>haha</Text>
+                {search_result}
             </View>
         );
     }
@@ -88,4 +104,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 10
     },
+    small_image: {
+        width: Dimensions.get('window').width/2 - 10
+    }
 })

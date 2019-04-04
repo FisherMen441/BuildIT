@@ -38,13 +38,11 @@ export default class StepScreen extends React.Component {
             return response.json();
         })
         .then((data)=>{
-            console.log(`${HOST}${data.img_url}`)
             this.setState({
                 stepManualLoc: `${HOST}${data.img_url}`,
                 description: data.description,
                 videoLink: data.video_link,
             })
-            console.log(this.state)
         })
         .catch(error => console.log('Error: ', error))
     }
@@ -102,6 +100,10 @@ export default class StepScreen extends React.Component {
         })
     }
 
+    nextStep() {
+
+    }
+
     render() {
         const { navigation } = this.props;
         if (this.state.videoOnPlay === 'false'){
@@ -128,7 +130,7 @@ export default class StepScreen extends React.Component {
                         <TouchableOpacity style={styles.button} onPress={() => {this.setState({videoOnPlay: 'True'})}}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={this.cameraNavigate.bind(this)} ><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={this.nextStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
                     </View>
                     <View style={styles.comment}>
                         <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
@@ -151,7 +153,6 @@ export default class StepScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.post}>
-                    {/* TODO: align to bottom and keyboard align */}
                         <TextInput style={styles.textInput}
                             ref="PostText"
                             editable={true}

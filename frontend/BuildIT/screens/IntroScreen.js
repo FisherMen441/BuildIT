@@ -145,7 +145,10 @@ export default class IntroScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.comment}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
+                            uri: this.state.uri,
+                            naviFunc: this.state.naviFunc
+                        })}} >
                             <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
                         </TouchableOpacity>
                     </View>

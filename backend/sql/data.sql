@@ -1,7 +1,7 @@
 INSERT INTO Furniture VALUES(1, 'Accent Table', 'Three drawers on wood slides open to reveal plenty of room to tuck away small-scale must-haves, while the top offers space to place a lamp, books, and more.', 'Accent_table.jpg', 7);
 INSERT INTO Furniture VALUES(2, 'Lamp', 'A nice white lamp.', 'lamp.png', 1);
 
-INSERT INTO Steps VALUES(2, 8, NULL, '', 'step1.mp4');
+INSERT INTO Steps VALUES(2, 1, NULL, 'lamp_step1.png', 'step1.mp4');
 INSERT INTO Steps VALUES(1, 1, NULL, 'table_step1.png', 'https://youtu.be/MHp-UEC9tQ4');
 INSERT INTO Steps VALUES(1, 2, NULL, 'table_step2.png', 'https://youtu.be/yVdLjqTq7sY');
 INSERT INTO Steps VALUES(1, 3, NULL, 'table_step3.png', 'https://youtu.be/ImvDnnRtoTY');
@@ -31,7 +31,7 @@ INSERT INTO Components VALUES(18, "Screwer(Draer)", "R.png", "R_.jpg", NULL);
 INSERT INTO Components VALUES(19, "Bolt (Knob)", "S.png", "S_.jpg", NULL);
 
 INSERT INTO Tools VALUES(1, 'Cross Screwdriver', 'cross_screwdriver.png', NULL);
-INSERT INTO Tools_needed VALUES(2, 8, 1);
+INSERT INTO Tools_needed VALUES(2, 1, 1);
 INSERT INTO Tools_needed VALUES(1, 1, 1);
 INSERT INTO Tools_needed VALUES(1, 2, 1);
 INSERT INTO Tools_needed VALUES(1, 3, 1);

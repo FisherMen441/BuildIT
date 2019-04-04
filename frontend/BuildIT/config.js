@@ -1,2 +1,2 @@
 
-export let HOST = 'http://35.3.117.173:8000';
+export let HOST = 'http://100.64.8.146:8000';

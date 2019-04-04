@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
 import { Icon } from 'react-native-elements';
 import React, { Component } from 'react'
+import {HOST} from '../config'
 
 export default class QRScreen extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class QRScreen extends React.Component {
             hasCameraPermission: null,
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             naviScreen: navigation.getParam('naviScreen', 'Home'),
-            FID: 0,
+            FID: 1,
             uri: '',
             name: ''
         }
@@ -56,7 +57,7 @@ export default class QRScreen extends React.Component {
 
     handleBarCodeScanned = ({ type, data }) => {
         this.state.FID = data;
-        const query = `http://35.3.117.173:8000/api/furniture_info/?furniture_id=${this.state.FID.toString()}`;
+        const query = `${HOST}/api/furniture_info/?furniture_id=${this.state.FID}`;
         const url = encodeURI(query);
         fetch(url, {
             credentials: 'same-origin',
@@ -67,20 +68,17 @@ export default class QRScreen extends React.Component {
         })
         .then((data)=>{
             this.setState({
-                uri: data.Img_url,
+                uri: `${HOST}${data.Img_url}`,
                 name: data.Name
             })
-            // console.log(data)
+            this.state.naviFunc('Intro', {
+                uri: this.state.uri,
+                name: this.state.name,
+                FID: this.state.FID,
+                naviFunc: this.state.naviFunc
+            }) 
         })
         .catch(error => console.log('Error: ', error))
-
-        // This is the place holder for recent demo
-        this.state.naviFunc('Intro', {
-            uri: this.state.uri,
-            name: this.state.name,
-            FID: this.state.FID,
-            naviFunc: this.state.naviFunc
-        }) 
     }
 }
 

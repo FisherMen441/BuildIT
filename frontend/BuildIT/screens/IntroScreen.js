@@ -22,32 +22,7 @@ export default class IntroScreen extends React.Component {
             FID: navigation.getParam('FID', 1),
         }
     }
-    async componentDidMount() {
-        fetch(
-<<<<<<< HEAD
-            'http://35.3.117.173:8000/api/furniture_info/?furniture_id=' 
-            + this.state.FID,
-=======
-            `${HOST}/api/furniture_info/?furniture_id=${this.state.FID}`,
->>>>>>> 4cc8998a912e0f9fb0e477e56cc64f00a4098f87
-            {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response => {
-            if (!response.stateText == 'OK')
-                throw Error("Not 200 status code");
-            return response.json();
-        })
-        .then((data)=>{
-            this.setState({
-                name: data.Name,
-                uri: data.Img_url,
-            })
-        })
-        .catch(error => console.log('Error: ', error))
+    componentDidMount() {
     }
 
     postPressed() {
@@ -59,7 +34,7 @@ export default class IntroScreen extends React.Component {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                username: "testuser5",
+                username: "1",
                 message: this.state.text,
             })
         })
@@ -80,7 +55,7 @@ export default class IntroScreen extends React.Component {
         const {navigate} = this.props.navigation;
         navigate('Step', {
             FID: this.state.FID,
-            SID: 1,
+            SID: 1
         })
     }
 
@@ -92,65 +67,63 @@ export default class IntroScreen extends React.Component {
                 horizontal={false}
                 showsPagination={false}
             >
-            <View style={styles.container}>
-                <View style={styles.back}>
-                    <Icon
-                        name='arrow-left'
-                        type='material-community'
-                        style={{ flex: 0.1 }}
-                        onPress={() => {
-                            navigation.goBack()
-                        }}
-                    />
-                    <View style={{ flex: 0.9 }}/>
-                </View>
-                <View style={styles.main}>
-                    <ScaleImage uri={this.state.uri} style={styles.image} />
-                    <Text style={{ margin: 10 }}>{this.state.name}</Text>
-                    <TouchableOpacity style={styles.button} onPress={this.pressAssemble.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Start assemble </Text></TouchableOpacity>
-                </View>
-                <View style={styles.comment}>
-                    <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
-                        uri: this.state.uri,
-                        naviFunc: this.state.naviFunc
-                    })}} >
-                        <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <Swiper
-                loop={false}
-                horizontal={false}
-                showsPagination={false}
-            >
-                <View style={styles.container} >
-                <View style={styles.tointro}>
-                    <TouchableOpacity>
-                    <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.post}>
-                {/* TODO: align to bottom and keyboard align */}
-                    <TextInput style={styles.textInput}
-                        ref="PostText"
-                        editable={true}
-                        multiline={true}
-                        value={this.state.text}
-                        onChangeText={(text) => this.setState({ text: text }) }
-                        placeholder="Post yout comments"
-                    />
-                    <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
-                        <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
-                    </TouchableOpacity>
-                </View>
+                <View style={styles.container}>
+                    <View style={styles.back}>
+                        <Icon
+                            name='arrow-left'
+                            type='material-community'
+                            style={{ flex: 0.1 }}
+                            onPress={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                        <View style={{ flex: 0.9 }}/>
+                    </View>
+                    <View style={styles.main}>
+                        <ScaleImage uri={this.state.uri} style={styles.image} />
+                        <Text style={{ margin: 10, fontSize: 20, fontWeight: "bold"}}>{this.state.name}</Text>
+                        <TouchableOpacity style={styles.button} onPress={this.pressAssemble.bind(this)}>
+                            <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Start assemble </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.comment}>
+                        <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
+                            uri: this.state.uri,
+                            naviFunc: this.state.naviFunc
+                        })}} >
+                            <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
+                <Swiper
+                    loop={false}
+                    horizontal={false}
+                    showsPagination={false}
+                >
+                    <View style={styles.container} >
+                        <View style={styles.tointro}>
+                            <TouchableOpacity>
+                            <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.post}>
+                        {/* TODO: align to bottom and keyboard align */}
+                            <TextInput style={styles.textInput}
+                                ref="PostText"
+                                editable={true}
+                                multiline={true}
+                                value={this.state.text}
+                                onChangeText={(text) => this.setState({ text: text }) }
+                                placeholder="Post yout comments"
+                            />
+                            <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
+                                <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Swiper>
             </Swiper>
-            
-            
-            </Swiper>
-            
         )
     }
 }

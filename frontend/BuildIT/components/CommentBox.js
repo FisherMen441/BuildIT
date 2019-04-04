@@ -16,6 +16,8 @@ export default class CommentBox extends Component {
         this.initPage()
         this.state = { rating: this.dSource.cloneWithRows(this.ratingArr) }
         this.props.selectStar = null
+        this.userName = this.props.userName ? this.props.userName: null
+        this.content = this.props.content ? this.props.content: null
     }
     selectStar = (item, Windex) => {
         if (this.editable == true) {
@@ -67,10 +69,8 @@ export default class CommentBox extends Component {
                         onPress={this.selectStar.bind(this, item, index)}
                         style={[styles.rating, this.rating < item.level ? styles.rating_n : ""]}>&#11089;</Text>}
                 />
-                <Text>Jingyuan</Text>
-                <Text>This furniture looks so nice!
-                    This furniture looks so nice!This furniture looks so nice!
-                    This furniture looks so nice!This furniture looks so nice!</Text>
+                <Text>{this.userName}</Text>
+                <Text>{this.content}</Text>
             </View>
         </View>)
     }

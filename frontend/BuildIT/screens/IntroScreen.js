@@ -18,7 +18,7 @@ export default class IntroScreen extends React.Component {
             stepScreen: navigation.getParam('stepScreen', 'Step'),
             uri: navigation.getParam('uri', ''),
             name: navigation.getParam('name', ''),
-            comments: '',
+            comments: [],
             text: '',
             FID: navigation.getParam('FID', 1),
         }
@@ -43,30 +43,60 @@ export default class IntroScreen extends React.Component {
                 uri: `${HOST}${data.Img_url}`,
             })
         })
-        .catch(error => console.log('Error: ', error))
+        .catch(error => console.log('Error: ', error));
+
+        fetch(`${HOST}/api/comment/?furniture_id=${this.state.FID}&step=0`, {
+            method: 'GET',
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then((data)=>{
+            this.setState({
+                comments: data.comments
+            })
+        })
+        .catch(error => console.log('Error: ', error));
     }
 
     postPressed() {
+        if (this.state.text === ''){
+            return;
+        }
         this.backgroundColor='#ffffff';
         const host = '';
-        fetch('', {
+        fetch(`${HOST}/api/comment/?furniture_id=${this.state.FID}&step=0`, {
+            credentials: 'same-origin',
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                username: "1",
-                message: this.state.text,
+                user_id: 1,
+                furniture_id: this.state.FID,
+                text: this.state.text,
+                step: 0,
+                "my": 123,
             })
         })
         .then(response => {
             if (!response.stateText == 'OK')
                 throw Error("Not 200 status code");
-            return;
+            return response.json();
         })
-        .then(()=>{
-            this.props.addPost();
-            this.refs.PostText.clear();
+        .then((data)=>{
+            const newComments = this.state.comments
+            newComments.push({
+                User_name: data.User_name,
+                Content: data.Content,
+                });
+            this.setState({
+                comments: newComments,
+                text: '',
+            })
+            console.log(this.state.comments)
         })
         .catch(error => console.log('Error: ', error))
     }
@@ -81,6 +111,14 @@ export default class IntroScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
+        const comments_list = [];
+        this.state.comments.forEach((element, i)=>{
+            comments_list.push(
+                <View  key={i} style={{height: 100}}>
+                <CommentBox userName={element.User_name} content={element.Content} editable={true}/>
+                </View>
+            )
+        })
         return (
             <Swiper 
                 loop={false}
@@ -107,10 +145,7 @@ export default class IntroScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.comment}>
-                        <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
-                            uri: this.state.uri,
-                            naviFunc: this.state.naviFunc
-                        })}} >
+                        <TouchableOpacity>
                             <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
                         </TouchableOpacity>
                     </View>
@@ -142,15 +177,7 @@ export default class IntroScreen extends React.Component {
                             </TouchableOpacity>
                         </View>
                         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                        <View style={{height: 100}}><CommentBox editable={true}/></View>
-                        <View style={{height: 100}}><CommentBox rating={4}/></View>
-                        <View style={{height: 100}}><CommentBox rating={3}/></View>
-                        <View style={{height: 100}}><CommentBox rating={3}/></View>
-                        <View style={{height: 100}}><CommentBox rating={3}/></View>
-                        <View style={{height: 100}}><CommentBox rating={3}/></View>
-                        <View style={{height: 100}}><CommentBox rating={3}/></View>
-                        <View style={{height: 100}}><CommentBox rating={3}/></View>
-                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        {comments_list}
                         </ScrollView>
                     </View>
                 </Swiper>

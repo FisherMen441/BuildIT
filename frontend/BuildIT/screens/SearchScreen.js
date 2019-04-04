@@ -18,16 +18,21 @@ export default class SearchScreen extends React.Component {
 
     updateSearchText(text) {
         this.setState(
-            { searchText: text }
+            { searchText: text }, 
+            () => this.searchResult(this.state.searchText)
         )
     }
 
     searchResult(searchText) {
-        if (searchText === '')
-            return [
-                { name: 'Accent Table', id: 1, uri:  'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg'},
-                { name: 'Lamp', id: 2 , uri: 'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG'},
-            ]
+        if (searchText === ''){
+            console.log("nothing")
+            this.setState({
+                return_list: [
+                    { name: 'Accent Table', id: 1, uri:  'https://images-na.ssl-images-amazon.com/images/I/71yCFbAM0jL._SL1500_.jpg'},
+                    { name: 'Lamp', id: 2 , uri: 'https://www.ikea.com/PIAimages/0314514_PE514214_S5.JPG'},
+                ]
+            })
+        }
         else {
             fetch(
                 `${HOST}/api/search/?search_text=${this.state.searchText}`,
@@ -50,23 +55,25 @@ export default class SearchScreen extends React.Component {
                 this.setState({
                     return_list: return_list
                 })
-                return return_list;
+                // return return_list;
             })
             .catch(error => console.log('Error: ', error))
         };
     }
 
+    componentWillMount(){
+        this.searchResult(this.state.searchText)
+    }
 
     render() {
-        let sr = this.searchResult(this.state.searchText);
         const search_result = [];
         console.log(this.state.return_list)
-        this.state.return_list.forEach((element) => {
-            search_result.push(
-                <ScaleImage uri={element.img_url} style={styles.small_image}/> ,
-            );
-        });
-
+        // this.state.return_list.forEach((element) => {
+        //     search_result.push(
+        //         <ScaleImage uri={element.img_url} style={styles.small_image}/> ,
+        //     );
+        // });
+        // console.log("sr: ", sr)
         return (
             <View>
                 <SearchQR 
@@ -75,7 +82,7 @@ export default class SearchScreen extends React.Component {
                     naviScreen={'Home'} 
                     screen={'Search'} />
                 <FlatList
-                    data={sr}
+                    data={this.state.return_list}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({ item }) =>
                         <TouchableOpacity
@@ -87,12 +94,13 @@ export default class SearchScreen extends React.Component {
                             })}>
                             <View style={styles.searchItem}>
                                 <Icon name='clock-outline' type='material-community' containerStyle={{ flex: 0.1 }} />
-                                <Text style={{ flex: 0.9, fontSize: 16 }}>{item.name}</Text>
+                                <View style={{ flex: 0.9}} >
+                                    <Text style={{ fontSize: 16 }}>{item.name}</Text>
+                                    <ScaleImage uri={item.uri} style={styles.small_image} />
+                                </View>
                             </View>
                         </TouchableOpacity>
                     } />
-                <Text>haha</Text>
-                {search_result}
             </View>
         );
     }

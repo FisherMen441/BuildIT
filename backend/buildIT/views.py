@@ -28,13 +28,14 @@ def search(request):
     search_text = request.GET.get('search_text')
     search_text_lowercase = search_text.lower()
     cursor = connection.cursor()
-    cursor.execute("SELECT Name, FID FROM Furniture WHERE Name LIKE %s", ("%" + search_text_lowercase + "%",))
+    cursor.execute("SELECT Name, FID, Img_url FROM Furniture WHERE Name LIKE %s", ("%" + search_text_lowercase + "%",))
     furniture_result = cursor.fetchall()
     result_list = []
     for fur in furniture_result:
         result_list.append({
             'name': fur[0],
-            'id': fur[1]
+            'id': fur[1],
+            'img_url': '/sql/uploads/' + fur[2]
         })
     response = {'result': result_list}
     return JsonResponse(response)

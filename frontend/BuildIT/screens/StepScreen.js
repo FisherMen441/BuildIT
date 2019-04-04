@@ -16,16 +16,14 @@ export default class StepScreen extends React.Component {
             stepScreen: navigation.getParam('stepScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
-            stepManualLoc: '',
-            videoLink: '',
-            description:'',
+            stepManualLoc: navigation.getParam('stepManualLoc', ''),
+            videoLink: navigation.getParam('videoLink', ''),
+            description: navigation.getParam('description', ''),
             videoOnPlay: 'false'
         }
     }
 
     async componentDidMount() {
-        const host = '';
-        console.log(`${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`);
         fetch(
             `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
             {
@@ -107,7 +105,6 @@ export default class StepScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        console.log(this.state.videoOnPlay);
         if (this.state.videoOnPlay === 'false'){
             return (
                 <Swiper 

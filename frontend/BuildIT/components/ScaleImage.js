@@ -9,6 +9,7 @@ export default class ScaleImage extends Component {
     }
 
     componentWillMount() {
+        console.log('scale', this.state.source.uri);
         Image.getSize(this.props.uri, (width, height) => {
             if (this.props.style.width && !this.props.style.height) {
                 this.setState({

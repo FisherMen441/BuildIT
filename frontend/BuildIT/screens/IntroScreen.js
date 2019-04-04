@@ -15,14 +15,34 @@ export default class IntroScreen extends React.Component {
             naviScreen: navigation.getParam('naviScreen', 'Home'),
             commentScreen: navigation.getParam('commentScreen', 'Comment'),
             stepScreen: navigation.getParam('stepScreen', 'Step'),
-            uri: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
-            name: navigation.getParam('name', 'annonymous'),
+            uri: navigation.getParam('uri', ''),
+            name: navigation.getParam('name', ''),
             comments: '',
             text: '',
             FID: navigation.getParam('FID', 1),
         }
     }
     componentDidMount() {
+        fetch(
+            `${HOST}/api/furniture_info/?furniture_id=${this.state.FID}`,
+            {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then((data)=>{
+            this.setState({
+                name: data.Name,
+                uri: `${HOST}${data.Img_url}`,
+            })
+        })
+        .catch(error => console.log('Error: ', error))
     }
 
     postPressed() {
@@ -55,7 +75,7 @@ export default class IntroScreen extends React.Component {
         const {navigate} = this.props.navigation;
         navigate('Step', {
             FID: this.state.FID,
-            SID: 1
+            SID: 1,
         })
     }
 

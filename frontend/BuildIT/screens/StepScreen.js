@@ -40,11 +40,13 @@ export default class StepScreen extends React.Component {
             return response.json();
         })
         .then((data)=>{
+            console.log(data)
             this.setState({
                 stepManualLoc: `${HOST}${data.img_url}`,
                 description: data.description,
                 videoLink: data.video_link,
             })
+            console.log('step',this.state.stepManualLoc);
         })
         .catch(error => console.log('Error: ', error))
     }

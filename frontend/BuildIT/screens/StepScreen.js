@@ -209,17 +209,17 @@ const styles = StyleSheet.create({
         margin: 10
     },
     back: {
-        marginTop: 40,
+        marginTop: 30,
         marginLeft: 10,
         flexDirection: 'row',
     },
     main: {
-        marginTop: 30,
+        marginTop: 5,
         alignItems: 'center'
     },
     title:{
-        margin: 10,
-        fontSize: 40,
+        margin: 5,
+        fontSize: 30,
         color: '#696969',
     },
     description:{

@@ -33,7 +33,6 @@ INSERT INTO Components VALUES(18, "Screwer(Draer)", "R.png", "R_.jpg", NULL);
 INSERT INTO Components VALUES(19, "Bolt (Knob)", "S.png", "S_.jpg", NULL);
 
 INSERT INTO Tools VALUES(1, 'Cross Screwdriver', 'cross_screwdriver.png', NULL);
-INSERT INTO Tools_needed VALUES(2, 1, 1);
 INSERT INTO Tools_needed VALUES(1, 1, 1);
 INSERT INTO Tools_needed VALUES(1, 2, 1);
 INSERT INTO Tools_needed VALUES(1, 3, 1);

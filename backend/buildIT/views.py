@@ -20,7 +20,7 @@ def recommend(request):
         }
         response += [rsp]
     return JsonResponse({'result': response})
-   
+
 
 def search(request):
     if request.method != 'GET':

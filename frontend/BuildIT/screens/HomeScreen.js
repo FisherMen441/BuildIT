@@ -29,16 +29,20 @@ export default class HomeScreen extends React.Component {
         .then(data => {
             data = data["result"]
             let size = data.length;
-            var images1 = [], images2 = [];
+            var images1_new = [], images2_new = [];
             var FID1 = [], FID2 = [];
-            for (let i  = 0; i < size /2; i++) {
-                images1.push(`${HOST}${data[i]["img"]}`);
+            for (let i  = 0; i < size; i++) {
+                images1_new.push(`${HOST}${data[i]["img"]}`);
                 FID1.push(data[i]["fid"]);
             }
             for (let i  = size/2; i < size; i++) {
-                images2.push(`${HOST}${data[i]["img"]}`);
+                images2_new.push(`${HOST}${data[i]["img"]}`);
                 FID2.push(data[i]["fid"]);
             }
+            this.setState({
+                images1: images1_new,
+                images2: images2_new
+            })
         })
     }
 
@@ -48,6 +52,8 @@ export default class HomeScreen extends React.Component {
             focusScreen: 'Search'
         };
         const { navigation } = this.props;
+        console.log('123')
+        // console.log(this.state)
         return (
             <View>
                 <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>

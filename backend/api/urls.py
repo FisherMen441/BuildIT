@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'api/manual/$', views.step_manual, name='manual'),
     url(r'api/furniture_info/$', views.furniture_info, name='furniture_info'),
     url(r'api/search/$', views.search, name='search'),
-    url(r'api/comment/$', views.comment, name='comment')
+    url(r'api/comment/$', views.comment, name='comment'),
+    url(r'api/upload/$', views.cv_upload, name='cv_upload')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

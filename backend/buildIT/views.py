@@ -98,6 +98,7 @@ def tools(request):
     response = {'tool_list': tool_list, 'furniture_id': furniture_id, 'step': step}
     return JsonResponse(response)
 
+
 def step_manual(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
@@ -118,10 +119,18 @@ def step_manual(request):
     
     return JsonResponse(response)
     
-    
 
+@csrf_exempt
 def cv_upload(request):
-    pass
+    # if request.method != 'POST':
+    #     return HttpResponse(status=404)
+    if request.method == 'POST':
+        print('post')
+        print(request.body)
+    print('cv_upload')
+    response = {1: 10}
+    return JsonResponse(response)
+
 
 def videos(request):
     if request.method != 'GET':

@@ -16,16 +16,14 @@ export default class StepScreen extends React.Component {
             stepScreen: navigation.getParam('stepScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
-            stepManualLoc: '',
-            videoLink: '',
-            description:'',
+            stepManualLoc: navigation.getParam('stepManualLoc', ''),
+            videoLink: navigation.getParam('videoLink', ''),
+            description: navigation.getParam('description', ''),
             videoOnPlay: 'false'
         }
     }
 
     async componentDidMount() {
-        const host = '';
-        console.log(`${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`);
         fetch(
             `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
             {
@@ -40,13 +38,11 @@ export default class StepScreen extends React.Component {
             return response.json();
         })
         .then((data)=>{
-            console.log(data)
             this.setState({
                 stepManualLoc: `${HOST}${data.img_url}`,
                 description: data.description,
                 videoLink: data.video_link,
             })
-            console.log('step',this.state.stepManualLoc);
         })
         .catch(error => console.log('Error: ', error))
     }
@@ -106,7 +102,6 @@ export default class StepScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        console.log(this.state.videoOnPlay);
         if (this.state.videoOnPlay === 'false'){
             return (
                 <Swiper 
@@ -126,7 +121,7 @@ export default class StepScreen extends React.Component {
                     </View>
                     <View style={styles.main}>
                         <Text style={styles.title}>Step: {this.state.SID}</Text>
-                        <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />
+                        {this.state.stepManualLoc ? <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />: null}
                         <Text style={styles.description}>{this.state.description}</Text>
                         <TouchableOpacity style={styles.button} onPress={() => {this.setState({videoOnPlay: 'True'})}}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text></TouchableOpacity>

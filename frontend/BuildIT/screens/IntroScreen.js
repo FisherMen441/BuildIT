@@ -68,7 +68,6 @@ export default class IntroScreen extends React.Component {
             this.refs.PostText.clear();
         })
         .catch(error => console.log('Error: ', error))
-
     }
 
     pressAssemble(){

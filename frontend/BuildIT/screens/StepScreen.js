@@ -47,7 +47,6 @@ export default class StepScreen extends React.Component {
             console.log(this.state)
         })
         .catch(error => console.log('Error: ', error))
-        console.log(this.state)
     }
 
     backStep(){
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
     container: {
     },
     image: {
-        width: Dimensions.get('window').width - 20,
+        width: Dimensions.get('window').height / 4 - 10,
         borderRadius: 30,
         margin: 10
     },

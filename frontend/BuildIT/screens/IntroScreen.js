@@ -138,7 +138,7 @@ export default class IntroScreen extends React.Component {
                         <View style={{ flex: 0.9 }}/>
                     </View>
                     <View style={styles.main}>
-                        <ScaleImage uri={this.state.uri} style={styles.image} />
+                        {this.state.uri ? <ScaleImage uri={this.state.uri} style={styles.image} />: null} 
                         <Text style={{ margin: 10, fontSize: 20, fontWeight: "bold"}}>{this.state.name}</Text>
                         <TouchableOpacity style={styles.button} onPress={this.pressAssemble.bind(this)}>
                             <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Start assemble </Text>

@@ -2,7 +2,7 @@ import React from 'react';
 import { AppRegistry, StyleSheet, View, TouchableOpacity, Text, Dimensions, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Camera, Permissions } from 'expo';
-import { IP } from '../config';
+import { HOST } from '../config';
 
 export default class CameraScreen extends React.Component {
     constructor(props) {
@@ -28,10 +28,14 @@ export default class CameraScreen extends React.Component {
     }
 
     async takePicture() {
-        console.log(IP);
         if (this.camera) {
             let photo = await this.camera.takePictureAsync({ skipProcessing: false, base64: true, quality: 0.0 });
+            // const postData = {};
+            //console.log(JSON.stringify(postData))
             fetch(`${HOST}/api/upload/`, {
+                // headers: {
+                //     'Content-Type' : "application/json", 
+                // },
                 method: 'POST',
                 body: photo.base64,
             }).
@@ -40,6 +44,8 @@ export default class CameraScreen extends React.Component {
                     throw Error("Not 200 status code");
                 return response.json();
             })
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
         }
     }
 

@@ -53,10 +53,31 @@ export default class StepScreen extends React.Component {
                 FID: this.state.FID,
             })
         } else{
-            this.props.navigation.navigate('Step', {
-                FID: this.state.FID,
-                SID: this.state.SID - 1,
+            fetch(
+                `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID - 1}`,
+                {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                },
             })
+            .then(response => {
+                if (!response.stateText == 'OK')
+                    throw Error("Not 200 status code");
+                return response.json();
+            })
+            .then((data)=>{
+                if (data.img_url != '') {
+                    this.setState({
+                        FID: this.state.FID,
+                        SID: this.state.SID - 1,
+                        stepManualLoc: `${HOST}${data.img_url}`,
+                        description: data.description,
+                        videoLink: data.video_link,
+                    })
+                } 
+            })
+            .catch(error => console.log('Error: ', error))
         }
     }
 
@@ -101,7 +122,33 @@ export default class StepScreen extends React.Component {
     }
 
     nextStep() {
-
+        fetch(
+            `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID + 1}`,
+            {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then((data)=>{
+            if (data.img_url != '') {
+                this.setState({
+                    FID: this.state.FID,
+                    SID: this.state.SID + 1,
+                    stepManualLoc: `${HOST}${data.img_url}`,
+                    description: data.description,
+                    videoLink: data.video_link,
+                })
+            } else {
+                alert(`This is the final step!`);
+            }
+        })
+        .catch(error => console.log('Error: ', error))
     }
 
     render() {

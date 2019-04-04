@@ -16,7 +16,7 @@ export default class ToolScreen extends React.Component {
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
             tools: '',
-            description:'Cross screw driver',
+            description:'',
             img_uri: ''
         }
     }
@@ -92,8 +92,8 @@ export default class ToolScreen extends React.Component {
                 </View>
                 <View style={styles.main}>
                     <Text style={styles.title}>Step: {this.state.SID}</Text>
-                    {this.state.img_uri ? <ScaleImage uri={this.state.img_uri} style={styles.image} />: null}
-                    <Text style={styles.description}>{this.state.description}</Text>
+                    {this.state.img_uri ? <ScaleImage uri={this.state.img_uri} style={styles.image} /> : null}
+                    {this.state.tools ? <Text style={styles.description}>{this.state.description}</Text> : <Text>No tools needed</Text>}
                 </View>
             </View>
         )

@@ -10,8 +10,8 @@ export default class HomeScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            images1: ['http://100.64.9.41:8000/sql/uploads/Accent_table.jpg'],
-            images2: ['http://100.64.9.41:8000/sql/uploads/Accent_table.jpg'],
+            images1: [`${HOST}/sql/uploads/Accent_table.jpg`],
+            images2: [`${HOST}/sql/uploads/lamp.png`],
             FID1: [1],
             FID2: [2],
         }
@@ -58,7 +58,6 @@ export default class HomeScreen extends React.Component {
             <View>
                 <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                {/* <Text>{this.state.images1[0]}</Text> */}
                 <View style={[styles.pic, styles.left]}>
                     <PicStack uris={this.state.images1} style={styles.PicStack} naviFunc={navigation.navigate.bind(this)} fid={this.state.FID1}/>
                 </View>

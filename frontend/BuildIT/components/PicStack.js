@@ -5,7 +5,6 @@ import ScaleImage from './ScaleImage';
 export default class PicStack extends React.Component {
     constructor(props) {
         super(props);
-        console.log("PicStack", props.uris);
         this.state = {
             uris: props.uris,
             naviFunc: props.naviFunc,
@@ -15,7 +14,6 @@ export default class PicStack extends React.Component {
 
 
     render() {
-        // console.log(this.state)
         let images = [];
         for (let [index, uri] of this.props.uris.entries())
             images.push(

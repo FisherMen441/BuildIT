@@ -16,9 +16,9 @@ export default class StepScreen extends React.Component {
             stepScreen: navigation.getParam('stepScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
-            stepManualLoc: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
+            stepManualLoc: '',
             videoLink: '',
-            description:'Note: Insert cam-lock in open position. Rotate to open position with screw driver if necessary.',
+            description:'',
             videoOnPlay: 'false'
         }
     }
@@ -37,11 +37,11 @@ export default class StepScreen extends React.Component {
         .then(response => {
             if (!response.stateText == 'OK')
                 throw Error("Not 200 status code");
-            return;
+            return response.json();
         })
         .then((data)=>{
             this.setState({
-                stepManualLoc: data.img_url,
+                stepManualLoc: `${HOST}${data.img_url}`,
                 description: data.description,
                 videoLink: data.video_link,
             })
@@ -50,7 +50,7 @@ export default class StepScreen extends React.Component {
     }
 
     backStep(){
-        if (this.state.SID === 1){//back to intro
+        if (this.state.SID === 1){ // back to intro
             this.props.navigation.navigate('Intro', {
                 FID: this.state.FID,
             })

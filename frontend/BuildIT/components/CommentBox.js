@@ -57,15 +57,20 @@ export default class CommentBox extends Component {
         })
     }
     render = () => {
-        return (<View style={styles.vView}>
+        return (
+        <View style={styles.vView}>
             <View style={[styles.vRatingV, styles.vRating_s]}>
                 <ListView
                     contentContainerStyle={styles.vRating}
                     dataSource={this.state.rating}
                     renderRow={(item, index) => <Text
                         onPress={this.selectStar.bind(this, item, index)}
-                        style={[styles.rating, this.rating < item.level ? styles.rating_n : ""]}>&#xe61d;</Text>}
+                        style={[styles.rating, this.rating < item.level ? styles.rating_n : ""]}>&#11089;</Text>}
                 />
+                <Text>Jingyuan</Text>
+                <Text>This furniture looks so nice!
+                    This furniture looks so nice!This furniture looks so nice!
+                    This furniture looks so nice!This furniture looks so nice!</Text>
             </View>
         </View>)
     }
@@ -73,7 +78,7 @@ export default class CommentBox extends Component {
 
 const styles = StyleSheet.create({
     vView: {
-        position: "relative"
+        position: "relative",
     },
     vRating: {
         flexDirection: "row",
@@ -92,7 +97,7 @@ const styles = StyleSheet.create({
         zIndex: 800
     },
     rating: {
-        fontFamily: "iconfont",
+        // fontFamily: "iconfont",
         fontSize: rx(34),
         color: '#ff6600',
         marginRight: rx(10),

@@ -52,8 +52,6 @@ export default class HomeScreen extends React.Component {
             focusScreen: 'Search'
         };
         const { navigation } = this.props;
-        console.log('123')
-        // console.log(this.state)
         return (
             <View>
                 <SearchQR naviFunc={navigation.navigate.bind(this)} naviScreen={'Search'} screen={'Home'}/>

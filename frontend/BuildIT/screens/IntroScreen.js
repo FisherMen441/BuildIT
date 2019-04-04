@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput} from 'react-native';
+import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput, ScrollView} from 'react-native';
 import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage'
 import Swiper from 'react-native-swiper'
+import CommentBox from '../components/CommentBox'
 import {HOST} from '../config'
 
 
@@ -101,7 +102,7 @@ export default class IntroScreen extends React.Component {
                     horizontal={false}
                     showsPagination={false}
                 >
-                    <View style={styles.container} >
+                    <View style={{flexDirection: 'column', justifyContent: 'center',alignItems: 'stretch',}}>
                         <View style={styles.tointro}>
                             <TouchableOpacity>
                             <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
@@ -121,6 +122,17 @@ export default class IntroScreen extends React.Component {
                                 <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
                             </TouchableOpacity>
                         </View>
+                        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+                        <View style={{height: 100}}><CommentBox editable={true}/></View>
+                        <View style={{height: 100}}><CommentBox rating={4}/></View>
+                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        <View style={{height: 100}}><CommentBox rating={3}/></View>
+                        </ScrollView>
                     </View>
                 </Swiper>
             </Swiper>
@@ -140,6 +152,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     container: {
+        
     },
     button: {
         alignItems: 'center',
@@ -166,7 +179,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     post: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     tointro: {
         marginTop: 30,

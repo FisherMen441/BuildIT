@@ -40,13 +40,16 @@ export default class StepScreen extends React.Component {
             return response.json();
         })
         .then((data)=>{
+            console.log(`${HOST}${data.img_url}`)
             this.setState({
                 stepManualLoc: `${HOST}${data.img_url}`,
                 description: data.description,
                 videoLink: data.video_link,
             })
+            console.log(this.state)
         })
         .catch(error => console.log('Error: ', error))
+        console.log(this.state)
     }
 
     backStep(){
@@ -124,7 +127,7 @@ export default class StepScreen extends React.Component {
                     </View>
                     <View style={styles.main}>
                         <Text style={styles.title}>Step: {this.state.SID}</Text>
-                        <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />
+                        {this.state.stepManualLoc ? <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />: null}
                         <Text style={styles.description}>{this.state.description}</Text>
                         <TouchableOpacity style={styles.button} onPress={() => {this.setState({videoOnPlay: 'True'})}}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text></TouchableOpacity>

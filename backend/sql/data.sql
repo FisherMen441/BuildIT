@@ -11,6 +11,7 @@ INSERT INTO Steps VALUES(1, 4, NULL, 'table_step4.png', 'https://www.youtube.com
 INSERT INTO Steps VALUES(1, 5, NULL, 'table_step5.png', 'https://www.youtube.com/embed/5467aFq7yHY');
 INSERT INTO Steps VALUES(1, 6, NULL, 'table_step6.png', 'https://www.youtube.com/embed/HBZauC7ZY14');
 INSERT INTO Steps VALUES(1, 7, NULL, 'table_step7.png', 'https://www.youtube.com/embed/Tdo_KB6QV54');
+
 INSERT INTO Components VALUES(1, "Top Panel", "A.png", "A_.jpg", NULL);
 INSERT INTO Components VALUES(2, "Middle Panel", "B.png", "B_.jpg", NULL);
 INSERT INTO Components VALUES(3, "Bottom Panel", "C.png", "C_.jpg", NULL);
@@ -30,6 +31,9 @@ INSERT INTO Components VALUES(16, "Cam Lock Screwer", "P.png", "P_.jpg", NULL);
 INSERT INTO Components VALUES(17, "Small Screwer(Foot)", "Q.png", "Q_.jpg", NULL);
 INSERT INTO Components VALUES(18, "Screwer(Draer)", "R.png", "R_.jpg", NULL);
 INSERT INTO Components VALUES(19, "Bolt (Knob)", "S.png", "S_.jpg", NULL);
+INSERT INTO Components VALUES(20, "Lamp screw", "lamp_item1.jpg", "lamp_item1.jpg", NULL)
+INSERT INTO Components VALUES(21, "Lamp base", "lamp_item2.jpg", "lamp_item2.jpg", NULL)
+INSERT INTO Components VALUES(22, "Lamp light", "lamp_item3.jpg", "lamp_item3.jpg", NULL)
 
 INSERT INTO Components_needed VALUES(1, 1, 2);
 INSERT INTO Components_needed VALUES(1, 1, 15);
@@ -51,7 +55,6 @@ INSERT INTO Components_needed VALUES(1, 6, 1);
 INSERT INTO Components_needed VALUES(1, 6, 15);
 INSERT INTO Components_needed VALUES(1, 6, 8);
 INSERT INTO Components_needed VALUES(1, 6, 16);
-
 INSERT INTO Components_needed VALUES(1, 7, 12);
 INSERT INTO Components_needed VALUES(1, 7, 13);
 INSERT INTO Components_needed VALUES(1, 7, 14);
@@ -62,6 +65,9 @@ INSERT INTO Components_needed VALUES(1, 7, 10);
 INSERT INTO Components_needed VALUES(1, 7, 18);
 INSERT INTO Components_needed VALUES(1, 7, 11);
 INSERT INTO Components_needed VALUES(1, 7, 8);
+INSERT INTO Components_needed VALUES(2, 1, 20);
+INSERT INTO Components_needed VALUES(2, 1, 21);
+INSERT INTO Components_needed VALUES(2, 1, 22);
 
 INSERT INTO Tools VALUES(1, 'Cross Screwdriver', 'cross_screwdriver.png', NULL);
 INSERT INTO Tools_needed VALUES(1, 1, 1);
@@ -71,6 +77,8 @@ INSERT INTO Tools_needed VALUES(1, 4, 1);
 INSERT INTO Tools_needed VALUES(1, 5, 1);
 INSERT INTO Tools_needed VALUES(1, 6, 1);
 INSERT INTO Tools_needed VALUES(1, 7, 1);
+INSERT INTO Tools_needed VALUES(2, 1, 1);
+
 
 INSERT INTO Users VALUES(1, "Xiaoyu", "password");
 INSERT INTO Users VALUES(2, "Jingyuan", "password");

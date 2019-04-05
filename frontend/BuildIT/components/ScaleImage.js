@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { Image } from "react-native";
+import { Image, Dimensions } from "react-native";
 
 export default class ScaleImage extends Component {
     constructor(props) {
@@ -29,7 +29,7 @@ export default class ScaleImage extends Component {
     render() {
         return (
             <Image
-                source={this.state.source}
+                source={{uri: this.props.uri}}
                 // Maybe need support any # of styles ley
                 style={{ height: this.state.height, width: this.state.width, borderRadius: this.state.borderRadius}}
             />

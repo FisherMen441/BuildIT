@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput} from 'react-native';
+import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput, WebView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage';
 import Swiper from 'react-native-swiper';
 import { Constants, Video } from 'expo';
+import {HOST} from '../config'
 
 
 export default class StepScreen extends React.Component {
@@ -15,22 +16,16 @@ export default class StepScreen extends React.Component {
             stepScreen: navigation.getParam('stepScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
-            stepManualLoc: navigation.getParam('uri', 'https://cdn.shopify.com/s/files/1/2660/5106/files/LR-2-Main_159cda8c-8447-4d3b-888b-0bc8b8999dd2_960x.jpg'),
-            videoLink: '',
-            description:'Note: Insert cam-lock in open position. Rotate to open position with screw driver if necessary.',
+            stepManualLoc: navigation.getParam('stepManualLoc', ''),
+            videoLink: navigation.getParam('videoLink', ''),
+            description: navigation.getParam('description', ''),
             videoOnPlay: 'false'
         }
     }
 
     async componentDidMount() {
-        const host = '';
-        console.log('http://100.64.9.41:8000/api/manual/?furniture_id=' 
-        + this.state.FID 
-        + '&step=' + this.state.SID)
         fetch(
-            'http://100.64.9.41:8000/api/manual/?furniture_id=' 
-            + this.state.FID 
-            + '&step=' + this.state.SID,
+            `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID}`,
             {
             method: 'GET',
             headers: {
@@ -40,28 +35,49 @@ export default class StepScreen extends React.Component {
         .then(response => {
             if (!response.stateText == 'OK')
                 throw Error("Not 200 status code");
-            return;
+            return response.json();
         })
         .then((data)=>{
             this.setState({
-                stepManualLoc: data.img_url,
+                stepManualLoc: `${HOST}${data.img_url}`,
                 description: data.description,
-                videoLink: data.video_link,
+                videoLink: data.Video_loc,
             })
         })
         .catch(error => console.log('Error: ', error))
     }
 
     backStep(){
-        if (this.state.SID === 1){//back to intro
+        if (this.state.SID === 1){ // back to intro
             this.props.navigation.navigate('Intro', {
                 FID: this.state.FID,
             })
         } else{
-            this.props.navigation.navigate('Step', {
-                FID: this.state.FID,
-                SID: this.state.SID - 1,
+            fetch(
+                `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID - 1}`,
+                {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                },
             })
+            .then(response => {
+                if (!response.stateText == 'OK')
+                    throw Error("Not 200 status code");
+                return response.json();
+            })
+            .then((data)=>{
+                if (data.img_url != '') {
+                    this.setState({
+                        FID: this.state.FID,
+                        SID: this.state.SID - 1,
+                        stepManualLoc: `${HOST}${data.img_url}`,
+                        description: data.description,
+                        videoLink: data.video_link,
+                    })
+                } 
+            })
+            .catch(error => console.log('Error: ', error))
         }
     }
 
@@ -105,9 +121,38 @@ export default class StepScreen extends React.Component {
         })
     }
 
+    nextStep() {
+        fetch(
+            `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID + 1}`,
+            {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then((data)=>{
+            if (data.img_url != '') {
+                this.setState({
+                    FID: this.state.FID,
+                    SID: this.state.SID + 1,
+                    stepManualLoc: `${HOST}${data.img_url}`,
+                    description: data.description,
+                    videoLink: data.video_link,
+                })
+            } else {
+                alert(`This is the final step!`);
+            }
+        })
+        .catch(error => console.log('Error: ', error))
+    }
+
     render() {
         const { navigation } = this.props;
-        console.log(this.state.videoOnPlay);
         if (this.state.videoOnPlay === 'false'){
             return (
                 <Swiper 
@@ -127,12 +172,12 @@ export default class StepScreen extends React.Component {
                     </View>
                     <View style={styles.main}>
                         <Text style={styles.title}>Step: {this.state.SID}</Text>
-                        <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />
+                        {this.state.stepManualLoc ? <ScaleImage uri={this.state.stepManualLoc} style={styles.image} />: null}
                         <Text style={styles.description}>{this.state.description}</Text>
                         <TouchableOpacity style={styles.button} onPress={() => {this.setState({videoOnPlay: 'True'})}}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Video</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={this.toolStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Tools</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={this.cameraNavigate.bind(this)} ><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Camera</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.button}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={this.nextStep.bind(this)}><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Next</Text></TouchableOpacity>
                     </View>
                     <View style={styles.comment}>
                         <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
@@ -143,64 +188,57 @@ export default class StepScreen extends React.Component {
                     </View>
                 </View>        
     
-                <Swiper
-                    loop={false}
-                    horizontal={false}
-                    showsPagination={false}
-                >
-                    <View style={styles.container} >
-                    <View style={styles.tointro}>
-                        <TouchableOpacity>
-                        <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.post}>
-                    {/* TODO: align to bottom and keyboard align */}
-                        <TextInput style={styles.textInput}
-                            ref="PostText"
-                            editable={true}
-                            multiline={true}
-                            value={this.state.text}
-                            onChangeText={(text) => this.setState({ text: text }) }
-                            placeholder="Post yout comments"
-                        />
-                        <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
-                            <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
-                        </TouchableOpacity>
-                    </View>
-                    </View>
-    
-                </Swiper>
-    
-    
+                    <Swiper
+                        loop={false}
+                        horizontal={false}
+                        showsPagination={false}
+                    >
+                        <View style={styles.container} >
+                            <View style={styles.tointro}>
+                                <TouchableOpacity>
+                                    <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.post}>
+                                <TextInput style={styles.textInput}
+                                    ref="PostText"
+                                    editable={true}
+                                    multiline={true}
+                                    value={this.state.text}
+                                    onChangeText={(text) => this.setState({ text: text })}
+                                    placeholder="Post yout comments"
+                                />
+                                <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
+                                    <Text style={{ fontSize: 18, color: 'white' }}> Post </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </Swiper>
                 </Swiper>
             )
         }else {
             return (
                 <View style={styles.container}>
                     <View style={styles.back}>
-                            <Icon
-                                name='arrow-left'
-                                type='material-community'
-                                style={{ flex: 0.1 }}
-                                onPress={() => {this.setState({videoOnPlay: 'false'})}}
-                            />
-                            <View style={{ flex: 0.9 }}/>
-                        </View>
-                    <Video
-                        source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-                        rate={1.0}
-                        volume={1.0}
-                        isMuted={false}
-                        useNativeControls={true}
-                        resizeMode="contain"
-                        shouldPlay
-                        isLooping
-                        style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height - 40 }}/>
+                        <Icon
+                            name='arrow-left'
+                            type='material-community'
+                            style={{ flex: 0.1 }}
+                            onPress={() => { this.setState({ videoOnPlay: 'false' }) }}
+                        />
+                        <View style={{ flex: 0.9 }} />
+                    </View>
+                    <View style={{ height: 240 }}>
+                        <WebView
+                            javaScriptEnabled={true}
+                            domStorageEnabled={true}
+                            source={{ uri: this.state.videoLink }}
+                        />
+                    </View>
                 </View>
             )
         }
-
     }
 }
 
@@ -208,22 +246,22 @@ const styles = StyleSheet.create({
     container: {
     },
     image: {
-        width: Dimensions.get('window').width - 20,
+        width: Dimensions.get('window').height / 4 - 10,
         borderRadius: 30,
         margin: 10
     },
     back: {
-        marginTop: 40,
+        marginTop: 30,
         marginLeft: 10,
         flexDirection: 'row',
     },
     main: {
-        marginTop: 30,
+        marginTop: 5,
         alignItems: 'center'
     },
     title:{
-        margin: 10,
-        fontSize: 40,
+        margin: 5,
+        fontSize: 30,
         color: '#696969',
     },
     description:{

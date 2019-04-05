@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput} from 'react-native';
+import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput, WebView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage';
 import Swiper from 'react-native-swiper';
@@ -41,7 +41,7 @@ export default class StepScreen extends React.Component {
             this.setState({
                 stepManualLoc: `${HOST}${data.img_url}`,
                 description: data.description,
-                videoLink: data.video_link,
+                videoLink: data.Video_loc,
             })
         })
         .catch(error => console.log('Error: ', error))
@@ -188,63 +188,57 @@ export default class StepScreen extends React.Component {
                     </View>
                 </View>        
     
-                <Swiper
-                    loop={false}
-                    horizontal={false}
-                    showsPagination={false}
-                >
-                    <View style={styles.container} >
-                    <View style={styles.tointro}>
-                        <TouchableOpacity>
-                        <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.post}>
-                        <TextInput style={styles.textInput}
-                            ref="PostText"
-                            editable={true}
-                            multiline={true}
-                            value={this.state.text}
-                            onChangeText={(text) => this.setState({ text: text }) }
-                            placeholder="Post yout comments"
-                        />
-                        <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
-                            <Text style={{ fontSize: 18, color: 'white'}}> Post </Text>
-                        </TouchableOpacity>
-                    </View>
-                    </View>
-    
-                </Swiper>
-    
-    
+                    <Swiper
+                        loop={false}
+                        horizontal={false}
+                        showsPagination={false}
+                    >
+                        <View style={styles.container} >
+                            <View style={styles.tointro}>
+                                <TouchableOpacity>
+                                    <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.post}>
+                                <TextInput style={styles.textInput}
+                                    ref="PostText"
+                                    editable={true}
+                                    multiline={true}
+                                    value={this.state.text}
+                                    onChangeText={(text) => this.setState({ text: text })}
+                                    placeholder="Post yout comments"
+                                />
+                                <TouchableOpacity style={styles.button} onPress={this.postPressed.bind(this)}>
+                                    <Text style={{ fontSize: 18, color: 'white' }}> Post </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </Swiper>
                 </Swiper>
             )
         }else {
             return (
                 <View style={styles.container}>
                     <View style={styles.back}>
-                            <Icon
-                                name='arrow-left'
-                                type='material-community'
-                                style={{ flex: 0.1 }}
-                                onPress={() => {this.setState({videoOnPlay: 'false'})}}
-                            />
-                            <View style={{ flex: 0.9 }}/>
-                        </View>
-                    <Video
-                        source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-                        rate={1.0}
-                        volume={1.0}
-                        isMuted={false}
-                        useNativeControls={true}
-                        resizeMode="contain"
-                        shouldPlay
-                        isLooping
-                        style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height - 40 }}/>
+                        <Icon
+                            name='arrow-left'
+                            type='material-community'
+                            style={{ flex: 0.1 }}
+                            onPress={() => { this.setState({ videoOnPlay: 'false' }) }}
+                        />
+                        <View style={{ flex: 0.9 }} />
+                    </View>
+                    <View style={{ height: 240 }}>
+                        <WebView
+                            javaScriptEnabled={true}
+                            domStorageEnabled={true}
+                            source={{ uri: this.state.videoLink }}
+                        />
+                    </View>
                 </View>
             )
         }
-
     }
 }
 

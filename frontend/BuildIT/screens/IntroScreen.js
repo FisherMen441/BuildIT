@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput, ScrollView} from 'react-native';
 import { Icon } from 'react-native-elements';
-import ScaleImage from '../components/ScaleImage'
-import Swiper from 'react-native-swiper'
-import CommentBox from '../components/CommentBox'
-import {HOST} from '../config'
+import ScaleImage from '../components/ScaleImage';
+import Swiper from 'react-native-swiper';
+import CommentBox from '../components/CommentBox';
+import {HOST} from '../config';
 
 
 export default class IntroScreen extends React.Component {
@@ -23,6 +23,7 @@ export default class IntroScreen extends React.Component {
             FID: navigation.getParam('FID', 1),
         }
     }
+
     componentDidMount() {
         fetch(
             `${HOST}/api/furniture_info/?furniture_id=${this.state.FID}`,
@@ -66,7 +67,6 @@ export default class IntroScreen extends React.Component {
             return;
         }
         this.backgroundColor='#ffffff';
-        const host = '';
         fetch(`${HOST}/api/comment/?furniture_id=${this.state.FID}&step=0`, {
             credentials: 'same-origin',
             method: 'POST',
@@ -96,7 +96,6 @@ export default class IntroScreen extends React.Component {
                 comments: newComments,
                 text: '',
             })
-            console.log(this.state.comments)
         })
         .catch(error => console.log('Error: ', error))
     }
@@ -147,7 +146,9 @@ export default class IntroScreen extends React.Component {
                     <View style={styles.comment}>
                         <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
                             uri: this.state.uri,
-                            naviFunc: this.state.naviFunc
+                            naviFunc: this.state.naviFunc,
+                            FID: this.state.FID,
+                            SID: 0
                         })}} >
                             <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
                         </TouchableOpacity>
@@ -161,12 +162,13 @@ export default class IntroScreen extends React.Component {
                 >
                     <View style={{flexDirection: 'column', justifyContent: 'center',alignItems: 'stretch',}}>
                         <View style={styles.tointro}>
-                            <TouchableOpacity>
-                            <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
+                            <TouchableOpacity underlayColor="#ffffff00" onPress={() => { this.state.naviFunc('Intro', {
+                                naviFunc: this.state.naviFunc
+                            }) }} > 
+                                <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.post}>
-                        {/* TODO: align to bottom and keyboard align */}
                             <TextInput style={styles.textInput}
                                 ref="PostText"
                                 editable={true}

@@ -154,9 +154,7 @@ def cv_upload(request):
         img_url = cursor.fetchall()
         img_list.append("./sql/uploads/" + img_url[0][0])
     recognize_from_image(img_list)
-    response = {
-    'img_url': '/buildIT/result.jpg'
-    }
+    response = {'img_url': '/buildIT/result.jpg'}
     return JsonResponse(response)
 
 

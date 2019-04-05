@@ -37,7 +37,11 @@ export default class CameraScreen extends React.Component {
                 //     'Content-Type' : "application/json", 
                 // },
                 method: 'POST',
-                body: photo.base64,
+                body: JSON.stringify({
+                    img: photo.base64,
+                    FID: this.state.FID,
+                    SID: this.state.SID
+                })
             }).
             then(response => {
                 if (!response.stateText == 'OK')
@@ -131,7 +135,7 @@ const styles = StyleSheet.create({
     },
     camera: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').width * 16 / 9,
+        height: Dimensions.get('window').width * 16 / 10,
     },
     icon: {
         width: Dimensions.get('window').width / 4,

@@ -3,6 +3,9 @@ from django.http import JsonResponse, HttpResponse
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt 
 import json
+import base64
+import os
+from .sift import *
 
 # Create your views here.
 def recommend(request):
@@ -129,13 +132,28 @@ def step_manual(request):
 
 @csrf_exempt
 def cv_upload(request):
-    # if request.method != 'POST':
-    #     return HttpResponse(status=404)
-    if request.method == 'POST':
-        print('post')
-        print(request.body)
-    print('cv_upload')
-    response = {1: 10}
+    if request.method != 'POST':
+         return HttpResponse(status=404)
+    data = json.loads(request.body.decode('utf-8'))
+    img_data = data['img']
+    furniture_id = data['FID']
+    step = data['SID']
+    new_img_dir = "./buildIT/imageToSave.jpg"
+    with open(new_img_dir, "wb") as fh:
+        fh.write(base64.decodebytes(img_data.encode('ascii')))
+    cursor = connection.cursor()
+    cursor.execute("SELECT CID FROM Components_needed WHERE FID=%s AND SID=%s;", (furniture_id, step))
+    CIDs = cursor.fetchall()
+    img_list = [new_img_dir]
+    for i in range(0, len(CIDs)):
+        CID = CIDs[i][0]
+        cursor.execute("SELECT Real_img_url FROM Components WHERE CID=%s;", (CID, ))
+        img_url = cursor.fetchall()
+        img_list.append("./sql/uploads/" + img_url[0][0])
+    recognize_from_image(img_list)
+    response = {
+    'img_url': '/buildIT/result.jpg'
+    }
     return JsonResponse(response)
 
 

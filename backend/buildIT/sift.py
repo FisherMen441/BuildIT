@@ -79,7 +79,7 @@ def recognize_from_image(files=['2.jpeg', '1.jpeg']):
     plt.subplots_adjust(top = 1)
     plt.subplots_adjust(right = 1)
     plt.subplots_adjust(left = 0)
-    plt.savefig('result.jpg')
+    plt.savefig('./buildIT/result.jpg')
     # draw_params = dict(matchColor=(0, 0, 0), # draw matches in green color
     #                    singlePointColor=None,
     #                    matchesMask=matchesMask, # draw only inliers
@@ -89,7 +89,3 @@ def recognize_from_image(files=['2.jpeg', '1.jpeg']):
     # img3 = cv2.drawMatches(img1,kp1,img2,kp2,good,None,**draw_params)
 
     # plt.imshow(img3, 'gray'),plt.show()
-
-if __name__ == '__main__':
-    recognize_from_image()
-    

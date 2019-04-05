@@ -19,7 +19,9 @@ def preprocess(file):
         dImg.save(file)
 
 
-def recognize_from_image(files=['2.jpeg', '1.jpeg']):
+def recognize_from_image(files=[]):
+    if len(files) < 2:
+        return False
     origin_photo = files[0]
     MIN_MATCH_COUNT = 10
     img_colored = cv2.imread(files[0], cv2.IMREAD_COLOR)
@@ -30,7 +32,9 @@ def recognize_from_image(files=['2.jpeg', '1.jpeg']):
         preprocess(item)
 
     i = 1
+    print('before loop')
     while i < len(files):
+        print(files[i])
         img = cv2.imread(files[i], 0)  # queryImage
         
         # Initiate SIFT detector
@@ -73,13 +77,21 @@ def recognize_from_image(files=['2.jpeg', '1.jpeg']):
         i += 1
 
     plt.xticks([])
+    print('finished 0')
     plt.yticks([])
+    print('finished 1')
     plt.imshow(origin)
+    print('finished 2')
     plt.subplots_adjust(bottom = 0)
+    print('finished 3')
     plt.subplots_adjust(top = 1)
+    print('finished 4')
     plt.subplots_adjust(right = 1)
     plt.subplots_adjust(left = 0)
+    print('finished')
     plt.savefig('./buildIT/result.jpg')
+    print('finished after save')
+    return True
     # draw_params = dict(matchColor=(0, 0, 0), # draw matches in green color
     #                    singlePointColor=None,
     #                    matchesMask=matchesMask, # draw only inliers

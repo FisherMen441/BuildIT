@@ -26,7 +26,7 @@ SECRET_KEY = 'l=2m+yclr9v#)9+%cpa7*nuw&)a(_l54c2=ueop0==4s_np*h='
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['0.0.0.0', '35.3.117.173', '100.64.8.146', '35.3.111.186', 'localhost', '100.64.9.249']
+ALLOWED_HOSTS = ['0.0.0.0', '35.3.117.173', '100.64.8.146', '35.3.81.62', 'localhost', '100.64.9.249']
 
 
 # Application definition
@@ -126,4 +126,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/sql/uploads/'
+CV_RESULT_URL = '/buildIT/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "sql/uploads")
+CV_RESULT_ROOT = os.path.join(BASE_DIR, "buildIT")

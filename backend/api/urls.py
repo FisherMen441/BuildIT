@@ -32,3 +32,4 @@ urlpatterns = [
     url(r'api/upload/$', views.cv_upload, name='cv_upload')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.CV_RESULT_URL, document_root=settings.CV_RESULT_ROOT)

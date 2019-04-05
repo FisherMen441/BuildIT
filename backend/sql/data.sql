@@ -31,9 +31,9 @@ INSERT INTO Components VALUES(16, "Cam Lock Screwer", "P.png", "P_.jpg", NULL);
 INSERT INTO Components VALUES(17, "Small Screwer(Foot)", "Q.png", "Q_.jpg", NULL);
 INSERT INTO Components VALUES(18, "Screwer(Draer)", "R.png", "R_.jpg", NULL);
 INSERT INTO Components VALUES(19, "Bolt (Knob)", "S.png", "S_.jpg", NULL);
-INSERT INTO Components VALUES(20, "Lamp screw", "lamp_item1.jpg", "lamp_item1.jpg", NULL)
-INSERT INTO Components VALUES(21, "Lamp base", "lamp_item2.jpg", "lamp_item2.jpg", NULL)
-INSERT INTO Components VALUES(22, "Lamp light", "lamp_item3.jpg", "lamp_item3.jpg", NULL)
+INSERT INTO Components VALUES(20, "Lamp screw", "lamp_item1.jpg", "lamp_item1.jpg", NULL);
+INSERT INTO Components VALUES(21, "Lamp base", "lamp_item2.jpg", "lamp_item2.jpg", NULL);
+INSERT INTO Components VALUES(22, "Lamp light", "lamp_item3.jpg", "lamp_item3.jpg", NULL);
 
 INSERT INTO Components_needed VALUES(1, 1, 2);
 INSERT INTO Components_needed VALUES(1, 1, 15);
@@ -55,6 +55,7 @@ INSERT INTO Components_needed VALUES(1, 6, 1);
 INSERT INTO Components_needed VALUES(1, 6, 15);
 INSERT INTO Components_needed VALUES(1, 6, 8);
 INSERT INTO Components_needed VALUES(1, 6, 16);
+INSERT INTO Components_needed VALUES(1, 7, 9);
 INSERT INTO Components_needed VALUES(1, 7, 12);
 INSERT INTO Components_needed VALUES(1, 7, 13);
 INSERT INTO Components_needed VALUES(1, 7, 14);

@@ -9,5 +9,3 @@ cd backend/sql
 mysql -uroot buildIT < drop.sql
 mysql -uroot buildIT < schema.sql
 mysql -uroot buildIT < data.sql
-cd ..
-cd ..

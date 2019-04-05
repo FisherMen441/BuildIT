@@ -129,32 +129,36 @@ def step_manual(request):
             'description': result[0][1],
             'Video_loc': result[0][2]
         }
-    
     return JsonResponse(response)
     
 
 @csrf_exempt
 def cv_upload(request):
     if request.method != 'POST':
-         return HttpResponse(status=404)
+        return HttpResponse(status=404)
     data = json.loads(request.body.decode('utf-8'))
-    img_data = data['img']
-    furniture_id = data['FID']
-    step = data['SID']
-    new_img_dir = "./buildIT/imageToSave.jpg"
-    with open(new_img_dir, "wb") as fh:
-        fh.write(base64.decodebytes(img_data.encode('ascii')))
-    cursor = connection.cursor()
-    cursor.execute("SELECT CID FROM Components_needed WHERE FID=%s AND SID=%s;", (furniture_id, step))
-    CIDs = cursor.fetchall()
-    img_list = [new_img_dir]
-    for i in range(0, len(CIDs)):
-        CID = CIDs[i][0]
-        cursor.execute("SELECT Real_img_url FROM Components WHERE CID=%s;", (CID, ))
-        img_url = cursor.fetchall()
-        img_list.append("./sql/uploads/" + img_url[0][0])
-    recognize_from_image(img_list)
-    response = {'img_url': '/buildIT/result.jpg'}
+    requirement = data['requirement']
+    response = {}
+    if requirement == 'components': 
+        img_data = data['img']
+        furniture_id = data['FID']
+        step = data['SID']
+        new_img_dir = "./buildIT/imageToSave.jpg"
+        print('saved')
+        with open(new_img_dir, "wb") as fh:
+            fh.write(base64.decodebytes(img_data.encode('ascii')))
+        cursor = connection.cursor()
+        cursor.execute("SELECT CID FROM Components_needed WHERE FID=%s AND SID=%s;", (furniture_id, step))
+        CIDs = cursor.fetchall()
+        img_list = [new_img_dir]
+        for i in range(0, len(CIDs)):
+            CID = CIDs[i][0]
+            cursor.execute("SELECT Real_img_url FROM Components WHERE CID=%s;", (CID, ))
+            img_url = cursor.fetchall()
+            img_list.append("./sql/uploads/" + img_url[0][0])
+        print(img_list)
+        recognize_from_image(img_list)
+        response = {'img_url': '/buildIT/result.jpg'}
     return JsonResponse(response)
 
 

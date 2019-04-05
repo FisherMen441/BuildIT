@@ -21,7 +21,7 @@ def preprocess(file):
 
 def recognize_from_image(files=['2.jpeg', '1.jpeg']):
     origin_photo = files[0]
-    MIN_MATCH_COUNT = 10
+    MIN_MATCH_COUNT = 7
     img_colored = cv2.imread(files[0], cv2.IMREAD_COLOR)
     origin = cv2.imread(files[0], 0) # trainImage
 

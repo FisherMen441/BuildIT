@@ -112,17 +112,20 @@ def step_manual(request):
     furniture_id = int(request.GET.get('furniture_id'))
     step = request.GET.get('step')
     cursor = connection.cursor()
-    cursor.execute("SELECT Img_url, Description FROM Steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
+    cursor.execute("SELECT Img_url, Description, Video_loc FROM Steps WHERE FID=%s AND SID=%s;", (furniture_id, step))
     result = cursor.fetchall()
     if len(result) == 0:
         response = {
-        'img_url': '',
-        'description': ''}
+            'img_url': '',
+            'description': '',
+            'Video_loc': ''
+        }
     else:
         response = {
-        'img_url': '/sql/uploads/' + result[0][0],
-        'description': result[0][1]
-    }
+            'img_url': '/sql/uploads/' + result[0][0],
+            'description': result[0][1],
+            'Video_loc': result[0][2]
+        }
     
     return JsonResponse(response)
     

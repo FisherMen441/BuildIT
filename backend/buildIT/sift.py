@@ -9,13 +9,17 @@ def preprocess(file):
     sImg = Image.open(file)  
     w, h = sImg.size
     if w > 1000 and h > 1000:
-        dImg=sImg.resize((1000, 1000),Image.ANTIALIAS)
-        dImg.save(file)
+        if h > w:
+            dImg=sImg.resize((int(1000*w/h), 1000),Image.ANTIALIAS)
+            dImg.save(file)
+        else:
+            dImg=sImg.resize((1000, int(1000*h/w)),Image.ANTIALIAS)
+            dImg.save(file)
     elif w > 1000:
-        dImg=sImg.resize((1000, h),Image.ANTIALIAS)
+        dImg=sImg.resize((1000, int(1000*h/w)),Image.ANTIALIAS)
         dImg.save(file)
     elif h > 1000:
-        dImg=sImg.resize((w, 1000),Image.ANTIALIAS)
+        dImg=sImg.resize((int(1000*w/h), 1000),Image.ANTIALIAS)
         dImg.save(file)
 
 
@@ -32,9 +36,7 @@ def recognize_from_image(files=[]):
         preprocess(item)
 
     i = 1
-    print('before loop')
     while i < len(files):
-        print(files[i])
         img = cv2.imread(files[i], 0)  # queryImage
         
         # Initiate SIFT detector
@@ -77,20 +79,13 @@ def recognize_from_image(files=[]):
         i += 1
 
     plt.xticks([])
-    print('finished 0')
     plt.yticks([])
-    print('finished 1')
     plt.imshow(origin)
-    print('finished 2')
     plt.subplots_adjust(bottom = 0)
-    print('finished 3')
     plt.subplots_adjust(top = 1)
-    print('finished 4')
     plt.subplots_adjust(right = 1)
     plt.subplots_adjust(left = 0)
-    print('finished')
     plt.savefig('./buildIT/result.jpg')
-    print('finished after save')
     return True
     # draw_params = dict(matchColor=(0, 0, 0), # draw matches in green color
     #                    singlePointColor=None,

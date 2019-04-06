@@ -20,8 +20,10 @@ def preprocess(file):
 
 
 def recognize_from_image(files=['2.jpeg', '1.jpeg']):
+    if len(files) < 2:
+        return False
     origin_photo = files[0]
-    MIN_MATCH_COUNT = 7
+    MIN_MATCH_COUNT = 10
     img_colored = cv2.imread(files[0], cv2.IMREAD_COLOR)
     origin = cv2.imread(files[0], 0) # trainImage
 
@@ -30,7 +32,9 @@ def recognize_from_image(files=['2.jpeg', '1.jpeg']):
         preprocess(item)
 
     i = 1
+    print('before loop')
     while i < len(files):
+        print(files[i])
         img = cv2.imread(files[i], 0)  # queryImage
         
         # Initiate SIFT detector

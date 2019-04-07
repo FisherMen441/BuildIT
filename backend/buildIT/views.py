@@ -6,6 +6,7 @@ import json
 import base64
 import os
 from .sift import *
+from .load_model import *
 
 # Create your views here.
 def recommend(request):
@@ -138,15 +139,15 @@ def cv_upload(request):
         return HttpResponse(status=404)
     data = json.loads(request.body.decode('utf-8'))
     requirement = data['requirement']
+    img_data = data['img']
+    furniture_id = data['FID']
+    step = data['SID']
+    new_img_dir = "./buildIT/imageToSave.jpg"
+    print('saved')
+    with open(new_img_dir, "wb") as fh:
+        fh.write(base64.decodebytes(img_data.encode('ascii')))
     response = {}
     if requirement == 'components': 
-        img_data = data['img']
-        furniture_id = data['FID']
-        step = data['SID']
-        new_img_dir = "./buildIT/imageToSave.jpg"
-        print('saved')
-        with open(new_img_dir, "wb") as fh:
-            fh.write(base64.decodebytes(img_data.encode('ascii')))
         cursor = connection.cursor()
         cursor.execute("SELECT CID FROM Components_needed WHERE FID=%s AND SID=%s;", (furniture_id, step))
         CIDs = cursor.fetchall()
@@ -158,7 +159,9 @@ def cv_upload(request):
             img_list.append("./sql/uploads/" + img_url[0][0])
         print(img_list)
         recognize_from_image(img_list)
-        response = {'img_url': '/buildIT/result.jpg'}
+    elif requirement == 'tools':
+        run_detection(new_img_dir)
+    response = {'img_url': '/buildIT/result.jpg'} 
     return JsonResponse(response)
 
 

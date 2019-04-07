@@ -10,45 +10,46 @@ git clone https://github.com/FisherMen441/BuildIT.git
 ## Frontend
 
 ### Frontend Folder and File Structure
-
-.
-frontend
-└── BuildIT
-    ├── App.js
-    ├── app.json
-    ├── assets
-    │   ├── back.png
-    │   ├── icon.png
-    │   ├── qr_code.png
-    │   ├── search.png
-    │   ├── splash.png
-    │   ├── swipedown.png
-    │   ├── swipeup.png
-    │   └── takepic.jpg
-    ├── babel.config.js
-    ├── components
-    │   ├── CommentBox.js
-    │   ├── PicStack.js
-    │   ├── RecommendSlider.js
-    │   ├── ScaleImage.js
-    │   ├── SearchQR.js
-    │   └── variable.js
-    ├── config.js
-    ├── navigation
-    │   ├── AppNavigator.js
-    │   └── MainTabNavigator.js
-    ├── package-lock.json
-    ├── package.json
-    └── screens
-        ├── CameraScreen.js
-        ├── CameraToolScreen.js
-        ├── CommentScreen.js
-        ├── HomeScreen.js
-        ├── IntroScreen.js
-        ├── QRScreen.js
-        ├── SearchScreen.js
-        ├── StepScreen.js
-        └── ToolScreen.js
+```
+    .
+    frontend
+    └── BuildIT
+        ├── App.js
+        ├── app.json
+        ├── assets
+        │   ├── back.png
+        │   ├── icon.png
+        │   ├── qr_code.png
+        │   ├── search.png
+        │   ├── splash.png
+        │   ├── swipedown.png
+        │   ├── swipeup.png
+        │   └── takepic.jpg
+        ├── babel.config.js
+        ├── components
+        │   ├── CommentBox.js
+        │   ├── PicStack.js
+        │   ├── RecommendSlider.js
+        │   ├── ScaleImage.js
+        │   ├── SearchQR.js
+        │   └── variable.js
+        ├── config.js
+        ├── navigation
+        │   ├── AppNavigator.js
+        │   └── MainTabNavigator.js
+        ├── package-lock.json
+        ├── package.json
+        └── screens
+            ├── CameraScreen.js
+            ├── CameraToolScreen.js
+            ├── CommentScreen.js
+            ├── HomeScreen.js
+            ├── IntroScreen.js
+            ├── QRScreen.js
+            ├── SearchScreen.js
+            ├── StepScreen.js
+            └── ToolScreen.js
+```
 ### Build Instructions
 
 We use React Native for the app.

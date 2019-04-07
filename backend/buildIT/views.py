@@ -129,6 +129,7 @@ def step_manual(request):
             'description': result[0][1],
             'Video_loc': result[0][2]
         }
+    print(response)
     return JsonResponse(response)
     
 

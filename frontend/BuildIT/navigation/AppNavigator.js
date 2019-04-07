@@ -9,6 +9,7 @@ import CommentScreen from '../screens/CommentScreen';
 import StepScreen from '../screens/StepScreen';
 import ToolScreen from '../screens/ToolScreen';
 import CameraScreen from '../screens/CameraScreen';
+import CameraToolScreen from '../screens/CameraToolScreen';
 
 export default createAppContainer(createSwitchNavigator(
   {
@@ -22,6 +23,7 @@ export default createAppContainer(createSwitchNavigator(
     Step: StepScreen,
     Tool: ToolScreen,
     Camera: CameraScreen,
+    CameraTool: CameraToolScreen,
   },
   {
     initialRouteName: 'Home',

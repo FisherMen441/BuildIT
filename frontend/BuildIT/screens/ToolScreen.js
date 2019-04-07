@@ -51,6 +51,13 @@ export default class ToolScreen extends React.Component {
         })
     }
 
+    cameraNavigate(){
+        this.state.naviFunc('CameraTool', {
+            FID: this.state.FID,
+            SID: this.state.SID
+        })
+    }
+
     postPressed() {
         this.backgroundColor='#ffffff';
         fetch('', {
@@ -94,6 +101,7 @@ export default class ToolScreen extends React.Component {
                     <Text style={styles.title}>Step: {this.state.SID}</Text>
                     {this.state.img_uri ? <ScaleImage uri={this.state.img_uri} style={styles.image} /> : null}
                     {this.state.tools ? <Text style={styles.description}>{this.state.description}</Text> : <Text>No tools needed</Text>}
+                    <TouchableOpacity style={styles.button} onPress={this.cameraNavigate.bind(this)} ><Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}> Find Tools</Text></TouchableOpacity>
                 </View>
             </View>
         )

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, Button, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput, WebView } from 'react-native';
+import { StyleSheet, View, Text, Button, ListView, Dimensions, AppRegistry, TouchableOpacity, Image, TouchableHighlight, TextInput, WebView, ScrollView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import ScaleImage from '../components/ScaleImage';
 import Swiper from 'react-native-swiper';
+import CommentBox from '../components/CommentBox';
 import { Constants, Video } from 'expo';
 import {HOST} from '../config'
 
@@ -10,6 +11,7 @@ import {HOST} from '../config'
 export default class StepScreen extends React.Component {
     constructor(props) {
         super(props);
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.Content !== r2.Content});
         const { navigation } = props;
         this.state = {
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
@@ -19,7 +21,9 @@ export default class StepScreen extends React.Component {
             stepManualLoc: navigation.getParam('stepManualLoc', ''),
             videoLink: navigation.getParam('videoLink', ''),
             description: navigation.getParam('description', ''),
-            videoOnPlay: 'false'
+            videoOnPlay: 'false',
+            comments: ds.cloneWithRows([]),
+            text: '',
         }
     }
 
@@ -44,7 +48,22 @@ export default class StepScreen extends React.Component {
                 videoLink: data.Video_loc,
             })
         })
-        .catch(error => console.log('Error: ', error))
+        .catch(error => console.log('Error: ', error));
+
+        fetch(`${HOST}/api/comment/?furniture_id=${this.state.FID}&step=${this.state.SID}`, {
+            method: 'GET',
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then((data)=>{
+            this.setState({
+                comments: this.state.comments.cloneWithRows(data.comments)
+            })
+        })
+        .catch(error => console.log('Error: ', error));
     }
 
     backStep(){
@@ -53,6 +72,7 @@ export default class StepScreen extends React.Component {
                 FID: this.state.FID,
             })
         } else{
+            var prev_sid = this.state.SID - 1;
             fetch(
                 `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID - 1}`,
                 {
@@ -73,11 +93,29 @@ export default class StepScreen extends React.Component {
                         SID: this.state.SID - 1,
                         stepManualLoc: `${HOST}${data.img_url}`,
                         description: data.description,
-                        videoLink: data.video_link,
+                        videoLink: data.Video_loc,
                     })
                 } 
             })
-            .catch(error => console.log('Error: ', error))
+            .catch(error => console.log('Error: ', error));
+
+            fetch(`${HOST}/api/comment/?furniture_id=${this.state.FID}&step=&step=${prev_sid}`, {
+                method: 'GET',
+            })
+            .then(response => {
+                if (!response.stateText == 'OK')
+                    throw Error("Not 200 status code");
+                return response.json();
+            })
+            .then((data)=>{
+                this.setState({
+                    comments: this.state.comments.cloneWithRows([])
+                });
+                this.setState({
+                    comments: this.state.comments.cloneWithRows(data.comments)
+                })
+            })
+            .catch(error => console.log('Error: ', error));
         }
     }
 
@@ -89,29 +127,40 @@ export default class StepScreen extends React.Component {
     }
 
     postPressed() {
+        if (this.state.text === ''){
+            return;
+        }
         this.backgroundColor='#ffffff';
-        const host = '';
-        fetch('', {
+        fetch(`${HOST}/api/comment/?furniture_id=${this.state.FID}&step=${this.state.SID}`, {
+            credentials: 'same-origin',
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                username: "testuser5",
-                message: this.state.text,
+                user_id: 1,
+                furniture_id: this.state.FID,
+                text: this.state.text,
+                step: this.state.SID,
             })
         })
         .then(response => {
             if (!response.stateText == 'OK')
                 throw Error("Not 200 status code");
-            return;
+            return response.json();
         })
-        .then(()=>{
-            this.props.addPost();
-            this.refs.PostText.clear();
+        .then((data)=>{
+            const newComments = this.state.comments
+            newComments.push({
+                User_name: data.User_name,
+                Content: data.Content,
+                });
+            this.setState({
+                comments: newComments,
+                text: '',
+            })
         })
         .catch(error => console.log('Error: ', error))
-
     }
 
     cameraNavigate(){
@@ -122,6 +171,7 @@ export default class StepScreen extends React.Component {
     }
 
     nextStep() {
+        var next_sid = this.state.SID + 1;
         fetch(
             `${HOST}/api/manual/?furniture_id=${this.state.FID}&step=${this.state.SID + 1}`,
             {
@@ -142,17 +192,43 @@ export default class StepScreen extends React.Component {
                     SID: this.state.SID + 1,
                     stepManualLoc: `${HOST}${data.img_url}`,
                     description: data.description,
-                    videoLink: data.video_link,
+                    videoLink: data.Video_loc,
                 })
             } else {
                 alert(`This is the final step!`);
             }
         })
-        .catch(error => console.log('Error: ', error))
+        .catch(error => console.log('Error: ', error));
+
+        fetch(`${HOST}/api/comment/?furniture_id=${this.state.FID}&step=${next_sid}`, {
+            method: 'GET',
+        })
+        .then(response => {
+            if (!response.stateText == 'OK')
+                throw Error("Not 200 status code");
+            return response.json();
+        })
+        .then((data)=>{
+            this.setState({
+                comments: this.state.comments.cloneWithRows([])
+            });
+            this.setState({
+                comments: this.state.comments.cloneWithRows(data.comments)
+            })
+        })
+        .catch(error => console.log('Error: ', error));
     }
 
     render() {
         const { navigation } = this.props;
+        // const comments_list = [];
+        // this.state.comments.forEach((element, i)=>{
+        //     comments_list.push(
+        //         <View  key={i} style={{height: 100}}>
+        //         <CommentBox userName={element.User_name} content={element.Content} editable={true}/>
+        //         </View>
+        //     )
+        // })
         if (this.state.videoOnPlay === 'false'){
             return (
                 <Swiper 
@@ -182,6 +258,9 @@ export default class StepScreen extends React.Component {
                     <View style={styles.comment}>
                         <TouchableOpacity onPress={() => { this.state.naviFunc('Comment', {
                             uri: this.state.uri,
+                            naviFunc: this.state.naviFunc,
+                            FID: this.state.FID,
+                            SID: this.state.SID,
                         })}} >
                             <Image style={styles.stretch} source={require('../assets/swipedown.png')} />
                         </TouchableOpacity>
@@ -212,12 +291,20 @@ export default class StepScreen extends React.Component {
                                     <Text style={{ fontSize: 18, color: 'white' }}> Post </Text>
                                 </TouchableOpacity>
                             </View>
+                            <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+                            <ListView
+                                enableEmptySections={true}
+                                dataSource={this.state.comments}
+                                renderRow={(rowData) => <View style={{height: 100}}><CommentBox userName={rowData.User_name} content={rowData.Content} editable={true}/></View>}
+                            />
+                            </ScrollView>
                         </View>
 
                     </Swiper>
                 </Swiper>
             )
         }else {
+            console.log(this.state.videoLink);
             return (
                 <View style={styles.container}>
                     <View style={styles.back}>

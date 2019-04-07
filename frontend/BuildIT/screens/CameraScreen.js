@@ -14,7 +14,8 @@ export default class CameraScreen extends React.Component {
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             naviScreen: navigation.getParam('naviScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
-            SID: navigation.getParam('SID', 1)
+            SID: navigation.getParam('SID', 1),
+            cvResult: 'false',
         };
     }
 
@@ -40,7 +41,8 @@ export default class CameraScreen extends React.Component {
                 body: JSON.stringify({
                     img: photo.base64,
                     FID: this.state.FID,
-                    SID: this.state.SID
+                    SID: this.state.SID,
+                    requirement: 'components',
                 })
             }).
             then(response => {
@@ -48,7 +50,13 @@ export default class CameraScreen extends React.Component {
                     throw Error("Not 200 status code");
                 return response.json();
             })
-            .then(data => console.log(data))
+            .then((data) => {
+                if (data['img_url']) {
+                    this.setState({
+                        cvResult: 'true'
+                    })
+                }
+            })
             .catch(err => console.log(err))
         }
     }
@@ -60,69 +68,89 @@ export default class CameraScreen extends React.Component {
         } else if (hasCameraPermission === false) {
             return <Text>No access to camera</Text>;
         } else {
-            return (
-                <View style={{ flex: 1 }}>
-                    <View style={styles.back}>
-                        <Icon
-                            name='arrow-left'
-                            type='material-community'
-                            style={{ flex: 0.1 }}
-                            onPress={() => {
-                                this.state.naviFunc(this.state.naviScreen, {
-                                    FID: this.state.FID,
-                                    SID: this.state.SID,
-                                });
-                            }}
-                        />
-                        <View style={{ flex: 0.45 }} />
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}> Recognizing Components </Text>
-                    </View>
-                    <Camera style={{ flex: 1 }}
-                        type={this.state.type}
-                        ref={ref => { this.camera = ref; }}
-                        ratio={'16:9'}
-                        style={styles.camera}
-                    >
-                        <View
-                            style={{
-                                flex: 1,
-                                backgroundColor: 'transparent',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                marginTop: 500,
-                                marginLeft: 150,
-                            }}>
-                            {/* <TouchableOpacity
-                                style={{
-                                    flex: 0.1,
-                                    alignSelf: 'flex-end',
-                                    alignItems: 'center',
-                                }}
+            if (this.state.cvResult === 'false') {
+                return (
+                    <View style={{ flex: 1 }}>
+                        <View style={styles.back}>
+                            <Icon
+                                name='arrow-left'
+                                type='material-community'
+                                style={{ flex: 0.1 }}
                                 onPress={() => {
-                                    this.setState({
-                                        type: this.state.type === Camera.Constants.Type.back
-                                            ? Camera.Constants.Type.front
-                                            : Camera.Constants.Type.back,
+                                    this.state.naviFunc(this.state.naviScreen, {
+                                        FID: this.state.FID,
+                                        SID: this.state.SID,
                                     });
-                                }}>
-                                <Text
-                                    style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                                    {' '}Flip{' '}
-                                </Text>
-                            </TouchableOpacity> */}
-                            <TouchableOpacity
-                                // style={{
-                                //     // flex: 0.1,
-                                //     // alignSelf: 'flex',
-                                // }}
-                                onPress={() => this.takePicture()}
-                            >
-                            <Image source={require('../assets/takepic.jpg')} style={styles.icon}/>
-                            </TouchableOpacity>
+                                }}
+                            />
+                            <View style={{ flex: 0.45 }} />
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: "center" }}> Recognizing Components </Text>
                         </View>
-                    </Camera>
-                </View>
-            );
+                        <Camera style={{ flex: 1 }}
+                            type={this.state.type}
+                            ref={ref => { this.camera = ref; }}
+                            ratio={'16:9'}
+                            style={styles.camera}
+                        >
+                            <View
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: 'transparent',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    marginTop: 500,
+                                    marginLeft: 150,
+                                }}>
+                                {/* <TouchableOpacity
+                                    style={{
+                                        flex: 0.1,
+                                        alignSelf: 'flex-end',
+                                        alignItems: 'center',
+                                    }}
+                                    onPress={() => {
+                                        this.setState({
+                                            type: this.state.type === Camera.Constants.Type.back
+                                                ? Camera.Constants.Type.front
+                                                : Camera.Constants.Type.back,
+                                        });
+                                    }}>
+                                    <Text
+                                        style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
+                                        {' '}Flip{' '}
+                                    </Text>
+                                </TouchableOpacity> */}
+                                <TouchableOpacity
+                                    // style={{
+                                    //     // flex: 0.1,
+                                    //     // alignSelf: 'flex',
+                                    // }}
+                                    onPress={() => this.takePicture()}
+                                >
+                                <Image source={require('../assets/takepic.jpg')} style={styles.icon}/>
+                                </TouchableOpacity>
+                            </View>
+                        </Camera>
+                    </View>
+                );
+            }
+            else {
+                return (
+                    <View>
+                        <View style={styles.back}>
+                            <Icon
+                                name='arrow-left'
+                                type='material-community'
+                                style={{ flex: 0.1 }}
+                                onPress={() => { this.setState({ cvResult: 'false' }) }}
+                            />
+                            <View style={{ flex: 0.9 }} />
+                        </View>
+                        <View style={styles.img_container}>
+                            <Image style={{width: Dimensions.get('window').width - 30, height: Dimensions.get('window').height - 70}} source={{uri: `${HOST}/buildIT/result.jpg`}} />
+                        </View>
+                    </View>
+                );
+            }
         }
     }
 }
@@ -135,11 +163,15 @@ const styles = StyleSheet.create({
     },
     camera: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').width * 16 / 10,
+        height: Dimensions.get('window').width * 16 / 9,
     },
     icon: {
         width: Dimensions.get('window').width / 4,
         height: Dimensions.get('window').width / 4,
         resizeMode: 'contain'
     },
+    img_container: {
+        marginEnd: 10,
+        marginLeft: 15
+    }
 })

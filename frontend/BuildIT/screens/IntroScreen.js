@@ -78,7 +78,6 @@ export default class IntroScreen extends React.Component {
                 furniture_id: this.state.FID,
                 text: this.state.text,
                 step: 0,
-                "my": 123,
             })
         })
         .then(response => {

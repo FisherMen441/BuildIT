@@ -10,6 +10,8 @@ git clone https://github.com/FisherMen441/BuildIT.git
 ## Frontend
 
 ### Frontend Folder and File Structure
+
+.
 frontend
 └── BuildIT
     ├── App.js

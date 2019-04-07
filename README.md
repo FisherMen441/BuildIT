@@ -76,7 +76,59 @@ If you are using Android phone, open `Expo` and go to `Projects -> Scan QR Code`
 ## Backend
 
 ### Backend Folder and File Structure
-
+```
+    .
+    backend
+    ├── README.md
+    ├── api
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── buildIT
+    │   ├── __init__.py
+    │   ├── admin.py
+    │   ├── apps.py
+    │   ├── freezed_graph
+    │   │   ├── checkpoint
+    │   │   ├── frozen_inference_graph.pb
+    │   │   ├── model.ckpt.data-00000-of-00001
+    │   │   ├── model.ckpt.index
+    │   │   ├── model.ckpt.meta
+    │   │   ├── pipeline.config
+    │   │   ├── saved_model
+    │   │   │   └── saved_model.pb
+    │   │   └── script
+    │   │       ├── cheatsheet.txt
+    │   │       ├── graph.pbtxt
+    │   │       ├── load_model.py
+    │   │       ├── sort_node.py
+    │   │       ├── sorted_inference_graph.pb
+    │   │       ├── tf_text_graph_common.py
+    │   │       └── tf_text_graph_ssd.py
+    │   ├── load_model.py
+    │   ├── migrations
+    │   │   └── __init__.py
+    │   ├── models.py
+    │   ├── result.jpg
+    │   ├── sift.py
+    │   ├── tests.py
+    │   ├── tool_reg
+    │   │   ├── graph.pbtxt
+    │   │   ├── load_model.py
+    │   │   ├── sorted_inference_graph.pb
+    │   │   ├── test.jpg
+    │   │   └── text.jpg
+    │   ├── tools_result.jpg
+    │   └── views.py
+    ├── manage.py
+    └── sql
+        ├── data.sql
+        ├── drop.sql
+        ├── schema.sql
+        └── uploads
+            └── *.png
+```
 ### Backend APIs
 
 | API                                   | Method   | Describe                                                     |

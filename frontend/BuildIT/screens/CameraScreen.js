@@ -15,11 +15,7 @@ export default class CameraScreen extends React.Component {
             naviScreen: navigation.getParam('naviScreen', 'Step'),
             FID: navigation.getParam('FID', 1),
             SID: navigation.getParam('SID', 1),
-<<<<<<< HEAD
             cvResult: 'false',
-=======
-            cvResult: 'false'
->>>>>>> test cv
         };
     }
 

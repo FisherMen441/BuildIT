@@ -3,6 +3,7 @@ import { AppRegistry, StyleSheet, View, TouchableOpacity, Text, Dimensions, Imag
 import { Icon } from 'react-native-elements';
 import { Camera, Permissions } from 'expo';
 import { HOST } from '../config';
+import ScaleImage from '../components/ScaleImage';
 
 export default class CameraScreen extends React.Component {
     constructor(props) {
@@ -145,9 +146,10 @@ export default class CameraScreen extends React.Component {
                             />
                             <View style={{ flex: 0.9 }} />
                         </View>
-                        <View style={styles.img_container}>
-                            <Image style={{width: Dimensions.get('window').width - 30, height: Dimensions.get('window').height - 70}} source={{uri: `${HOST}/buildIT/result.jpg`}} />
-                        </View>
+                        {/* <View style={styles.img_container}> */}
+                            {/* <Image style={{width: Dimensions.get('window').width - 30, height: Dimensions.get('window').height - 70}} source={{uri: `${HOST}/buildIT/result.jpg`}} /> */}
+                            <ScaleImage uri={`${HOST}/buildIT/result.jpg`} style={styles.img_container} />
+                        {/* </View> */}
                     </View>
                 );
             }
@@ -171,7 +173,6 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     img_container: {
-        marginEnd: 10,
-        marginLeft: 15
+        width: Dimensions.get('window').width - 10,
     }
 })

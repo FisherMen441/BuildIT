@@ -24,6 +24,7 @@ export default class StepScreen extends React.Component {
             videoOnPlay: 'false',
             comments: ds.cloneWithRows([]),
             text: '',
+            arr: []
         }
     }
 
@@ -60,7 +61,8 @@ export default class StepScreen extends React.Component {
         })
         .then((data)=>{
             this.setState({
-                comments: this.state.comments.cloneWithRows(data.comments)
+                comments: this.state.comments.cloneWithRows(data.comments),
+                arr: data.comments,
             })
         })
         .catch(error => console.log('Error: ', error));
@@ -112,6 +114,7 @@ export default class StepScreen extends React.Component {
                     comments: this.state.comments.cloneWithRows([])
                 });
                 this.setState({
+                    arr: data.comments,
                     comments: this.state.comments.cloneWithRows(data.comments)
                 })
             })
@@ -150,13 +153,13 @@ export default class StepScreen extends React.Component {
             return response.json();
         })
         .then((data)=>{
-            const newComments = this.state.comments
+            const newComments = this.state.arr;
             newComments.push({
                 User_name: data.User_name,
                 Content: data.Content,
                 });
             this.setState({
-                comments: newComments,
+                comments: this.state.comments.cloneWithRows(newComments),
                 text: '',
             })
         })
@@ -213,6 +216,7 @@ export default class StepScreen extends React.Component {
                 comments: this.state.comments.cloneWithRows([])
             });
             this.setState({
+                arr: data.comments,
                 comments: this.state.comments.cloneWithRows(data.comments)
             })
         })

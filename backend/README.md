@@ -1,10 +1,36 @@
-# Backend of BuildIT
-We will use `django` for backend. 
+## Run Starter App
 
+### Backend API
 
+Start server:
 
-# Reference 
+`service gunicorn restart`
 
- [django-project-sample-f17](https://github.com/UM-EECS-441/django-project-sample-f17)
+You can use `postman` or `curl` to test these APIs.
 
-[django tutorial](https://medium.com/backticks-tildes/lets-build-an-api-with-django-rest-framework-32fcf40231e5)
+- POST request 157.230.91.86/adduser/
+- POST request 157.230.91.86/addchatt/
+- GET request 157.230.91.86/getchatts/
+
+### Frontend
+
+We use React Native for the app.
+
+Install `node` on MacOS:`brew install node`
+
+Launch the app:
+
+```
+cd BuildIT/Starter\ App/frontend/Chatter
+npm install -g expo-cli
+npm install
+npm start
+```
+
+There will be a website window with a QR code.
+
+Now download the app [`Expo`](https://expo.io/) to your phone.
+
+If you are using an iPhone, open your camera and focus the QR code. Then open the app `Expo`. 
+
+If you are using an Android phone, open `Expo` and go to `Projects -> Scan QR Code`.

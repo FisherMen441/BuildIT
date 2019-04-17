@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
             let size = data.length;
             var images1_new = [], images2_new = [];
             var FID1 = [], FID2 = [];
-            for (let i  = 0; i < size; i++) {
+            for (let i  = 0; i < size/2; i++) {
                 images1_new.push(`${HOST}${data[i]["img"]}`);
                 FID1.push(data[i]["fid"]);
             }

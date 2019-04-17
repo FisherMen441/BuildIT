@@ -39,7 +39,7 @@ export default class QRScreen extends React.Component {
                     <Icon
                         name='arrow-left'
                         type='material-community'
-                        style={{ flex: 0.1 }}
+                        style={{ flex: 0.1, size: 32 }}
                         onPress={() => {
                             this.state.naviFunc(this.state.naviScreen);
                         }}

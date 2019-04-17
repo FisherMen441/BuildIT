@@ -15,6 +15,7 @@ export default class CommentScreen extends React.Component {
             text: '',
             naviFunc: navigation.getParam('naviFunc', navigation.navigate),
             introScreen: navigation.getParam('introScreen', 'Intro'),
+            stepScreen: navigation.getParam('stepScreen', 'Step'),
             uri: navigation.getParam('uri', ''),
         }
     }
@@ -34,6 +35,22 @@ export default class CommentScreen extends React.Component {
             })
         })
         .catch(error => console.log('Error: ', error));
+    }
+
+    commentBack() {
+        if (this.state.SID === 0) {
+            this.state.naviFunc('Intro', {
+                naviFunc: this.state.naviFunc,
+                FID: this.state.FID,
+            })
+        }
+        else {
+            this.state.naviFunc('Step', {
+                naviFunc: this.state.naviFunc,
+                FID: this.state.FID,
+                SID: this.state.SID,
+            })
+        }
     }
 
     postPressed() {
@@ -87,11 +104,7 @@ export default class CommentScreen extends React.Component {
         return (
             <View style={{flexDirection: 'column', justifyContent: 'center',alignItems: 'stretch',}}>
                 <View style={styles.tointro}>
-                    <TouchableOpacity underlayColor="#ffffff00" onPress={() => {
-                        this.state.naviFunc('Intro', {
-                            naviFunc: this.state.naviFunc
-                        })
-                    }} >
+                    <TouchableOpacity underlayColor="#ffffff00" onPress={this.commentBack.bind(this)}>
                         <Image style={styles.stretch} source={require('../assets/swipeup.png')} />
                     </TouchableOpacity>
                 </View>

@@ -84,6 +84,6 @@ INSERT INTO Tools_needed VALUES(2, 1, 1);
 INSERT INTO Users VALUES(1, "Xiaoyu", "password");
 INSERT INTO Users VALUES(2, "Jingyuan", "password");
 
-INSERT INTO Comments VALUES(1, 1, 1, "This is an easy step" );
-INSERT INTO Comments VALUES(1, 2, 1, "This is a hard step" );
-INSERT INTO Comments VALUES(1, 1, 2, "I think this step is ok" );
+INSERT INTO Comments VALUES(1, 1, 1, 1, 0, "This is an easy step" );
+INSERT INTO Comments VALUES(2, 1, 2, 1, 0, "This is a hard step" );
+INSERT INTO Comments VALUES(3, 1, 1, 2, 0, "I think this step is ok" );

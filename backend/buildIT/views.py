@@ -56,8 +56,8 @@ def comment(request):
         step = int(data['step'])
         user_id = int(data['user_id'])
         body = data['text']
-        cursor.execute("INSERT INTO Comments (FID, SID, UID, Content) VALUES (%s, %s, %s, %s);"
-                        ,(furniture_id, step, user_id, body))
+        cursor.execute("INSERT INTO Comments (FID, SID, UID, LIKES, Content) VALUES (%s, %s, %s, %s, %s);"
+                        ,(furniture_id, step, user_id, 0, body))
         connection.commit()
         cursor.execute("SELECT User_name " +
                        "FROM Users " + 
@@ -71,11 +71,13 @@ def comment(request):
     if step == 0:
         cursor.execute("SELECT C.Content, U.User_name " +
                 "FROM Comments C, Users U " + 
-                "WHERE C.FID=%s AND U.UID = C.UID;", (furniture_id,))
+                "WHERE C.FID=%s AND U.UID = C.UID;" + 
+                "ORDER BY C.LIKES DESC", (furniture_id,))
     else:
         cursor.execute("SELECT C.Content, U.User_name " +
                     "FROM Comments C, Users U " + 
-                    "WHERE U.UID = C.UID AND C.FID=%s AND C.SID=%s;", (furniture_id, step))
+                    "WHERE U.UID = C.UID AND C.FID=%s AND C.SID=%s;" + 
+                    "ORDER BY C.LIKES DESC", (furniture_id, step))
     comment_list = cursor.fetchall()
     result = []
     context = {'comments': []}
@@ -87,6 +89,25 @@ def comment(request):
     context['comments'] = result
     return JsonResponse(context)
 
+
+@csrf_exempt
+def like_comment(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    comment_id = request.POST.get('comment_id')
+    like = request.POST.get('like')
+    cursor = connection.cursor()
+    cursor.execute("SELECT LIKES FROM Comments WHERE CID=%s;", (comment_id,))
+    likes = cursor.fetchall()[0][0]
+    if like == 'true':
+        likes += 1
+    else:
+        likes -= 1
+    cursor.execute("UPDATE Comments SET LIKES=%s;"
+                        ,(likes,))
+    connection.commit()
+    context = {}
+    return JsonResponse(context)
 
 def tools(request):
     if request.method != 'GET':

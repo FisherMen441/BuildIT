@@ -86,6 +86,7 @@ def recognize_from_image(files=[]):
     plt.subplots_adjust(right = 1)
     plt.subplots_adjust(left = 0)
     plt.savefig('./buildIT/result.jpg')
+    plt.close()
     return True
     # draw_params = dict(matchColor=(0, 0, 0), # draw matches in green color
     #                    singlePointColor=None,

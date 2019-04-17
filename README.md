@@ -141,6 +141,7 @@ If you are using Android phone, open `Expo` and go to `Projects -> Scan QR Code`
 | /api/upload/                           | POST     | Post images token by camera to backend for CV analysis, return the path of the result image         |
 | /api/videos/?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
 | /api/furniture_info/?furniture_id=xxx | GET | Get the furniture infor for intro screen |
+| /api/like_comment/?comment_id=xxx&like=true | POST | Post likes/unlikes(false) for the comments |
 
 ### Backend Dadabase
 

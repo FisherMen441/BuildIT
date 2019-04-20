@@ -79,7 +79,9 @@ export default class CameraScreen extends React.Component {
                             />
                             <View style={{ flex: 0.9 }} />
                         </View>
-                            <ScaleImage uri={`${HOST}/buildIT/result.jpg`} style={styles.img_container} />
+                        <View style={styles.img_container}>
+                            <Image style={{ width: Dimensions.get('window').width - 30, height: Dimensions.get('window').height - 70 }} source={{ uri: `${HOST}/buildIT/result.jpg` }} />
+                        </View>
                     </View>
                 );
             }

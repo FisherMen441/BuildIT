@@ -166,6 +166,9 @@ export default class StepScreen extends React.Component {
                 newComments.push({
                     User_name: data.User_name,
                     Content: data.Content,
+                    Likes: data.Likes,
+                    Rate: data.Rate,
+                    CommentID: data.CommentID,
                 });
                 this.setState({
                     comments: this.state.comments.cloneWithRows(newComments),
@@ -379,7 +382,7 @@ export default class StepScreen extends React.Component {
                                 <ListView
                                     enableEmptySections={true}
                                     dataSource={this.state.comments}
-                                    renderRow={(rowData) => <View style={{ height: 100 }}><CommentBox userName={rowData.User_name} content={rowData.Content} editable={true} /></View>}
+                                    renderRow={(rowData) => <View style={{ height: 100 }}><CommentBox userName={rowData.User_name} content={rowData.Content} editable={true} commentID={rowData.CommentID} rating={rowData.Rate} likes={rowData.Likes}/></View>}
                                 />
                             </ScrollView>
                         </View>

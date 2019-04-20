@@ -56,8 +56,8 @@ def comment(request):
         step = int(data['step'])
         user_id = int(data['user_id'])
         body = data['text']
-        cursor.execute("INSERT INTO Comments (FID, SID, UID, LIKES, Content) VALUES (%s, %s, %s, %s, %s);"
-                        ,(furniture_id, step, user_id, 0, body))
+        cursor.execute("INSERT INTO Comments (FID, SID, UID, LIKES, RATE, Content) VALUES (%s, %s, %s, %s, %s);"
+                        ,(furniture_id, step, user_id, 0, 0, body))
         connection.commit()
         cursor.execute("SELECT User_name " +
                        "FROM Users " + 

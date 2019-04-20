@@ -3,6 +3,7 @@ import { AppRegistry, StyleSheet, View, TouchableOpacity, Text, Dimensions, Imag
 import { Icon } from 'react-native-elements';
 import { Camera, Permissions } from 'expo';
 import { HOST } from '../config';
+import ScaleImage from '../components/ScaleImage';
 
 export default class CameraScreen extends React.Component {
     constructor(props) {
@@ -30,13 +31,11 @@ export default class CameraScreen extends React.Component {
 
     async takePicture() {
         if (this.camera) {
+            this.setState({
+                cvResult: 'loading'
+            })
             let photo = await this.camera.takePictureAsync({ skipProcessing: false, base64: true, quality: 0.0 });
-            // const postData = {};
-            //console.log(JSON.stringify(postData))
             fetch(`${HOST}/api/upload/`, {
-                // headers: {
-                //     'Content-Type' : "application/json", 
-                // },
                 method: 'POST',
                 body: JSON.stringify({
                     img: photo.base64,
@@ -68,14 +67,32 @@ export default class CameraScreen extends React.Component {
         } else if (hasCameraPermission === false) {
             return <Text>No access to camera</Text>;
         } else {
-            if (this.state.cvResult === 'false') {
+            if (this.state.cvResult === 'true') {
+                return (
+                    <View>
+                        <View style={styles.back}>
+                            <Icon
+                                name='arrow-left'
+                                type='material-community'
+                                style={{ flex: 0.1 }}
+                                onPress={() => { this.setState({ cvResult: 'false' }) }}
+                            />
+                            <View style={{ flex: 0.9 }} />
+                        </View>
+                        <View style={styles.img_container}>
+                            <Image style={{ width: Dimensions.get('window').width - 30, height: Dimensions.get('window').height - 70 }} source={{ uri: `${HOST}/buildIT/result.jpg` }} />
+                        </View>
+                    </View>
+                );
+            }
+            else {
                 return (
                     <View style={{ flex: 1 }}>
                         <View style={styles.back}>
                             <Icon
                                 name='arrow-left'
                                 type='material-community'
-                                style={{ flex: 0.1 }}
+                                style={{ flex: 0.1, size: 32 }}
                                 onPress={() => {
                                     this.state.naviFunc(this.state.naviScreen, {
                                         FID: this.state.FID,
@@ -92,62 +109,34 @@ export default class CameraScreen extends React.Component {
                             ratio={'16:9'}
                             style={styles.camera}
                         >
-                            <View
-                                style={{
-                                    flex: 1,
-                                    backgroundColor: 'transparent',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginTop: 500,
-                                    marginLeft: 150,
-                                }}>
-                                {/* <TouchableOpacity
+                            {this.state.cvResult === 'loading' ?
+                                <View
                                     style={{
-                                        flex: 0.1,
-                                        alignSelf: 'flex-end',
+                                        flex: 1,
+                                        backgroundColor: 'rgba(112, 112, 112, 0.8)',
+                                        flexDirection: 'row',
                                         alignItems: 'center',
-                                    }}
-                                    onPress={() => {
-                                        this.setState({
-                                            type: this.state.type === Camera.Constants.Type.back
-                                                ? Camera.Constants.Type.front
-                                                : Camera.Constants.Type.back,
-                                        });
                                     }}>
-                                    <Text
-                                        style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                                        {' '}Flip{' '}
-                                    </Text>
-                                </TouchableOpacity> */}
-                                <TouchableOpacity
-                                    // style={{
-                                    //     // flex: 0.1,
-                                    //     // alignSelf: 'flex',
-                                    // }}
-                                    onPress={() => this.takePicture()}
-                                >
-                                <Image source={require('../assets/takepic.jpg')} style={styles.icon}/>
-                                </TouchableOpacity>
-                            </View>
+                                    <Image source={require('../assets/Loading.png')} style={styles.loading} />
+                                </View>
+                                :
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: 'transparent',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        marginTop: 400,
+                                        marginLeft: 150,
+                                    }}>
+                                    <TouchableOpacity
+                                        onPress={() => this.takePicture()}
+                                    >
+                                        <Image source={require('../assets/takepic.jpg')} style={styles.icon} />
+                                    </TouchableOpacity>
+                                </View>
+                            }
                         </Camera>
-                    </View>
-                );
-            }
-            else {
-                return (
-                    <View>
-                        <View style={styles.back}>
-                            <Icon
-                                name='arrow-left'
-                                type='material-community'
-                                style={{ flex: 0.1 }}
-                                onPress={() => { this.setState({ cvResult: 'false' }) }}
-                            />
-                            <View style={{ flex: 0.9 }} />
-                        </View>
-                        <View style={styles.img_container}>
-                            <Image style={{width: Dimensions.get('window').width - 30, height: Dimensions.get('window').height - 70}} source={{uri: `${HOST}/buildIT/result.jpg`}} />
-                        </View>
                     </View>
                 );
             }
@@ -170,8 +159,13 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width / 4,
         resizeMode: 'contain'
     },
+    loading: {
+        marginLeft: 150,
+        width: Dimensions.get('window').width / 4,
+        height: Dimensions.get('window').width / 4,
+        resizeMode: 'contain'
+    },
     img_container: {
-        marginEnd: 10,
-        marginLeft: 15
+        width: Dimensions.get('window').width - 10,
     }
 })

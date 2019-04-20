@@ -69,8 +69,8 @@ export default class CommentBox extends Component {
                         onPress={this.selectStar.bind(this, item, index)}
                         style={[styles.rating, this.rating < item.level ? styles.rating_n : ""]}>&#11089;</Text>}
                 />
-                <Text>{this.userName}</Text>
-                <Text>{this.content}</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{this.userName}</Text>
+                <Text style={{ fontSize: 16 }}>{this.content}</Text>
             </View>
         </View>)
     }

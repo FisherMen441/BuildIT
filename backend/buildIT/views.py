@@ -64,27 +64,29 @@ def comment(request):
                        "WHERE UID=%s;", (user_id,))
         name = cursor.fetchall()[0][0]
         return JsonResponse({'User_name': name, 'Content': body})
-    elif request.method == 'GET':
-        furniture_id = int(request.GET.get('furniture_id'))
-        step = int(request.GET.get('step'))
+    
+    furniture_id = int(request.GET.get('furniture_id'))
+    step = int(request.GET.get('step'))
 
     if step == 0:
-        cursor.execute("SELECT C.Content, U.User_name " +
+        cursor.execute("SELECT C.Content, U.User_name, C.LIKES " +
                 "FROM Comments C, Users U " + 
                 "WHERE C.FID=%s AND U.UID = C.UID;" + 
-                "ORDER BY C.LIKES DESC", (furniture_id,))
+                "ORDER BY C.LIKES DESC;", (furniture_id,))
     else:
-        cursor.execute("SELECT C.Content, U.User_name " +
+        cursor.execute("SELECT C.Content, U.User_name, C.LIKES " +
                     "FROM Comments C, Users U " + 
                     "WHERE U.UID = C.UID AND C.FID=%s AND C.SID=%s;" + 
-                    "ORDER BY C.LIKES DESC", (furniture_id, step))
+                    "ORDER BY C.LIKES DESC;", (furniture_id, step))
     comment_list = cursor.fetchall()
+    print(comment_list)
     result = []
     context = {'comments': []}
     for comment in comment_list:
         result.append({
             'User_name': comment[1],
-            'Content': comment[0]
+            'Content': comment[0],
+            'Likes': comment[2]
         })
     context['comments'] = result
     return JsonResponse(context)
@@ -94,19 +96,22 @@ def comment(request):
 def like_comment(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
-    comment_id = request.POST.get('comment_id')
-    like = request.POST.get('like')
+    data = json.loads(request.body.decode('utf-8'))
+    comment_id = int(data['comment_id'])
+    like = data['like']
     cursor = connection.cursor()
     cursor.execute("SELECT LIKES FROM Comments WHERE CID=%s;", (comment_id,))
-    likes = cursor.fetchall()[0][0]
+    likes = cursor.fetchall()[0]
+    likes = likes[0]
     if like == 'true':
         likes += 1
     else:
-        likes -= 1
+        if likes > 0: 
+            like -= 1
     cursor.execute("UPDATE Comments SET LIKES=%s;"
                         ,(likes,))
     connection.commit()
-    context = {}
+    context = {'like': likes}
     return JsonResponse(context)
 
 def tools(request):

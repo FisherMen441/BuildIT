@@ -29,7 +29,8 @@ urlpatterns = [
     url(r'api/furniture_info/$', views.furniture_info, name='furniture_info'),
     url(r'api/search/$', views.search, name='search'),
     url(r'api/comment/$', views.comment, name='comment'),
-    url(r'api/upload/$', views.cv_upload, name='cv_upload')
+    url(r'api/upload/$', views.cv_upload, name='cv_upload'),
+    url(r'api/like_comment/$', views.like_comment, name='like_comment')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.CV_RESULT_URL, document_root=settings.CV_RESULT_ROOT)

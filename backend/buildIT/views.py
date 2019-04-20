@@ -69,24 +69,25 @@ def comment(request):
     step = int(request.GET.get('step'))
 
     if step == 0:
-        cursor.execute("SELECT C.Content, U.User_name, C.LIKES " +
+        cursor.execute("SELECT C.Content, U.User_name, C.LIKES, C.RATE, C.CID " +
                 "FROM Comments C, Users U " + 
                 "WHERE C.FID=%s AND U.UID = C.UID;" + 
                 "ORDER BY C.LIKES DESC;", (furniture_id,))
     else:
-        cursor.execute("SELECT C.Content, U.User_name, C.LIKES " +
+        cursor.execute("SELECT C.Content, U.User_name, C.LIKES, C.RATE, C.CID " +
                     "FROM Comments C, Users U " + 
                     "WHERE U.UID = C.UID AND C.FID=%s AND C.SID=%s;" + 
                     "ORDER BY C.LIKES DESC;", (furniture_id, step))
     comment_list = cursor.fetchall()
-    print(comment_list)
     result = []
     context = {'comments': []}
     for comment in comment_list:
         result.append({
             'User_name': comment[1],
             'Content': comment[0],
-            'Likes': comment[2]
+            'Likes': comment[2],
+            'Rate': comment[3],
+            'CommentID': comment[4]
         })
     context['comments'] = result
     return JsonResponse(context)
@@ -108,11 +109,27 @@ def like_comment(request):
     else:
         if likes > 0: 
             like -= 1
-    cursor.execute("UPDATE Comments SET LIKES=%s;"
-                        ,(likes,))
+    cursor.execute("UPDATE Comments SET LIKES=%s WHERE CID=%s;"
+                        , (likes, comment_id))
     connection.commit()
     context = {'like': likes}
     return JsonResponse(context)
+
+
+@csrf_exempt
+def rate_comment(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    data = json.loads(request.body.decode('utf-8'))
+    comment_id = int(data['comment_id'])
+    star = int(data['star'])
+    cursor = connection.cursor()
+    cursor.execute("UPDATE Comments SET RATE=%s WHERE CID=%s;"
+                        , (star, comment_id))
+    connection.commit()
+    context = {'rate': star}
+    return JsonResponse(context)
+
 
 def tools(request):
     if request.method != 'GET':

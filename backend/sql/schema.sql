@@ -30,6 +30,7 @@ CREATE TABLE Comments (
     SID int NOT NULL,
     UID int NOT NULL,
     LIKES int NOT NULL,
+    RATE int,
     Content varchar(255) NOT NULL,
     FOREIGN KEY (FID, SID) REFERENCES Steps(FID, SID),
     FOREIGN KEY (UID) REFERENCES USERS(UID),

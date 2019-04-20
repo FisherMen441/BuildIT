@@ -142,6 +142,7 @@ If you are using Android phone, open `Expo` and go to `Projects -> Scan QR Code`
 | /api/videos/?furniture_id=xxx&step=xx  | GET      | Get the stepwise instruction for the furniture of step xx    |
 | /api/furniture_info/?furniture_id=xxx | GET | Get the furniture infor for intro screen |
 | /api/like_comment/ | POST | Post likes/unlikes for the comments whith filed comment_id=xxx and like=true/false |
+| /api/rate_comment/ | POST | Rate comments whith filed comment_id=xxx and star=xxx |
 
 ### Backend Dadabase
 

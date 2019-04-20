@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS=0;
 Drop table Comments;
 Drop table Tools_needed;
 Drop table Components_needed;
@@ -6,3 +7,4 @@ Drop table Components;
 Drop table Steps;
 Drop table Furniture;
 Drop table Users;
+SET FOREIGN_KEY_CHECKS=1;

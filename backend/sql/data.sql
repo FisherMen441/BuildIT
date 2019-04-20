@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO Furniture VALUES(1, 'Accent Table', 'Three drawers on wood slides open to reveal plenty of room to tuck away small-scale must-haves, while the top offers space to place a lamp, books, and more.', 'Accent_table.jpg', 7);
 INSERT INTO Furniture VALUES(2, 'Lamp', 'A nice white lamp.', 'lamp.png', 1);
 
@@ -87,3 +88,4 @@ INSERT INTO Users VALUES(2, "Jingyuan", "password");
 INSERT INTO Comments VALUES(1, 1, 1, 1, 0, 0, "This is an easy step" );
 INSERT INTO Comments VALUES(2, 1, 2, 1, 0, 0, "This is a hard step" );
 INSERT INTO Comments VALUES(3, 1, 1, 2, 0, 0, "I think this step is ok" );
+SET FOREIGN_KEY_CHECKS=1;

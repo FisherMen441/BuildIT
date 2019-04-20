@@ -19,6 +19,8 @@ from django.conf.urls import include, url
 from buildIT import views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.static import serve
+from django.views.decorators.cache import never_cache
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,5 +35,7 @@ urlpatterns = [
     url(r'api/like_comment/$', views.like_comment, name='like_comment'),
     url(r'api/rate_comment/$', views.rate_comment, name='rate_comment')
 ]
+
+static_view = never_cache(serve)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.CV_RESULT_URL, document_root=settings.CV_RESULT_ROOT)
+urlpatterns += static(settings.CV_RESULT_URL, view=static_view,  document_root=settings.CV_RESULT_ROOT)

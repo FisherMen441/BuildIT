@@ -56,13 +56,15 @@ def comment(request):
         step = int(data['step'])
         user_id = int(data['user_id'])
         body = data['text']
-        cursor.execute("INSERT INTO Comments (FID, SID, UID, LIKES, RATE, Content) VALUES (%s, %s, %s, %s, %s);"
+        cursor.execute("INSERT INTO Comments (FID, SID, UID, LIKES, RATE, Content) VALUES (%s, %s, %s, %s, %s, %s);"
                         ,(furniture_id, step, user_id, 0, 0, body))
         connection.commit()
+        print('after commit')
         cursor.execute("SELECT User_name " +
                        "FROM Users " + 
                        "WHERE UID=%s;", (user_id,))
         name = cursor.fetchall()[0][0]
+        print('before return')
         return JsonResponse({'User_name': name, 'Content': body})
     
     furniture_id = int(request.GET.get('furniture_id'))
@@ -101,7 +103,6 @@ def like_comment(request):
     data = json.loads(request.body.decode('utf-8'))
     comment_id = int(data['comment_id'])
     like = data['like']
-    print(like)
     cursor = connection.cursor()
     cursor.execute("SELECT LIKES FROM Comments WHERE CID=%s;", (comment_id,))
     likes = cursor.fetchall()[0]
@@ -191,7 +192,6 @@ def cv_upload(request):
     furniture_id = data['FID']
     step = data['SID']
     new_img_dir = "./buildIT/imageToSave.jpg"
-    print('saved')
     with open(new_img_dir, "wb") as fh:
         fh.write(base64.decodebytes(img_data.encode('ascii')))
     response = {}

@@ -55,6 +55,7 @@ export default class IntroScreen extends React.Component {
             return response.json();
         })
         .then((data)=>{
+            console.log(data)
             this.setState({
                 comments: data.comments
             })
@@ -90,6 +91,9 @@ export default class IntroScreen extends React.Component {
             newComments.push({
                 User_name: data.User_name,
                 Content: data.Content,
+                Likes: data.Likes,
+                Rate: data.Rate,
+                CommentID: data.CommentID,
                 });
             this.setState({
                 comments: newComments,
@@ -113,7 +117,7 @@ export default class IntroScreen extends React.Component {
         this.state.comments.forEach((element, i)=>{
             comments_list.push(
                 <View  key={i} style={{height: 100}}>
-                <CommentBox userName={element.User_name} content={element.Content} editable={true}/>
+                <CommentBox userName={element.User_name} content={element.Content} editable={true} commentID={element.CommentID} rating={element.Rate} likes={element.Likes} />
                 </View>
             )
         })
